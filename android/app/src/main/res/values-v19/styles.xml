@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="notification_info" parent="android:TextAppearance.Material.Notification.Info"
+           tools:targetApi="lollipop"/>
+
+    <style name="notification_title" parent="android:TextAppearance.Material.Notification.Title"
+           tools:targetApi="lollipop"/>
+</resources>
