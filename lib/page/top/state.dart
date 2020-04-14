@@ -55,27 +55,27 @@ TopPageState initState(Map<String, dynamic> args) {
   var topPageState = TopPageState();
   topPageState.showLoading = true;
   topPageState.topInfos = List()..add(TopInfo('10520166', '电音榜', Constants.dy_top))..add(TopInfo('180106', 'UK榜', Constants.uk_top))..add(TopInfo('60131', '日本榜', Constants.rb_top))..add(TopInfo('60198', 'Billl榜', Constants.billl_top))..add(TopInfo('21845217', 'KTV榜', Constants.krv_top))..add(TopInfo('11641012', 'Itunes榜', Constants.itunes_top));
-  var bs = SpUtil.getString('bs', defValue: null);
-  var newListStr = SpUtil.getString('new', defValue: null);
-  var yc = SpUtil.getString('yc', defValue: null);
-  var hot = SpUtil.getString('hot', defValue: null);
+//  var bs = SpUtil.getString('bs', defValue: null);
+//  var newListStr = SpUtil.getString('new', defValue: null);
+//  var yc = SpUtil.getString('yc', defValue: null);
+//  var hot = SpUtil.getString('hot', defValue: null);
 
-  if (bs != null) {
-    List responseJson = json.decode(bs);
-    topPageState.bsList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
-  }
-  if (newListStr != null) {
-    List responseJson = json.decode(newListStr);
-    topPageState.newList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
-  }
-  if (yc != null) {
-    List responseJson = json.decode(yc);
-    topPageState.ycList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
-  }
-  if (hot != null) {
-    List responseJson = json.decode(hot);
-    topPageState.hotList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
-    topPageState.showLoading = false;
-  }
+//  if (bs != null) {
+//    List responseJson = json.decode(bs);
+//    topPageState.bsList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
+//  }
+//  if (newListStr != null) {
+//    List responseJson = json.decode(newListStr);
+//    topPageState.newList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
+//  }
+//  if (yc != null) {
+//    List responseJson = json.decode(yc);
+//    topPageState.ycList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
+//  }
+//  if (hot != null) {
+//    List responseJson = json.decode(hot);
+//    topPageState.hotList = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
+//    topPageState.showLoading = false;
+//  }
   return topPageState;
 }

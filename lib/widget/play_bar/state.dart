@@ -36,5 +36,8 @@ class PlayBarState implements GlobalBaseState, Cloneable<PlayBarState> {
 
 PlayBarState initState(Map<String, dynamic> args) {
   var playBarState = PlayBarState();
+  if(args!=null){
+
+  }
   return playBarState;
 }

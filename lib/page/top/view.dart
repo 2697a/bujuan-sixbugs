@@ -20,6 +20,7 @@ Widget buildView(TopPageState state, Dispatch dispatch, ViewService viewService)
     body: state.showLoading == null || state.showLoading
         ? LoadingPage()
         : Container(
+      padding: EdgeInsets.symmetric(horizontal: Screens.width5),
             child: EasyRefresh.custom(
               header: TaurusHeader(),
               slivers: <Widget>[

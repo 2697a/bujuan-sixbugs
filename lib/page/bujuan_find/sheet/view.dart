@@ -7,7 +7,6 @@ import 'state.dart';
 Widget buildView(SheetViewState state, Dispatch dispatch, ViewService viewService) {
   var adapter = viewService.buildAdapter();
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: Screens.width5),
     child: Column(
       children: <Widget>[
         Offstage(
@@ -19,7 +18,7 @@ Widget buildView(SheetViewState state, Dispatch dispatch, ViewService viewServic
               style:
               TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
             ),
-            padding: EdgeInsets.only(top:15,bottom: 15,left: Screens.width5),
+            padding: EdgeInsets.only(top:15,bottom: 0,left: Screens.width5),
           ),
         ),
         GridView.builder(

@@ -18,7 +18,9 @@ Effect<TopPageState> buildEffect() {
 }
 
 void _init(Action action, Context<TopPageState> ctx) async {
-  _onRefresh(action, ctx);
+   Future.delayed(Duration(milliseconds: 300),(){
+     _onRefresh(action, ctx);
+   });
 }
 
 void _onOpen(Action action, Context<TopPageState> ctx) {
@@ -32,28 +34,18 @@ void _onOpen(Action action, Context<TopPageState> ctx) {
 //3: "19723756", //云音乐飙升榜
 //4: "10520166", //云音乐电音榜
 void _onRefresh(Action action, Context<TopPageState> ctx) async {
-//  _getTopMv().then((mv) {
-//    ctx.dispatch(TopPageActionCreator.onGetMv(mv.data));
-//  });
-//  _getTopSinger().then((singer) {
-//    ctx.dispatch(TopPageActionCreator.onGetSinger(singer.artists));
-//  });
-  _getTopData('19723756').then((top) {
-    SpUtil.putString('bs', jsonEncode(changeType(top)));
-    ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top), TopType.BS));
-  });
-  _getTopData('3779629').then((top) {
-    SpUtil.putString('new', jsonEncode(changeType(top)));
-    ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top), TopType.NEW));
-  });
-  _getTopData('2884035').then((top) {
-    SpUtil.putString('yc', jsonEncode(changeType(top)));
-    ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top), TopType.YC));
-  });
-  _getTopData('3778678').then((top) {
-    SpUtil.putString('hot', jsonEncode(changeType(top)));
-    ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top), TopType.HOT));
-  });
+ var top1 =  await _getTopData('19723756');
+// SpUtil.putString('bs', jsonEncode(changeType(top)));
+ ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top1), TopType.BS));
+ var top2 = await _getTopData('3779629');
+//  SpUtil.putString('new', jsonEncode(changeType(top)));
+  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top2), TopType.NEW));
+  var top3 = await _getTopData('2884035');
+//  SpUtil.putString('yc', jsonEncode(changeType(top)));
+  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top3), TopType.YC));
+ var top4 = await  _getTopData('3778678');
+//  SpUtil.putString('hot', jsonEncode(changeType(top)));
+  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top4), TopType.HOT));
 }
 
 List<SongBeanEntity> changeType(TopEntity topEntity) {

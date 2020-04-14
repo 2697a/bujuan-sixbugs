@@ -18,8 +18,9 @@ import '../bujuan_music.dart';
 import 'action.dart';
 import 'state.dart';
 
-StreamSubscription listen;
 const urlFMPlugin = const BasicMessageChannel('url_fm_plugin', StandardMessageCodec());
+StreamSubscription listen;
+const playPlugin = const EventChannel('com.sixbugs.bujuan/music_play');
 Effect<EntranceState> buildEffect() {
   return combineEffects(<Object, Effect<EntranceState>>{
     EntranceAction.bottomBarTap: _onBottomTap,
@@ -34,10 +35,12 @@ Effect<EntranceState> buildEffect() {
 
 void _onBottomTap(Action action, Context<EntranceState> ctx) {
   ctx.state.pageController.jumpToPage(action.payload);
+  ctx.dispatch(EntranceActionCreator.onPageChange(action.payload));
 }
 
 void _onInit(Action action, Context<EntranceState> ctx) {
-  listen = BujuanMusic.getStream().listen((_) {
+  Stream stream = playPlugin.receiveBroadcastStream();
+  listen = stream.listen((_) {
     _onEvent(_, ctx);
   }, onError: _onError);
   urlFMPlugin.setMessageHandler((message) => Future<String>(() async{
@@ -46,6 +49,32 @@ void _onInit(Action action, Context<EntranceState> ctx) {
     Map map = new Map<String, String>.from(message);
     if(map['type']=='getUrl'){
       s = await _getUrl(map['id']);
+      return s;
+    } else if(map['type']=='currSong'){
+      var currSong = map['data'];
+      if (currSong != null) {
+        SongBeanEntity songBeanEntity = SongBeanEntity.fromJson(jsonDecode(currSong));
+        GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songBeanEntity));
+      }
+      return s;
+    }else if(map['type']=='state'){
+      var state = map['data'];
+      if (state != null) {
+        ///执行了暂停，播放等操作
+        PlayStateType playState;
+        if (state == 'start') {
+          playState = PlayStateType.Playing;
+        } else if (state == 'pause') {
+          playState = PlayStateType.Pause;
+        } else if (state == 'stop') {
+          playState = PlayStateType.Stop;
+        } else if (state == 'completion') {
+          GlobalStore.store.dispatch(GlobalActionCreator.changeSongPos(0));
+          GlobalStore.store.dispatch(GlobalActionCreator.changeSongAllPos(100));
+        }
+
+        GlobalStore.store.dispatch(GlobalActionCreator.changePlayState(playState));
+      }
       return s;
     }else{
       return s;
@@ -70,7 +99,6 @@ void _onOPenPage(Action action, Context<EntranceState> ctx) {
       Navigator.of(ctx.context).pushNamed('about', arguments: null);
       break;
   }
-  ctx.state.innerDrawerKey.currentState.toggle(direction: InnerDrawerDirection.start);
 //  Future.delayed(Duration(milliseconds: 200), () {
 //  });
 }
@@ -86,71 +114,23 @@ void _onNext(Action action, Context<EntranceState> ctx) {
 void _onDispose(Action action, Context<EntranceState> ctx) {
   listen?.cancel();
   ctx.state.pageController?.dispose();
-  ctx.state.controller?.dispose();
 }
 
 //原生播放状态返回
 void _onEvent(Object event, ctx) {
   Map<String, dynamic> tag = Map<String, dynamic>.from(event);
-  var currSong = tag['currSong'];
-  var state = tag['state'];
-  if (currSong != null) {
-    SongBeanEntity songBeanEntity = SongBeanEntity.fromJson(jsonDecode(currSong));
-    _getLyric(songBeanEntity.id).then((lyric) {
-      GlobalStore.store.dispatch(GlobalActionCreator.changeLyric(lyric));
-    });
-    GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songBeanEntity));
-  }
-
-  if (state != null) {
-    ///执行了暂停，播放等操作
-    PlayStateType playState;
-    if (state == 'start') {
-      playState = PlayStateType.Playing;
-    } else if (state == 'pause') {
-      playState = PlayStateType.Pause;
-    } else if (state == 'stop') {
-      playState = PlayStateType.Stop;
-    } else if (state == 'completion') {
-//      var fm = SpUtil.getBool(Constants.ISFM, defValue: false);
-//      if (fm) {
-//        BujuanMusic.control(task: 'stop');
-//        _getFm().then((fm) {
-//          List<SongBeanEntity> songs = List();
-//          fm.data.forEach((data) {
-//            SongBeanEntity songBeanEntity = SongBeanEntity();
-//            songBeanEntity.id = data.id.toString();
-//            songBeanEntity.name = data.name;
-//            songBeanEntity.singer = data.artists[0].name;
-//            songBeanEntity.picUrl = data.album.picUrl;
-//            songBeanEntity.mv = data.mvid;
-//            songs.add(songBeanEntity);
-//          });
-//
-//          GlobalStore.store
-//              .dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
-//          SpUtil.putObjectList(Constants.playSongListHistory, songs);
-//          var jsonEncode2 = jsonEncode(songs);
-//          BujuanMusic.sendSongInfo(
-//              songInfo: jsonEncode2, playSong: jsonEncode(songs[0]));
-//        });
-//      }
-      GlobalStore.store.dispatch(GlobalActionCreator.changeSongPos(0));
-      GlobalStore.store.dispatch(GlobalActionCreator.changeSongAllPos(100));
-    }
-
-    GlobalStore.store.dispatch(GlobalActionCreator.changePlayState(playState));
-  }
+  var pos = tag['currSongPos'];
+  var allPos = tag['currSongAllPos'];
 
   ///歌曲进度
-//  if (pos != null) {
-//    println('=====POSITION===$pos');
-//    GlobalStore.store.dispatch(GlobalActionCreator.changeSongPos(int.parse(pos)));
-//  }
-//
-//  if(allPos!=null){
-//    GlobalStore.store.dispatch(GlobalActionCreator.changeSongAllPos(int.parse(allPos)));
-//  }
+  if (pos != null) {
+    GlobalStore.store.dispatch(GlobalActionCreator.changeSongPos(int.parse(pos)));
+  }
+
+  if (allPos != null) {
+    GlobalStore.store.dispatch(GlobalActionCreator.changeSongAllPos(int.parse(allPos)));
+  }
+
 }
 
 //获取播放状态异常

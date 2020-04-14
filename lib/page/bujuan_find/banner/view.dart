@@ -13,7 +13,6 @@ Widget buildView(
     NewBannerState state, Dispatch dispatch, ViewService viewService) {
   return state.banners != null
       ? Container(
-    padding: EdgeInsets.symmetric(horizontal: Screens.width5),
           margin: EdgeInsets.only(top: 3),
           child: Wrap(
             children: <Widget>[

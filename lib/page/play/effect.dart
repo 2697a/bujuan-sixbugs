@@ -17,12 +17,9 @@ import 'package:flutter/material.dart' hide Action;
 import '../../bujuan_music.dart';
 import 'state.dart';
 
-StreamSubscription listen;
-
 Effect<PlayViewState> buildEffect() {
   return combineEffects(<Object, Effect<PlayViewState>>{
     Lifecycle.initState: _onInit,
-    Lifecycle.dispose: _onDispose,
     PlayViewAction.playOrPause: _onTask,
     PlayViewAction.skipPrevious: _onPrevious,
     PlayViewAction.skipNext: _onNext,
@@ -43,13 +40,14 @@ void _onInit(Action action, Context<PlayViewState> ctx)  {
     _getLyric(ctx.state.currSong.id).then((lyric) {
       GlobalStore.store.dispatch(GlobalActionCreator.changeLyric(lyric));
     });
-  listen = BujuanMusic.getPlayStream().listen((_) {
-    _onEvent(_, ctx);
-  }, onError: _onError);
+//  Stream stream = playPlugin.receiveBroadcastStream();
+//  listen = stream.listen((_) {
+//    _onEvent(_, ctx);
+//  }, onError: _onError);
 }
 
 void _dispose(Action action, Context<PlayViewState> ctx) {
-  ctx.state.lyricController?.dispose();
+//  listen?.cancel();
 }
 
 void _onPlayMode(Action action, Context<PlayViewState> ctx) {
@@ -71,10 +69,6 @@ void _onPlayMode(Action action, Context<PlayViewState> ctx) {
   }
 }
 
-void _onDispose(Action action, Context<PlayViewState> ctx) {
-  listen?.cancel();
-  ctx.state.innerDrawerKey = null;
-}
 
 void _onEvent(Object event, Context<PlayViewState> ctx) {
   Map<String, dynamic> tag = Map<String, dynamic>.from(event);

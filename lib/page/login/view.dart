@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/page/login/action.dart';
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/color_loaed.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +12,7 @@ import 'state.dart';
 
 Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
   var width2 = MediaQuery.of(viewService.context).size.width;
-  return Scaffold(
+  return BujuanBack.back(Scaffold(
     body: SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -29,7 +30,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
             child: Card(
               elevation: 2,
               shape:
-                  const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+              const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
               child: TextField(
                 autofocus: true,
                 keyboardType: TextInputType.emailAddress,
@@ -50,7 +51,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
             child: Card(
               elevation: 2,
               shape:
-                  const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+              const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
               child: TextField(
                 autofocus: true,
                 keyboardType: TextInputType.text,
@@ -104,5 +105,5 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
         ],
       ),
     ),
-  );
+  ), viewService.context);
 }

@@ -3,13 +3,14 @@ import 'dart:ui';
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/page/search/action.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
 import 'state.dart';
 
 Widget buildView(SearchState state, Dispatch dispatch, ViewService viewService) {
-  return Scaffold(
+  return BujuanBack.back(Scaffold(
     resizeToAvoidBottomPadding: false,
     appBar: PreferredSize(child: Container(
       padding: EdgeInsets.only(top: MediaQueryData.fromWindow(window).padding.top+5,left: Screens.width5,right: Screens.width5),
@@ -45,28 +46,28 @@ Widget buildView(SearchState state, Dispatch dispatch, ViewService viewService) 
         children: <Widget>[
           Expanded(
               child: ListView.builder(
-            itemBuilder: (context, index) {
-              return ListTile(
-                dense: true,
-                title: Row(
-                  children: <Widget>[
-                    Text(
-                      '${index + 1}. ',
-                      style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    dense: true,
+                    title: Row(
+                      children: <Widget>[
+                        Text(
+                          '${index + 1}. ',
+                          style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                        Expanded(child: Text(state.data[index].searchWord))
+                      ],
                     ),
-                    Expanded(child: Text(state.data[index].searchWord))
-                  ],
-                ),
-                subtitle: Text(state.data[index].content),
-                onTap: () {
-                  dispatch(SearchActionCreator.doSearch(state.data[index].searchWord));
+                    subtitle: Text(state.data[index].content),
+                    onTap: () {
+                      dispatch(SearchActionCreator.doSearch(state.data[index].searchWord));
+                    },
+                  );
                 },
-              );
-            },
-            itemCount: state.data.length,
-          ))
+                itemCount: state.data.length,
+              ))
         ],
       ),
     ),
-  );
+  ), viewService.context);
 }

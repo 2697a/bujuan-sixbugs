@@ -14,7 +14,6 @@ import com.qw.soul.permission.bean.Permissions;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sixbugs.bujuan.entity.SongBean;
 import com.sixbugs.bujuan.imageloader.GsonUtil;
-import com.sixbugs.bujuan.plugin.BujuanBaseMessage;
 
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.MethodChannel;
@@ -30,7 +29,7 @@ import io.flutter.plugin.common.StandardMessageCodec;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity implements OnPlayerEventListener {
-    private BuJuanMusicListenPlugin buJuanMusicListenPlugin;
+//    private BuJuanMusicListenPlugin buJuanMusicListenPlugin;
     private TimerTaskManager mTimerTask;
     private Map<String, String> map = new HashMap<>();
     private BuJuanMusicPlayListenPlugin buJuanMusicPlayListenPlugin;
@@ -42,7 +41,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         GeneratedPluginRegistrant.registerWith(this);
         StarrySky.with().addPlayerEventListener(this);
         BujuanMusicPlugin.registerWith(this.registrarFor(BujuanMusicPlugin.CHANNEL));
-        buJuanMusicListenPlugin = BuJuanMusicListenPlugin.registerWith(this.registrarFor(BuJuanMusicListenPlugin.CHANNEL));
+//        buJuanMusicListenPlugin = BuJuanMusicListenPlugin.registerWith(this.registrarFor(BuJuanMusicListenPlugin.CHANNEL));
         buJuanMusicPlayListenPlugin = BuJuanMusicPlayListenPlugin.registerWith(this.registrarFor(BuJuanMusicPlayListenPlugin.CHANNEL));
         basicMessageChannelPlugin = new BasicMessageChannel<>(getFlutterView(), Config.URL_FM_CHANNEL, StandardMessageCodec.INSTANCE);
         listenerPos();
@@ -83,6 +82,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
             long position = StarrySky.with().getPlayingPosition();
             long duration = StarrySky.with().getDuration();
             long buffered = StarrySky.with().getBufferedPosition();
+            map.clear();
             map.put("currSongPos", String.valueOf(position));
             map.put("currSongAllPos", String.valueOf(duration));
             EventChannel.EventSink event = buJuanMusicPlayListenPlugin.event;
@@ -110,35 +110,45 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         song.setName(songInfo.getSongName());
         song.setSinger(songInfo.getArtist());
         song.setPicUrl(songInfo.getAlbumCover());
-        map.put("currSong", GsonUtil.GsonString(song));
-        buJuanMusicListenPlugin.eventSink.success(map);
+        map.clear();
+        map.put("type","currSong");
+        map.put("data", GsonUtil.GsonString(song));
+        basicMessageChannelPlugin.send(map);
+//        buJuanMusicListenPlugin.eventSink.success(map);
     }
 
     @Override
     public void onPlayCompletion(@NotNull SongInfo songInfo) {
-        map.put("state", "completion");
-        buJuanMusicListenPlugin.eventSink.success(map);
+        map.clear();
+        map.put("type","state");
+        map.put("data", "completion");
         mTimerTask.stopToUpdateProgress();
     }
 
     @Override
     public void onPlayerPause() {
-        map.put("state", "pause");
-        buJuanMusicListenPlugin.eventSink.success(map);
+        map.clear();
+        map.put("type","state");
+        map.put("data", "pause");
+        basicMessageChannelPlugin.send(map);
         mTimerTask.stopToUpdateProgress();
     }
 
     @Override
     public void onPlayerStart() {
-        map.put("state", "start");
-        buJuanMusicListenPlugin.eventSink.success(map);
+        map.clear();
+        map.put("type","state");
+        map.put("data", "start");
+        basicMessageChannelPlugin.send(map);
         mTimerTask.startToUpdateProgress();
     }
 
     @Override
     public void onPlayerStop() {
-        map.put("state", "start");
-        buJuanMusicListenPlugin.eventSink.success("stop");
+        map.clear();
+        map.put("type","state");
+        map.put("data", "start");
+        basicMessageChannelPlugin.send(map);
         mTimerTask.stopToUpdateProgress();
     }
 

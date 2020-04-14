@@ -10,7 +10,6 @@ import 'state.dart';
 Widget buildView(
     NewSongState state, Dispatch dispatch, ViewService viewService) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: Screens.width5),
     child: state.result != null
         ? Wrap(
             children: <Widget>[

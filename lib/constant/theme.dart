@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Colors.white,
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.transparent,
   appBarTheme: AppBarTheme(elevation: 0),
   cardTheme: CardTheme(color: Colors.white, elevation: 0),
 );
@@ -14,7 +14,7 @@ final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Color.fromRGBO(28, 28, 28, 1),
   appBarTheme: AppBarTheme(elevation: 0),
-  scaffoldBackgroundColor: Color.fromRGBO(28, 28, 28, 1),
+  scaffoldBackgroundColor: Colors.transparent,
   cardTheme: CardTheme(color: Color.fromRGBO(28, 28, 28, 1)),
 );
 

@@ -7,30 +7,38 @@ import 'reducer.dart';
 import 'state.dart';
 import 'view.dart';
 
-class PlayViewPage extends Page<PlayViewState, Map<String, dynamic>> with TickerProviderMixin<PlayViewState> {
+class PlayViewPage extends Page<PlayViewState, Map<String, dynamic>>
+    with TickerProviderMixin<PlayViewState> {
   PlayViewPage()
       : super(
           initState: initState,
           effect: buildEffect(),
           reducer: buildReducer(),
           view: buildView,
-          dependencies: Dependencies<PlayViewState>(adapter: null, slots: <String, Dependent<PlayViewState>>{}),
+          dependencies: Dependencies<PlayViewState>(
+              adapter: null, slots: <String, Dependent<PlayViewState>>{}),
           middleware: <Middleware<PlayViewState>>[],
         ) {
-    this.connectExtraStore<GlobalState>(GlobalStore.store, (Object pageState, GlobalState appState) {
+    this.connectExtraStore<GlobalState>(GlobalStore.store,
+        (Object pageState, GlobalState appState) {
       final GlobalBaseState p = pageState;
-      if (p.appTheme != null && p.appTheme.dark == appState.appTheme.dark && p.playStateType != null && p.playStateType == appState.playStateType && p.currSong != null && p.currSong == appState.currSong && p.currSongPos == appState.currSongPos && p.currSongAllPos == appState.currSongAllPos && p.lyric != null && p.lyric == appState.lyric && p.playModeType != null && p.playModeType == appState.playModeType) {
+      if (p.playStateType != null &&
+          p.playStateType == appState.playStateType &&
+          p.currSong != null &&
+          p.currSong == appState.currSong &&
+          p.currSongPos == appState.currSongPos &&
+          p.currSongAllPos == appState.currSongAllPos &&
+          p.playModeType != null &&
+          p.playModeType == appState.playModeType) {
         return pageState;
       } else {
         if (pageState is Cloneable) {
           final Object copy = pageState.clone();
           final GlobalBaseState newState = copy;
-          newState.appTheme = appState.appTheme;
           newState.playStateType = appState.playStateType;
           newState.currSong = appState.currSong;
           newState.currSongPos = appState.currSongPos;
           newState.currSongAllPos = appState.currSongAllPos;
-          newState.lyric = appState.lyric;
           newState.playModeType = appState.playModeType;
           return newState;
         }

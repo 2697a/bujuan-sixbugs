@@ -1,5 +1,6 @@
 import 'package:bujuan/entity/song_talk_entity.dart';
 import 'package:bujuan/page/talk/action.dart';
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_easyrefresh/phoenix_footer.dart';
 import 'state.dart';
 
 Widget buildView(TalkState state, Dispatch dispatch, ViewService viewService) {
-  return Scaffold(
+  return BujuanBack.back(Scaffold(
     appBar: AppBar(
       elevation: 0,
       leading: IconButton(
@@ -24,73 +25,73 @@ Widget buildView(TalkState state, Dispatch dispatch, ViewService viewService) {
     body: state.showLoading
         ? LoadingPage()
         : Container(
-            padding: EdgeInsets.only(left: 10, right: 5, bottom: 3),
-            child: Column(
+      padding: EdgeInsets.only(left: 10, right: 5, bottom: 3),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+              child: EasyRefresh.custom(
+                footer: MaterialFooter(),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Container(
+                        child: Text(
+                          '精彩评论',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left: 5, top: 20, bottom: 10)),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return _talkHotItem(state.hotComments[index]);
+                      },
+                      childCount: state.hotComments.length,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                        child: Text(
+                          '最新评论',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left: 5, top: 20, bottom: 5)),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return _talkItem(state.comments[index]);
+                      },
+                      childCount: state.comments.length,
+                    ),
+                  )
+                ],
+                onLoad: () => dispatch(TalkActionCreator.loadNextTalk()),
+              )),
+          Container(
+            padding: EdgeInsets.only(left: 5, right: 5),
+            child: Row(
               children: <Widget>[
                 Expanded(
-                    child: EasyRefresh.custom(
-                  footer: MaterialFooter(),
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Container(
-                          child: Text(
-                            '精彩评论',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(left: 5, top: 20, bottom: 10)),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return _talkHotItem(state.hotComments[index]);
-                        },
-                        childCount: state.hotComments.length,
+                    child: Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      elevation: 2,
+                      child: TextField(
+                        controller: state.textEditingController,
+                        decoration: InputDecoration(isDense: true, hintText: '祝你说出热评', border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8)),
                       ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Container(
-                          child: Text(
-                            '最新评论',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(left: 5, top: 20, bottom: 5)),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return _talkItem(state.comments[index]);
-                        },
-                        childCount: state.comments.length,
-                      ),
-                    )
-                  ],
-                  onLoad: () => dispatch(TalkActionCreator.loadNextTalk()),
-                )),
-                Container(
-                  padding: EdgeInsets.only(left: 5, right: 5),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        elevation: 2,
-                        child: TextField(
-                          controller: state.textEditingController,
-                          decoration: InputDecoration(isDense: true, hintText: '祝你说出热评', border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8)),
-                        ),
-                      )),
-                      IconButton(icon: Icon(Icons.send), onPressed: () {
-                        dispatch(TalkActionCreator.sendTalk());
-                      })
-                    ],
-                  ),
-                )
+                    )),
+                IconButton(icon: Icon(Icons.send), onPressed: () {
+                  dispatch(TalkActionCreator.sendTalk());
+                })
               ],
             ),
-          ),
-  );
+          )
+        ],
+      ),
+    ),
+  ), viewService.context);
 }
 
 Widget _talkHotItem(SongTalkHotcommants hotcommants) {

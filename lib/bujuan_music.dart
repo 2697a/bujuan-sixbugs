@@ -5,26 +5,26 @@ import 'package:flutter/services.dart';
 class BujuanMusic {
   static const MethodChannel _channel = const MethodChannel('music_plugin');
 //  com.sixbugs.bujuan/music_play
-  static const counterPlugin = const EventChannel('com.sixbugs.bujuan/music');
+//  static const counterPlugin = const EventChannel('com.sixbugs.bujuan/music');
 
-  static const playPlugin = const EventChannel('com.sixbugs.bujuan/music_play');
+//  static const playPlugin = const EventChannel('com.sixbugs.bujuan/music_play');
 
 //  url_fm_plugin
 
-  static Stream getStream() {
-    Stream stream;
-    if (stream == null) {
-      stream = counterPlugin.receiveBroadcastStream();
-    }
-    return stream;
-  }
-  static Stream getPlayStream() {
-    Stream stream;
-    if (stream == null) {
-      stream = playPlugin.receiveBroadcastStream();
-    }
-    return stream;
-  }
+//  static Stream getStream() {
+//    Stream stream;
+//    if (stream == null) {
+//      stream = counterPlugin.receiveBroadcastStream();
+//    }
+//    return stream;
+//  }
+//  static Stream getPlayStream() {
+//    Stream stream;
+//    if (stream == null) {
+//      stream = playPlugin.receiveBroadcastStream();
+//    }
+//    return stream;
+//  }
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;

@@ -59,11 +59,9 @@ var routes = new PageRoutes(
           (Object pageState, GlobalState appState) {
         final GlobalBaseState p = pageState;
         if (p.appTheme != null && p.appTheme.dark == appState.appTheme.dark && p.playStateType != null && p.playStateType == appState.playStateType && p.currSong != null && p.currSong == appState.currSong) {
-          print("path=$path");
           return pageState;
         } else {
           if (pageState is Cloneable) {
-            print("Cloneable path=$path");
             final Object copy = pageState.clone();
             final GlobalBaseState newState = copy;
             newState.appTheme = appState.appTheme;

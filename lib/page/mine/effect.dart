@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bujuan/api/module.dart';
@@ -14,11 +15,18 @@ import 'state.dart';
 import 'package:flutter/widgets.dart' hide Action; //注意1
 
 Effect<MineState> buildEffect() {
-  return combineEffects(<Object, Effect<MineState>>{MineAction.login: _onLogin, Lifecycle.initState: _init, MineAction.getRefresh: _getRefresh, MineAction.exit: _exit});
+  return combineEffects(<Object, Effect<MineState>>{
+    MineAction.login: _onLogin,
+    Lifecycle.initState: _init,
+    MineAction.getRefresh: _getRefresh,
+    MineAction.exit: _exit
+  });
 }
 
 Future<void> _getRefresh(Action action, Context<MineState> ctx) async {
-  _onRefresh(action, ctx);
+  Future.delayed(Duration(milliseconds: 300), () {
+    _onRefresh(action, ctx);
+  });
 }
 
 //点击登录
@@ -37,34 +45,32 @@ void _exit(Action action, Context<MineState> ctx) {
   ctx.dispatch(MineActionCreator.changeLoginState());
 }
 
-void _onRefresh(Action action, Context<MineState> ctx) {
+void _onRefresh(Action action, Context<MineState> ctx) async {
   var login = ctx.state.isLogin;
   var userId = SpUtil.getInt(Constants.USER_ID);
   if (login) {
-    _getLoveSong(userId);
-    _getProfile(userId).then((profile) {
-      if (profile != null) {
-        SpUtil.putString('profile', jsonEncode(profile));
-        ctx.dispatch(MineActionCreator.getUserProfile(profile));
-      }
-    });
+    await _getLoveSong(userId);
+    var profile = await _getProfile(userId);
+    if (profile != null) {
+//      SpUtil.putString('profile', jsonEncode(profile));
+      ctx.dispatch(MineActionCreator.getUserProfile(profile));
+    }
     List<UserOrderPlaylist> createList = List();
     List<UserOrderPlaylist> collList = List();
-    _getPlayList(userId).then((orderList) {
-      if (orderList != null) {
-        orderList.playlist.forEach((list) {
-          if (list.creator.userId == userId) {
-            createList.add(list);
-          } else {
-            collList.add(list);
-          }
-        });
-        SpUtil.putString('create', jsonEncode(createList));
-        SpUtil.putString('coll', jsonEncode(collList));
-        ctx.dispatch(MineActionCreator.getOrderList(collList));
-        ctx.dispatch(MineActionCreator.getCreateOrderList(createList));
-      }
-    });
+    var orderList = await _getPlayList(userId);
+    if (orderList != null) {
+      orderList.playlist.forEach((list) {
+        if (list.creator.userId == userId) {
+          createList.add(list);
+        } else {
+          collList.add(list);
+        }
+      });
+//        SpUtil.putString('create', jsonEncode(createList));
+//        SpUtil.putString('coll', jsonEncode(collList));
+      ctx.dispatch(MineActionCreator.getOrderList(collList));
+      ctx.dispatch(MineActionCreator.getCreateOrderList(createList));
+    }
   }
 }
 
@@ -75,7 +81,9 @@ void _init(Action action, Context<MineState> ctx) {
 
 Future<UserProfileEntity> _getProfile(userId) async {
   var profile = await user_detail({'uid': userId}, BuJuanUtil.getCookie());
-  return profile.status == 200 ? UserProfileEntity.fromJson(profile.body) : null;
+  return profile.status == 200
+      ? UserProfileEntity.fromJson(profile.body)
+      : null;
 }
 
 Future<UserOrderEntity> _getPlayList(userId) async {
@@ -84,7 +92,9 @@ Future<UserOrderEntity> _getPlayList(userId) async {
 //      await HttpUtil().get('/user/playlist', data: {'uid': userId});
 //  var data = profile.data;
 //  var jsonDecode2 = jsonDecode(data);
-  return playlist.status == 200 ? UserOrderEntity.fromJson(playlist.body) : null;
+  return playlist.status == 200
+      ? UserOrderEntity.fromJson(playlist.body)
+      : null;
 }
 
 ///likelist

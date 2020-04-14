@@ -41,7 +41,7 @@ class ImageHelper {
                 File(imageUrl),
                 height: height,
                 width: height,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
       );
     } else {

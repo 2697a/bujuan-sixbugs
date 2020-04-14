@@ -8,7 +8,6 @@ Reducer<PlayViewState> buildReducer() {
     <Object, Reducer<PlayViewState>>{
       PlayViewAction.getLyric: _getLyric,
       PlayViewAction.changeLikeState: _geLikeOrUnLike,
-      PlayViewAction.changeTickerProvider: _getChangeTickerProvider,
       PlayViewAction.changerDrr: _getChangerDrr,
     },
   );
@@ -33,15 +32,3 @@ PlayViewState _getChangerDrr(PlayViewState state, Action action) {
   return newState;
 }
 
-PlayViewState _getChangeTickerProvider(PlayViewState state, Action action) {
-  final PlayViewState newState = state.clone();
-  newState.lyricController = action.payload;
-  newState.lyricController
-    ..addListener(() {
-      //如果拖动歌词则显示选择器
-      if (newState.showSelect != newState.lyricController.isDragging) {
-        newState.showSelect = newState.lyricController.isDragging;
-      }
-    });
-  return newState;
-}

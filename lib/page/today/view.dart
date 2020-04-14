@@ -2,6 +2,7 @@ import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/page/today/action.dart';
 import 'package:bujuan/widget/app_bar.dart';
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -10,23 +11,23 @@ import 'package:flutter/material.dart';
 import 'state.dart';
 
 Widget buildView(TodayState state, Dispatch dispatch, ViewService viewService) {
-  return Scaffold(
+  return BujuanBack.back( Scaffold(
     appBar:BujuanAppBar.norAppBar(viewService.context, '每日推荐'),
     body: state.isShowLoading
         ? LoadingPage()
         : Column(
-            children: <Widget>[
-              Expanded(
-                  child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return _sheetItem(state.list[index], dispatch,index,viewService);
-                },
-                itemCount: state.list.length,
-              )),
-              PlayBarPage().buildPage(null)
-            ],
-          ),
-  );
+      children: <Widget>[
+        Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return _sheetItem(state.list[index], dispatch,index,viewService);
+              },
+              itemCount: state.list.length,
+            )),
+        PlayBarPage().buildPage(null)
+      ],
+    ),
+  ),viewService.context);
 }
 
 Widget _sheetItem(SongBeanEntity track, Dispatch dispatch,index,viewService) {

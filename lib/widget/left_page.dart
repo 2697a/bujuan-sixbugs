@@ -3,6 +3,7 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,7 +24,8 @@ class LeftPage extends StatefulWidget {
   _LeftPageState createState() => _LeftPageState();
 }
 
-class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin {
+class _LeftPageState extends State<LeftPage>
+    with SingleTickerProviderStateMixin {
   var val = false;
   AnimationController _controller;
 
@@ -40,9 +42,10 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BujuanBack.back(Scaffold(
+//      backgroundColor: Colors.transparent,
       body: AnimatedContainer(
-        color: val ? nightColor : dayColor,
+//        color: val ? nightColor : dayColor,
         duration: Duration(milliseconds: 300),
         child: Stack(
           children: <Widget>[
@@ -71,7 +74,9 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
               right: 0,
               height: Screens.setHeight(200),
               child: Image.asset(
-                val ? 'assets/images/mountain2_night.png' : 'assets/images/mountain2.png',
+                val
+                    ? 'assets/images/mountain2_night.png'
+                    : 'assets/images/mountain2.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -81,7 +86,9 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
               right: 0,
               height: Screens.setHeight(140),
               child: Image.asset(
-                val ? 'assets/images/mountain_night.png' : 'assets/images/mountain1.png',
+                val
+                    ? 'assets/images/mountain_night.png'
+                    : 'assets/images/mountain1.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -125,7 +132,8 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
               },
             ),
             Container(
-              padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 5),
+              padding:
+                  EdgeInsets.only(right: MediaQuery.of(context).size.width / 5),
               child: Column(
                 children: <Widget>[
                   Expanded(child: widget.child),
@@ -137,7 +145,8 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
                       onChanged: (value) {
                         setState(() {
                           val = value;
-                          GlobalStore.store.dispatch(GlobalActionCreator.onchangeThemeColor(value));
+                          GlobalStore.store.dispatch(
+                              GlobalActionCreator.onchangeThemeColor(value));
                           Constants.dark = value;
                           SpUtil.putBool('dark', value);
                         });
@@ -146,7 +155,8 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
                     onTap: () {
                       setState(() {
                         val = !val;
-                        GlobalStore.store.dispatch(GlobalActionCreator.onchangeThemeColor(val));
+                        GlobalStore.store.dispatch(
+                            GlobalActionCreator.onchangeThemeColor(val));
                         Constants.dark = val;
                         SpUtil.putBool('dark', val);
                       });
@@ -163,12 +173,13 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
         offset: Offset(140, 40),
         child: _buildFab(),
       ),
-    );
+    ),context,isDark: val);
   }
 
   Widget _buildFab() {
     return AnimatedBuilder(
-      animation: CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
+      animation:
+          CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
       builder: (context, child) {
         return Stack(
           alignment: Alignment.center,
@@ -199,7 +210,8 @@ class _LeftPageState extends State<LeftPage> with SingleTickerProviderStateMixin
       height: radius,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: (val ? Colors.amber[100] : Colors.orangeAccent).withOpacity(1 - _controller.value),
+        color: (val ? Colors.amber[100] : Colors.orangeAccent)
+            .withOpacity(1 - _controller.value),
       ),
     );
   }

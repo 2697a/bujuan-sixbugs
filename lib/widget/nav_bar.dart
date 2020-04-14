@@ -45,28 +45,26 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
             ),
         ],
       ),
-      child: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: Screens.setHeight(52),
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
-          child: Row(
-            mainAxisAlignment: mainAxisAlignment,
-            children: items.map((item) {
-              var index = items.indexOf(item);
-              return GestureDetector(
-                onTap: () => onItemSelected(index),
-                child: _ItemWidget(
-                  item: item,
-                  iconSize: iconSize,
-                  isSelected: index == selectedIndex,
-                  backgroundColor: Colors.transparent,
-                  itemCornerRadius: itemCornerRadius,
-                  animationDuration: animationDuration,
-                ),
-              );
-            }).toList(),
-          ),
+      child: Container(
+        width: double.infinity,
+        height: Screens.setHeight(52),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
+        child: Row(
+          mainAxisAlignment: mainAxisAlignment,
+          children: items.map((item) {
+            var index = items.indexOf(item);
+            return GestureDetector(
+              onTap: () => onItemSelected(index),
+              child: _ItemWidget(
+                item: item,
+                iconSize: iconSize,
+                isSelected: index == selectedIndex,
+                backgroundColor: Colors.transparent,
+                itemCornerRadius: itemCornerRadius,
+                animationDuration: animationDuration,
+              ),
+            );
+          }).toList(),
         ),
       ),
     );

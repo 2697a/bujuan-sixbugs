@@ -28,24 +28,24 @@ class NewFindState implements Cloneable<NewFindState> {
 NewFindState initState(Map<String, dynamic> args) {
   var newFindState = NewFindState();
   newFindState.isShowLoad = true;
-  var sheet = SpUtil.getString('sheet',defValue: '');
-  var banner = SpUtil.getString('banner',defValue: '');
-  var newSong = SpUtil.getString('newSong',defValue: '');
-  if (banner.isNotEmpty && sheet.isNotEmpty && newSong.isNotEmpty) {
-    //banner数据缓存
-    BannerEntity bannerEntity = BannerEntity.fromJson(jsonDecode(banner));
-    newFindState.bannerState = NewBannerState().clone()..banners = bannerEntity.banners;
-    //sheet数据缓存
-    PersonalEntity personalEntity = PersonalEntity.fromJson(jsonDecode(sheet));
-    newFindState.sheetViewState = SheetViewState().clone()..result = personalEntity.result;
-    List responseJson = json.decode(newSong);
-    newFindState.newSongState = NewSongState().clone()..result = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
-    newFindState.isShowLoad = false;
-  } else {
-    newFindState.sheetViewState = SheetViewState().clone()..result = [];
-    newFindState.newSongState = NewSongState().clone()..result = [];
-    newFindState.bannerState = NewBannerState().clone();
-  }
+//  var sheet = SpUtil.getString('sheet',defValue: '');
+//  var banner = SpUtil.getString('banner',defValue: '');
+//  var newSong = SpUtil.getString('newSong',defValue: '');
+//  if (banner.isNotEmpty && sheet.isNotEmpty && newSong.isNotEmpty) {
+//    //banner数据缓存
+//    BannerEntity bannerEntity = BannerEntity.fromJson(jsonDecode(banner));
+//    newFindState.bannerState = NewBannerState().clone()..banners = bannerEntity.banners;
+//    //sheet数据缓存
+//    PersonalEntity personalEntity = PersonalEntity.fromJson(jsonDecode(sheet));
+//    newFindState.sheetViewState = SheetViewState().clone()..result = personalEntity.result;
+//    List responseJson = json.decode(newSong);
+//    newFindState.newSongState = NewSongState().clone()..result = responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
+//    newFindState.isShowLoad = false;
+//  } else {
+//    newFindState.sheetViewState = SheetViewState().clone()..result = [];
+//    newFindState.newSongState = NewSongState().clone()..result = [];
+//    newFindState.bannerState = NewBannerState().clone();
+//  }
   return newFindState;
 }
 

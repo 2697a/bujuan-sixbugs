@@ -1,4 +1,5 @@
 import 'package:bujuan/page/sheet_square/sheet_square_details/page.dart';
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'action.dart';
 import 'state.dart';
 
 Widget buildView(SheetSquareState state, Dispatch dispatch, ViewService viewService) {
-  return Scaffold(
+  return BujuanBack.back(Scaffold(
     appBar: AppBar(
       title: Text('歌单广场'),
     ),
@@ -33,18 +34,18 @@ Widget buildView(SheetSquareState state, Dispatch dispatch, ViewService viewServ
               ),
               Expanded(
                   child: TabBarView(children: <Widget>[
-                SheetSquareDetailsPage().buildPage({'type': '全部'}),
-                SheetSquareDetailsPage().buildPage({'type': '华语'}),
-                SheetSquareDetailsPage().buildPage({'type': '欧美'}),
-                SheetSquareDetailsPage().buildPage({'type': '韩语'}),
-                SheetSquareDetailsPage().buildPage({'type': '日语'}),
-                SheetSquareDetailsPage().buildPage({'type': '粤语'}),
-                SheetSquareDetailsPage().buildPage({'type': '民谣'}),
-                SheetSquareDetailsPage().buildPage({'type': '古风'}),
-              ])),
+                    SheetSquareDetailsPage().buildPage({'type': '全部'}),
+                    SheetSquareDetailsPage().buildPage({'type': '华语'}),
+                    SheetSquareDetailsPage().buildPage({'type': '欧美'}),
+                    SheetSquareDetailsPage().buildPage({'type': '韩语'}),
+                    SheetSquareDetailsPage().buildPage({'type': '日语'}),
+                    SheetSquareDetailsPage().buildPage({'type': '粤语'}),
+                    SheetSquareDetailsPage().buildPage({'type': '民谣'}),
+                    SheetSquareDetailsPage().buildPage({'type': '古风'}),
+                  ])),
               PlayBarPage().buildPage(null)
             ],
           )),
     ),
-  );
+  ), viewService.context);
 }

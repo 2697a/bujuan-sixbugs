@@ -36,7 +36,7 @@ class MinNiNavBar extends StatelessWidget implements PreferredSizeWidget{
     final bgColor = (backgroundColor == null) ? Theme.of(context).scaffoldBackgroundColor : backgroundColor;
     return Container(
       decoration: BoxDecoration(
-        color: bgColor,
+        color: Colors.transparent,
         boxShadow: [
           if (showElevation)
             const BoxShadow(
@@ -45,28 +45,26 @@ class MinNiNavBar extends StatelessWidget implements PreferredSizeWidget{
             ),
         ],
       ),
-      child: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: Screens.setHeight(30),
-          padding:  EdgeInsets.symmetric(vertical: Screens.setHeight(12), horizontal: Screens.setWidth(15)),
-          child: Row(
-            mainAxisAlignment: mainAxisAlignment,
-            children: items.map((item) {
-              var index = items.indexOf(item);
-              return GestureDetector(
-                onTap: () => onItemSelected(index),
-                child: _ItemWidget(
-                  item: item,
-                  iconSize: iconSize,
-                  isSelected: index == selectedIndex,
-                  backgroundColor: Colors.transparent,
-                  itemCornerRadius: itemCornerRadius,
-                  animationDuration: animationDuration,
-                ),
-              );
-            }).toList(),
-          ),
+      child: Container(
+        width: double.infinity,
+        height: Screens.setHeight(32),
+        padding:  EdgeInsets.symmetric(vertical: Screens.setHeight(12), horizontal: Screens.setWidth(12)),
+        child: Row(
+          mainAxisAlignment: mainAxisAlignment,
+          children: items.map((item) {
+            var index = items.indexOf(item);
+            return GestureDetector(
+              onTap: () => onItemSelected(index),
+              child: _ItemWidget(
+                item: item,
+                iconSize: iconSize,
+                isSelected: index == selectedIndex,
+                backgroundColor: Colors.transparent,
+                itemCornerRadius: itemCornerRadius,
+                animationDuration: animationDuration,
+              ),
+            );
+          }).toList(),
         ),
       ),
     );

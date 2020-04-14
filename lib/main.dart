@@ -5,10 +5,6 @@ import 'package:bujuan/main/routes.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'api/answer.dart';
-import 'api/netease_cloud_music.dart';
 import 'constant/constants.dart';
 
 void main() async {

@@ -7,17 +7,18 @@ import 'package:bujuan/global_store/state.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class EntranceState implements GlobalBaseState, Cloneable<EntranceState> {
   int selectIndex;
   PageController pageController;
   bool navBarIsBottom;
-  GlobalKey<InnerDrawerState> innerDrawerKey;
   bool val;
   bool miniNav;
-  AnimationController controller;
-  SingleTickerProviderMixin singleTickerProviderMixin;
+  PanelController panelController;
 
   @override
   EntranceState clone() {
@@ -25,9 +26,9 @@ class EntranceState implements GlobalBaseState, Cloneable<EntranceState> {
       ..selectIndex = selectIndex
       ..pageController = pageController
       ..navBarIsBottom = navBarIsBottom
-      ..innerDrawerKey = innerDrawerKey
       ..appTheme = appTheme
       ..currSong = currSong
+      ..panelController = panelController
       ..miniNav = miniNav
       ..playStateType = playStateType;
   }
@@ -58,9 +59,10 @@ EntranceState initState(Map<String, dynamic> args) {
   final EntranceState state = EntranceState();
   state.selectIndex = 1;
   state.navBarIsBottom = SpUtil.getBool(Constants.BOTTOM_NAV, defValue: false);
-  state.innerDrawerKey = GlobalKey<InnerDrawerState>();
-  state.pageController = PageController(initialPage: state.selectIndex,viewportFraction: 0.99);
+  state.pageController =
+      PageController(initialPage: state.selectIndex, viewportFraction: 0.99);
   state.miniNav = SpUtil.getBool(Constants.MINI_NAV, defValue: true);
+  state.panelController = PanelController();
   state.val = false;
   return state;
 }

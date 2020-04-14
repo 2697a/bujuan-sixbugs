@@ -19,7 +19,7 @@ public class BuJuanMusicPlayListenPlugin implements EventChannel.StreamHandler {
         this.activity = activity;
     }
 
-    public static BuJuanMusicPlayListenPlugin registerWith(PluginRegistry.Registrar registrar) {
+    public static BuJuanMusicPlayListenPlugin  registerWith(PluginRegistry.Registrar registrar) {
         channel = new EventChannel(registrar.messenger(), CHANNEL);
         BuJuanMusicPlayListenPlugin instance = new BuJuanMusicPlayListenPlugin(registrar.activity());
         channel.setStreamHandler(instance);

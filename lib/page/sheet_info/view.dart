@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'state.dart';
 
 Widget buildView(
     SheetInfoState state, Dispatch dispatch, ViewService viewService) {
-  return Scaffold(
+  return BujuanBack.back(Scaffold(
     body: Container(
       padding: EdgeInsets.only(left: 5, right: 5),
       child: Column(
@@ -47,20 +48,20 @@ Widget buildView(
           ),
           Expanded(
               child: ListView(
-            padding: EdgeInsets.all(0),
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(15.0),
-                child: Text(
-                  state.playlist.description??'',
-                  style: TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold, height: 1.5),
-                ),
-              )
-            ],
-          ))
+                padding: EdgeInsets.all(0),
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      state.playlist.description??'',
+                      style: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.bold, height: 1.5),
+                    ),
+                  )
+                ],
+              ))
         ],
       ),
     ),
-  );
+  ), viewService.context);
 }
