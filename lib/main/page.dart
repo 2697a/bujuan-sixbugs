@@ -1,3 +1,5 @@
+import 'package:bujuan/global_store/state.dart';
+import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/main/reducer.dart';
 import 'package:bujuan/main/state.dart';
 import 'package:bujuan/main/view.dart';
@@ -16,5 +18,22 @@ class MainPage extends Page<MainState, Map<String, dynamic>> {
           dependencies: Dependencies<MainState>(
               adapter: null, slots: <String, Dependent<MainState>>{}),
           middleware: <Middleware<MainState>>[],
-        );
+        ){
+    this.connectExtraStore<GlobalState>(GlobalStore.store,
+            (Object pageState, GlobalState appState) {
+          final GlobalBaseState p = pageState;
+          if (p.appTheme != null && p.appTheme.dark == appState.appTheme.dark &&p.backPath!=null&&p.backPath == appState.backPath) {
+            return pageState;
+          } else {
+            if (pageState is Cloneable) {
+              final Object copy = pageState.clone();
+              final GlobalBaseState newState = copy;
+              newState.appTheme = appState.appTheme;
+              newState.backPath = appState.backPath;
+              return newState;
+            }
+            return pageState;
+          }
+        });
+  }
 }

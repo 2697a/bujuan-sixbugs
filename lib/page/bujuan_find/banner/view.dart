@@ -3,6 +3,7 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/page/bujuan_find/banner/action.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -17,7 +18,7 @@ Widget buildView(
           child: Wrap(
             children: <Widget>[
               Container(
-                height: ScreenUtil().setHeight(150),
+                height: ScreenUtil().setHeight(146),
                 child: Swiper(
                   autoplay: true,
                   duration: 300,
@@ -40,17 +41,17 @@ Widget buildView(
               ),
               Container(
                 margin: EdgeInsets.symmetric(
-                    vertical: Screens.height10, horizontal: Screens.width5),
+                    vertical: Screens.height15, horizontal: Screens.width5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    _menuItem('Today', Icons.event, dispatch, MenuType.TODAY),
+                    _menuItem('Today', Icons.event, dispatch, MenuType.TODAY,viewService),
                     _menuItem(
-                        '歌单', Icons.queue_music, dispatch, MenuType.SHEET),
-                    _menuItem('歌手', Icons.people, dispatch, MenuType.SINGER),
+                        '歌单', Icons.queue_music, dispatch, MenuType.SHEET,viewService),
+                    _menuItem('歌手', Icons.people, dispatch, MenuType.SINGER,viewService),
                     _menuItem(
-                        '电台', Icons.queue_music, dispatch, MenuType.RADIO),
-                    _menuItem('Fm', Icons.video_library, dispatch, MenuType.FM),
+                        '电台', Icons.queue_music, dispatch, MenuType.RADIO,viewService),
+                    _menuItem('Fm', Icons.video_library, dispatch, MenuType.FM,viewService),
                   ],
                 ),
               ),
@@ -60,17 +61,18 @@ Widget buildView(
       : Container();
 }
 
-Widget _menuItem(title, icon, dispatch, MenuType menuType) {
+Widget _menuItem(title, icon, dispatch, MenuType menuType,ViewService viewService) {
   return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       Container(
-        width: ScreenUtil().setWidth(44),
+        width: MediaQuery.of(viewService.context).size.width/8.3,
         decoration:
             BoxDecoration(color: Colors.amberAccent, shape: BoxShape.circle),
         child: IconButton(
             icon: Icon(icon),
             color: Colors.white,
-            iconSize: ScreenUtil().setSp(20),
+            iconSize: MediaQuery.of(viewService.context).size.width/15,
             onPressed: () {
               dispatch(NewBannerActionCreator.onOpenPage(menuType));
             }),

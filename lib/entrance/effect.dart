@@ -13,21 +13,13 @@ import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter/services.dart';
-import 'package:flutter_inner_drawer/inner_drawer.dart';
-import '../bujuan_music.dart';
 import 'action.dart';
 import 'state.dart';
 
 const urlFMPlugin = const BasicMessageChannel('url_fm_plugin', StandardMessageCodec());
-StreamSubscription listen;
-const playPlugin = const EventChannel('com.sixbugs.bujuan/music_play');
 Effect<EntranceState> buildEffect() {
   return combineEffects(<Object, Effect<EntranceState>>{
     EntranceAction.bottomBarTap: _onBottomTap,
-    EntranceAction.openPlayPage: _onOpenPlay,
-    EntranceAction.sendTask: _onTask,
-    EntranceAction.nextSong: _onNext,
-    EntranceAction.openPage: _onOPenPage,
     Lifecycle.initState: _onInit,
     Lifecycle.dispose: _onDispose,
   });
@@ -39,10 +31,6 @@ void _onBottomTap(Action action, Context<EntranceState> ctx) {
 }
 
 void _onInit(Action action, Context<EntranceState> ctx) {
-  Stream stream = playPlugin.receiveBroadcastStream();
-  listen = stream.listen((_) {
-    _onEvent(_, ctx);
-  }, onError: _onError);
   urlFMPlugin.setMessageHandler((message) => Future<String>(() async{
     print(message);
     var s;
@@ -82,69 +70,11 @@ void _onInit(Action action, Context<EntranceState> ctx) {
   }));
 }
 
-void _onOpenPlay(Action action, Context<EntranceState> ctx) {
-  if (ctx.state.playStateType != PlayStateType.Stop) BujuanMusic.control(task: "open");
-}
-
-void _onOPenPage(Action action, Context<EntranceState> ctx) {
-  OpenType openType = action.payload;
-  switch (openType) {
-    case OpenType.SETTING:
-      Navigator.of(ctx.context).pushNamed('setting', arguments: null);
-      break;
-    case OpenType.DONATION:
-      Navigator.of(ctx.context).pushNamed('donation', arguments: null);
-      break;
-    case OpenType.ABOUT:
-      Navigator.of(ctx.context).pushNamed('about', arguments: null);
-      break;
-  }
-//  Future.delayed(Duration(milliseconds: 200), () {
-//  });
-}
-
-void _onTask(Action action, Context<EntranceState> ctx) {
-  if (ctx.state.playStateType != PlayStateType.Stop) BujuanMusic.control(task: ctx.state.playStateType == PlayStateType.Playing ? 'pause' : 'play');
-}
-
-void _onNext(Action action, Context<EntranceState> ctx) {
-  if (ctx.state.playStateType != PlayStateType.Stop) BujuanMusic.control(task: 'next');
-}
-
+//页面销毁时
 void _onDispose(Action action, Context<EntranceState> ctx) {
-  listen?.cancel();
   ctx.state.pageController?.dispose();
 }
 
-//原生播放状态返回
-void _onEvent(Object event, ctx) {
-  Map<String, dynamic> tag = Map<String, dynamic>.from(event);
-  var pos = tag['currSongPos'];
-  var allPos = tag['currSongAllPos'];
-
-  ///歌曲进度
-  if (pos != null) {
-    GlobalStore.store.dispatch(GlobalActionCreator.changeSongPos(int.parse(pos)));
-  }
-
-  if (allPos != null) {
-    GlobalStore.store.dispatch(GlobalActionCreator.changeSongAllPos(int.parse(allPos)));
-  }
-
-}
-
-//获取播放状态异常
-void _onError(Object error) {
-  print('===_onError=========================$error');
-}
-
-Future<LyricEntity> _getLyric(id) async {
-  var answer = await lyric({'id': id}, BuJuanUtil.getCookie());
-  if (answer.status == 200 && answer.body != null) {
-    return LyricEntity.fromJson(answer.body);
-  } else
-    return null;
-}
 
 //获取播放地址
 Future<String> _getUrl(id) async{

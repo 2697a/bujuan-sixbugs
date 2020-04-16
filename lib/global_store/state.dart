@@ -18,6 +18,8 @@ abstract class GlobalBaseState {
 
   int get currSongAllPos;
 
+  String get backPath;
+
   PlayModeType get playModeType;
 
   set appTheme(AppTheme appTheme);
@@ -33,6 +35,8 @@ abstract class GlobalBaseState {
   set lyric(LyricEntity lyric);
 
   set playModeType(PlayModeType  playModeType);
+
+  set backPath(String backPath);
 }
 
 class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
@@ -45,6 +49,7 @@ class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
       ..currSong = currSong
       ..currSongPos = currSongPos
       ..lyric = lyric
+      ..backPath = backPath
       ..playModeType = playModeType
       ..currSongAllPos = currSongAllPos;
   }
@@ -69,4 +74,7 @@ class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
 
   @override
   PlayModeType playModeType;
+
+  @override
+  String backPath;
 }

@@ -43,9 +43,7 @@ class _LeftPageState extends State<LeftPage>
   @override
   Widget build(BuildContext context) {
     return BujuanBack.back(Scaffold(
-//      backgroundColor: Colors.transparent,
       body: AnimatedContainer(
-//        color: val ? nightColor : dayColor,
         duration: Duration(milliseconds: 300),
         child: Stack(
           children: <Widget>[
@@ -132,8 +130,6 @@ class _LeftPageState extends State<LeftPage>
               },
             ),
             Container(
-              padding:
-                  EdgeInsets.only(right: MediaQuery.of(context).size.width / 5),
               child: Column(
                 children: <Widget>[
                   Expanded(child: widget.child),

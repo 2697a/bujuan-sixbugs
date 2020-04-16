@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:bujuan/constant/constants.dart';
+import 'package:bujuan/global_store/action.dart';
+import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/page/setting/action.dart';
 import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -33,7 +35,7 @@ Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService)
                   color: Colors.red,
                 ),//cameraIcon and galleryIcon can change. If no icon provided default icon will be present
               );
-              SpUtil.putString(Constants.USER_BACKGROUND, image.path);
+              GlobalStore.store.dispatch(GlobalActionCreator.changeBack(image.path));
             },
           )
         ],

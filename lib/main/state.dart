@@ -33,6 +33,9 @@ class MainState implements GlobalBaseState, Cloneable<MainState> {
 
   @override
   PlayModeType playModeType;
+
+  @override
+  String backPath;
 }
 
 MainState initState(Map<String, dynamic> args) {

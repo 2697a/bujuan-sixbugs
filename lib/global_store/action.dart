@@ -3,7 +3,7 @@ import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
 
-enum GlobalAction { changeThemeColor, changePlayState, changeCurrSong, changeSongPos, changeSongAllPos,changeLyric ,changePlayMode}
+enum GlobalAction { changeThemeColor, changePlayState, changeCurrSong, changeSongPos, changeSongAllPos,changeLyric ,changePlayMode,changeBack}
 
 class GlobalActionCreator {
   static Action onchangeThemeColor(bool action) {
@@ -33,6 +33,10 @@ class GlobalActionCreator {
   //改變播放总進度條
   static Action changeLyric(LyricEntity lyricEntity) {
     return Action(GlobalAction.changeLyric, payload: lyricEntity);
+  }
+  //改變播放总進度條
+  static Action changeBack(String path) {
+    return Action(GlobalAction.changeBack, payload: path);
   }
 
 

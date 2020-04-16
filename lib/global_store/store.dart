@@ -18,6 +18,7 @@ class GlobalStore {
     var string = SpUtil.getString(Constants.playSongHistory, defValue: null);
     var mode =
     SpUtil.getInt(Constants.PLAY_MODE, defValue: PlayModeType.REPEAT.index);
+    var backPath = SpUtil.getString(Constants.USER_BACKGROUND,defValue: null);
     SongBeanEntity songBeanEntity = SongBeanEntity(
         name: '暂无播放歌曲',
         singer: '暂无歌手信息',
@@ -34,6 +35,7 @@ class GlobalStore {
           ..currSong = currSong
           ..currSongPos = 0
           ..lyric = null
+          ..backPath = backPath
           ..playModeType = PlayModeType.values[mode]
           ..currSongAllPos = 100,
         buildReducer());

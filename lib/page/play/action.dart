@@ -10,7 +10,7 @@ enum PlayViewAction {
   skipNext,
   playSingleSong,
   seekTo,
-  getLyric,
+  getUrl,
   getSongPos,
   getSongAllPos,
   getTalk,
@@ -42,8 +42,8 @@ class PlayViewActionCreator {
     return Action(PlayViewAction.seekTo, payload: seekNum);
   }
 
-  static Action getLyric(LyricEntity lyricEntity) {
-    return Action(PlayViewAction.getLyric, payload: lyricEntity);
+  static Action getUrl() {
+    return Action(PlayViewAction.getUrl);
   }
 
   static Action getSongPos(int pos) {

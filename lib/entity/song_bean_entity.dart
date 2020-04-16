@@ -28,8 +28,9 @@ class SongBeanEntity {
   String singer;
   int mv;
   bool like;
+  String url;
 
-  SongBeanEntity({this.name, this.id, this.picUrl,this.singer,this.mv,this.like});
+  SongBeanEntity({this.name, this.id, this.picUrl,this.singer,this.mv,this.like,this.url});
 
   SongBeanEntity.fromJson(Map<String, dynamic> json) {
     name = json['name'];

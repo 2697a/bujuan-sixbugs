@@ -125,6 +125,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  flutter_downloader:
+    dependency: "direct main"
+    description:
+      name: flutter_downloader
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.3"
   flutter_easyrefresh:
     dependency: "direct main"
     description:
@@ -132,13 +139,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  flutter_inner_drawer:
-    dependency: "direct main"
-    description:
-      name: flutter_inner_drawer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.5"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -248,7 +248,7 @@ packages:
     source: hosted
     version: "1.6.4"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"

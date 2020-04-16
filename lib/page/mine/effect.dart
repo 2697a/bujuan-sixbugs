@@ -49,28 +49,31 @@ void _onRefresh(Action action, Context<MineState> ctx) async {
   var login = ctx.state.isLogin;
   var userId = SpUtil.getInt(Constants.USER_ID);
   if (login) {
+    var list2 = await Future.wait([_getProfile(userId),_getPlayList(userId)]);
+
     await _getLoveSong(userId);
-    var profile = await _getProfile(userId);
-    if (profile != null) {
-//      SpUtil.putString('profile', jsonEncode(profile));
-      ctx.dispatch(MineActionCreator.getUserProfile(profile));
-    }
-    List<UserOrderPlaylist> createList = List();
-    List<UserOrderPlaylist> collList = List();
-    var orderList = await _getPlayList(userId);
-    if (orderList != null) {
-      orderList.playlist.forEach((list) {
-        if (list.creator.userId == userId) {
-          createList.add(list);
-        } else {
-          collList.add(list);
+    list2.forEach((data){
+      if(data is UserProfileEntity){
+        if (data != null) {
+          ctx.dispatch(MineActionCreator.getUserProfile(data));
         }
-      });
-//        SpUtil.putString('create', jsonEncode(createList));
-//        SpUtil.putString('coll', jsonEncode(collList));
-      ctx.dispatch(MineActionCreator.getOrderList(collList));
-      ctx.dispatch(MineActionCreator.getCreateOrderList(createList));
-    }
+      }
+      if(data is UserOrderEntity){
+        List<UserOrderPlaylist> createList = List();
+        List<UserOrderPlaylist> collList = List();
+        if (data != null) {
+          data.playlist.forEach((list) {
+            if (list.creator.userId == userId) {
+              createList.add(list);
+            } else {
+              collList.add(list);
+            }
+          });
+          ctx.dispatch(MineActionCreator.getOrderList(collList));
+          ctx.dispatch(MineActionCreator.getCreateOrderList(createList));
+        }
+      }
+    });
   }
 }
 

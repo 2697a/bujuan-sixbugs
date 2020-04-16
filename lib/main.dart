@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bujuan/main/routes.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'constant/constants.dart';
 
 void main() async {
@@ -14,11 +14,10 @@ void main() async {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-//  await _startServer(port: 3001);
-  SpUtil.getInstance().then((_){
-    Constants.dark = SpUtil.getBool('dark',defValue: false);
-    runApp(routes.buildPage("main", null));
-  });
+  await SpUtil.getInstance();
+  await FlutterDownloader.initialize();
+  Constants.dark = SpUtil.getBool('dark',defValue: false);
+  runApp(routes.buildPage("main", null));
 }
 
 //Future<HttpServer> _startServer({address = "localhost", int port = 3000}) {

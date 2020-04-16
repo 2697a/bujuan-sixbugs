@@ -7,11 +7,6 @@ enum EntranceAction {
   pageChange,
   navBarSwitch,
   miniNavBarSwitch,
-  changePlayState,
-  changeCurrSong,
-  openPlayPage,
-  sendTask,
-  nextSong,
   openPage,
 }
 
@@ -30,24 +25,8 @@ class EntranceActionCreator {
   static Action onMiniNavBarSwitch() {
     return Action(EntranceAction.miniNavBarSwitch);
   }
-  static Action changePlayState(PlayStateType state) {
-    return Action(EntranceAction.changePlayState, payload: state);
-  }
 
-  static Action changeCurrSong(String state) {
-    return Action(EntranceAction.changeCurrSong, payload: state);
-  }
-
-  static Action openPlayPage() {
-    return Action(EntranceAction.openPlayPage);
-  }
   static Action openPage(OpenType openType) {
     return Action(EntranceAction.openPage,payload: openType);
-  }
-  static Action sendTask() {
-    return Action(EntranceAction.sendTask);
-  }
-  static Action nextSong() {
-    return Action(EntranceAction.nextSong);
   }
 }

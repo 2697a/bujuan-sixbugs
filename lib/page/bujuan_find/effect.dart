@@ -29,35 +29,33 @@ void _onInit(Action action, Context<NewFindState> ctx) async {
 }
 
 void _onRefresh(Action action, Context<NewFindState> ctx) async {
-  var banner = await _getBanner();
-  if (banner != null) {
-    SpUtil.putString('banner', jsonEncode(banner));
-    ctx.dispatch(NewFindActionCreator.onGetBanner(
-        NewBannerState()..banners = banner.banners));
-  }
-  var person = await _getSheet();
-  if (person != null) {
-    SpUtil.putString('sheet', jsonEncode(person));
-    ctx.dispatch(NewFindActionCreator.onGetSheet(SheetViewState()
-      ..clone()
-      ..result = person.result));
-  }
-  var songEntity = await _getNewSong();
-  if (songEntity != null) {
-    List<SongBeanEntity> songs = List();
-    songEntity.result.forEach((song) {
-      SongBeanEntity songBeanEntity = SongBeanEntity();
-      songBeanEntity.name = song.name;
-      songBeanEntity.picUrl = song.picUrl;
-      songBeanEntity.id = song.id.toString();
-      songBeanEntity.singer = song.song.artists[0].name;
-      songs.add(songBeanEntity);
-    });
-    SpUtil.putString('newSong', jsonEncode(songs));
-    ctx.dispatch(NewFindActionCreator.onGetNewSong(NewSongState()
-      ..clone()
-      ..result = songs));
-  }
+  var wait = await Future.wait([_getBanner(), _getSheet(), _getNewSong()]);
+  wait.forEach((data) {
+    if (data is BannerEntity) if (data != null) {
+      ctx.dispatch(NewFindActionCreator.onGetBanner(
+          NewBannerState()..banners = data.banners));
+    }
+    if (data is PersonalEntity) if (data != null) {
+      ctx.dispatch(NewFindActionCreator.onGetSheet(SheetViewState()
+        ..clone()
+        ..result = data.result));
+    }
+    if (data is NewSongEntity) if (data != null) {
+      List<SongBeanEntity> songs = List();
+      data.result.forEach((song) {
+        SongBeanEntity songBeanEntity = SongBeanEntity();
+        songBeanEntity.name = song.name;
+        songBeanEntity.picUrl = song.picUrl;
+        songBeanEntity.id = song.id.toString();
+        songBeanEntity.singer = song.song.artists[0].name;
+        songs.add(songBeanEntity);
+      });
+      SpUtil.putString('newSong', jsonEncode(songs));
+      ctx.dispatch(NewFindActionCreator.onGetNewSong(NewSongState()
+        ..clone()
+        ..result = songs));
+    }
+  });
 }
 
 Future<PersonalEntity> _getSheet() async {

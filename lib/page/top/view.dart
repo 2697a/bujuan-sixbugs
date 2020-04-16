@@ -8,8 +8,6 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/material_header.dart';
-import 'package:flutter_easyrefresh/phoenix_header.dart';
 import 'package:flutter_easyrefresh/taurus_header.dart';
 
 import 'state.dart';

@@ -53,25 +53,24 @@ var routes = new PageRoutes(
     'local_list': LocalListPage(),
   },
   visitor: (String path, Page<Object, dynamic> page) {
-    if (page.isTypeof<GlobalBaseState>()) {
-      page.connectExtraStore<GlobalState>(GlobalStore.store,
-          // ignore: missing_return
-          (Object pageState, GlobalState appState) {
-        final GlobalBaseState p = pageState;
-        if (p.appTheme != null && p.appTheme.dark == appState.appTheme.dark && p.playStateType != null && p.playStateType == appState.playStateType && p.currSong != null && p.currSong == appState.currSong) {
-          return pageState;
-        } else {
-          if (pageState is Cloneable) {
-            final Object copy = pageState.clone();
-            final GlobalBaseState newState = copy;
-            newState.appTheme = appState.appTheme;
-            newState.playStateType = appState.playStateType;
-            newState.currSong = appState.currSong;
-            return newState;
-          }
-        }
-      });
-    }
+//    if (page.isTypeof<GlobalBaseState>()) {
+//      page.connectExtraStore<GlobalState>(GlobalStore.store,
+//          // ignore: missing_return
+//          (Object pageState, GlobalState appState) {
+//        final GlobalBaseState p = pageState;
+//        if (p.appTheme != null && p.appTheme.dark == appState.appTheme.dark &&p.backPath!=null&&p.backPath == appState.backPath) {
+//          return pageState;
+//        } else {
+//          if (pageState is Cloneable) {
+//            final Object copy = pageState.clone();
+//            final GlobalBaseState newState = copy;
+//            newState.appTheme = appState.appTheme;
+//            newState.backPath = appState.backPath;
+//            return newState;
+//          }
+//        }
+//      });
+//    }
 
     page.enhancer.append(
       viewMiddleware: <ViewMiddleware<dynamic>>[safetyView<dynamic>()],

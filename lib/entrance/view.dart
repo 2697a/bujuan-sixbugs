@@ -1,15 +1,6 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/page/bujuan_find/page.dart';
-import 'package:bujuan/page/local_music/page.dart';
-import 'package:bujuan/page/mine/page.dart';
-import 'package:bujuan/page/play/page.dart';
-import 'package:bujuan/page/top/page.dart';
-import 'package:bujuan/utils/bujuan_util.dart';
-import 'package:bujuan/utils/sp_util.dart';
-import 'package:bujuan/widget/bottom_drag_widget.dart';
 import 'package:bujuan/widget/bujuan_background.dart';
-import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
 import 'package:bujuan/widget/left_page.dart';
 import 'package:bujuan/widget/mini_nav_bar.dart';
 import 'package:bujuan/widget/nav_bar.dart';
@@ -19,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../android_back_desktop.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -31,26 +23,15 @@ Widget buildView(
 
 ///body
 Widget _body(EntranceState state, dispatch, ViewService viewService) {
-  return BujuanBack.back(
-      Scaffold(
-        resizeToAvoidBottomPadding: false,
+  return WillPopScope(
+      child:  Scaffold(
         body: SlidingUpPanel(
           controller: state.panelController,
-          minHeight: Screens.setHeight(60),
+          minHeight: Screens.setHeight(62),
           maxHeight: MediaQuery.of(viewService.context).size.height,
-          panel: Container(
-            child: PlayViewPage().buildPage(null),
-          ),
-          collapsed: InkWell(
-            child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: Screens.width5),
-              child: PlayBarPage().buildPage(null),
-            ),
-            onTap: () {
-              state.panelController.open();
-            },
-          ),
+          boxShadow: null,
+          panel: _leftChild(state, dispatch, viewService),
+          collapsed: PlayBarPage().buildPage(null),
           body: Column(
             children: <Widget>[
               AppBar(
@@ -59,67 +40,15 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                     padding: EdgeInsets.all(0),
                     icon: Icon(Icons.sort, size: Screens.text22),
                     onPressed: () {
-                      showBujuanBottomSheet(
-                          context: viewService.context,
-                          builder: (context) {
-                            return Container(
-                              height: MediaQuery.of(viewService.context)
-                                      .size
-                                      .height *
-                                  0.8,
-                              child: BujuanBack.back(
-                                  ListView(
-                                    shrinkWrap: true,
-                                    children: <Widget>[
-                                      ListTile(
-                                        title: Text('設置'),
-                                        onTap: () {
-                                          dispatch(
-                                              EntranceActionCreator.openPage(
-                                                  OpenType.SETTING));
-                                        },
-                                      ),
-                                      ListTile(
-                                        title: Text('關於'),
-                                        onTap: () {
-                                          dispatch(
-                                              EntranceActionCreator.openPage(
-                                                  OpenType.ABOUT));
-                                        },
-                                      ),
-                                      ListTile(
-                                        title: Text('捐贈'),
-                                        onTap: () {
-                                          dispatch(
-                                              EntranceActionCreator.openPage(
-                                                  OpenType.DONATION));
-                                        },
-                                      ),
-                                      SwitchListTile(
-                                          title: Text('底部导航栏'),
-                                          value: state.navBarIsBottom,
-                                          onChanged: (value) {
-                                            dispatch(EntranceActionCreator
-                                                .onNavBarSwitch());
-                                          }),
-                                      SwitchListTile(
-                                          title: Text('迷你导航栏'),
-                                          value: state.miniNav,
-                                          onChanged: (value) {
-                                            dispatch(EntranceActionCreator
-                                                .onMiniNavBarSwitch());
-                                          }),
-                                    ],
-                                  ),
-                                  viewService.context),
-                            );
-                          });
+                      state.panelController.isPanelOpen
+                          ? state.panelController.close()
+                          : state.panelController.open();
                     }),
                 elevation: 0.0,
                 title: Text(
                   '归山深浅去，须尽丘壑美。',
                   style: TextStyle(
-                      fontSize: Screens.text18, fontWeight: FontWeight.bold),
+                      fontSize: Screens.text18),
                   overflow: TextOverflow.ellipsis,
                 ),
                 centerTitle: true,
@@ -134,70 +63,76 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                   )
                 ],
               ),
-              !state.navBarIsBottom ? _navBar(state, dispatch) : Container(),
+              !state.navBarIsBottom
+                  ? _navBar(state, dispatch)
+                  : Container(),
               Expanded(
-                  child: PageView(
-                      controller: state.pageController,
-                      onPageChanged: (index) {
-                        dispatch(EntranceActionCreator.onPageChange(index));
-                      },
-                      children: <Widget>[
-                    MinePage().buildPage(null),
-                    NewFindPage().buildPage(null),
-                    TopPagePage().buildPage(null),
-                    LocalMusicPage().buildPage(null),
-                  ])),
-              Padding(padding: EdgeInsets.only(bottom: Screens.setHeight(75)),)
+                child: PageView.builder(
+                  itemBuilder: (context, index) {
+                    return state.pages[index];
+                  },
+                  itemCount: state.pages.length,
+                  controller: state.pageController,
+                  onPageChanged: (index) {
+                    dispatch(EntranceActionCreator.onPageChange(index));
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: Screens.setHeight(64)),
+              )
             ],
           ),
         ),
       ),
-      viewService.context,
-      isDark: state.appTheme.dark);
+      onWillPop: () async {
+        if (state.panelController.isPanelOpen) {
+          state.panelController.close();
+        } else {
+          AndroidBackTop.backDeskTop(); //设置为返回不退出app
+        }
+        return false;
+      });
 }
 
 ///leftChild
 Widget _leftChild(EntranceState state, dispatch, ViewService viewService) {
-  var string = SpUtil.getString(Constants.USER_BACKGROUND, defValue: '');
-  var width = MediaQuery.of(viewService.context).size.width;
   return LeftPage(
       child: Column(
     children: <Widget>[
-      ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          ListTile(
-            title: Text('設置'),
-            onTap: () {
-              dispatch(EntranceActionCreator.openPage(OpenType.SETTING));
-            },
-          ),
-          ListTile(
-            title: Text('關於'),
-            onTap: () {
-              dispatch(EntranceActionCreator.openPage(OpenType.ABOUT));
-            },
-          ),
-          ListTile(
-            title: Text('捐贈'),
-            onTap: () {
-              dispatch(EntranceActionCreator.openPage(OpenType.DONATION));
-            },
-          ),
-          SwitchListTile(
-              title: Text('底部导航栏'),
-              value: state.navBarIsBottom,
-              onChanged: (value) {
-                dispatch(EntranceActionCreator.onNavBarSwitch());
-              }),
-          SwitchListTile(
-              title: Text('迷你导航栏'),
-              value: state.miniNav,
-              onChanged: (value) {
-                dispatch(EntranceActionCreator.onMiniNavBarSwitch());
-              }),
-        ],
-      )
+      Expanded(child: Container()),
+      ListTile(
+        title: Text('設置'),
+        onTap: () {
+//          dispatch(EntranceActionCreator.openPage(OpenType.SETTING));
+          Navigator.of(viewService.context)
+              .pushNamed('setting', arguments: null); //注意2
+        },
+      ),
+      ListTile(
+        title: Text('關於'),
+        onTap: () {
+          dispatch(EntranceActionCreator.openPage(OpenType.ABOUT));
+        },
+      ),
+      ListTile(
+        title: Text('捐贈'),
+        onTap: () {
+          dispatch(EntranceActionCreator.openPage(OpenType.DONATION));
+        },
+      ),
+      SwitchListTile(
+          title: Text('底部导航栏'),
+          value: state.navBarIsBottom,
+          onChanged: (value) {
+            dispatch(EntranceActionCreator.onNavBarSwitch());
+          }),
+      SwitchListTile(
+          title: Text('迷你导航栏'),
+          value: state.miniNav,
+          onChanged: (value) {
+            dispatch(EntranceActionCreator.onMiniNavBarSwitch());
+          }),
     ],
   ));
 }

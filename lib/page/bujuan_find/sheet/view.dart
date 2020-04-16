@@ -9,18 +9,18 @@ Widget buildView(SheetViewState state, Dispatch dispatch, ViewService viewServic
   return Container(
     child: Column(
       children: <Widget>[
-        Offstage(
-          offstage: state.result.length == 0,
-          child: Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '推荐歌单',
-              style:
-              TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
-            ),
-            padding: EdgeInsets.only(top:15,bottom: 0,left: Screens.width5),
-          ),
-        ),
+//        Offstage(
+//          offstage: state.result.length == 0,
+//          child: Container(
+//            alignment: Alignment.centerLeft,
+//            child: Text(
+//              '推荐歌单',
+//              style:
+//              TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
+//            ),
+//            padding: EdgeInsets.only(top:0,bottom: 0,left: Screens.width5),
+//          ),
+//        ),
         GridView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),

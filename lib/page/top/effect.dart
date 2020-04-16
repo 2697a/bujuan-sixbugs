@@ -34,16 +34,17 @@ void _onOpen(Action action, Context<TopPageState> ctx) {
 //3: "19723756", //云音乐飙升榜
 //4: "10520166", //云音乐电音榜
 void _onRefresh(Action action, Context<TopPageState> ctx) async {
- var top1 =  await _getTopData('19723756');
+  var list = await Future.wait([_getTopData('19723756'),_getTopData('3779629'),_getTopData('2884035'),_getTopData('3778678')]);
+ var top1 =  list[0];
 // SpUtil.putString('bs', jsonEncode(changeType(top)));
  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top1), TopType.BS));
- var top2 = await _getTopData('3779629');
+ var top2 = list[1];
 //  SpUtil.putString('new', jsonEncode(changeType(top)));
   ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top2), TopType.NEW));
-  var top3 = await _getTopData('2884035');
+  var top3 = list[2];
 //  SpUtil.putString('yc', jsonEncode(changeType(top)));
   ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top3), TopType.YC));
- var top4 = await  _getTopData('3778678');
+ var top4 =  list[3];
 //  SpUtil.putString('hot', jsonEncode(changeType(top)));
   ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top4), TopType.HOT));
 }

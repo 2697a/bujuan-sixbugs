@@ -6,18 +6,12 @@ import 'state.dart';
 Reducer<PlayViewState> buildReducer() {
   return asReducer(
     <Object, Reducer<PlayViewState>>{
-      PlayViewAction.getLyric: _getLyric,
       PlayViewAction.changeLikeState: _geLikeOrUnLike,
       PlayViewAction.changerDrr: _getChangerDrr,
     },
   );
 }
 
-PlayViewState _getLyric(PlayViewState state, Action action) {
-  final PlayViewState newState = state.clone();
-  newState.lyric = action.payload;
-  return newState;
-}
 
 PlayViewState _geLikeOrUnLike(PlayViewState state, Action action) {
   final PlayViewState newState = state.clone();

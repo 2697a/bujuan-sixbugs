@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 import 'action.dart';
 import 'state.dart';
 
-Widget buildView(SheetDetailsState state, Dispatch dispatch, ViewService viewService) {
-//  ListAdapter sheetListAdapter = viewService.buildAdapter(); //创建adapter
+Widget buildView(
+    SheetDetailsState state, Dispatch dispatch, ViewService viewService) {
   return BujuanBack.back(Scaffold(
-    appBar:
-    BujuanAppBar.norAppBar(viewService.context, state.isShowLoading ? '' : state.playlist.name),
+    appBar:  BujuanAppBar.norAppBar(viewService.context,
+        state.isShowLoading ? '' : state.playlist.name),
     body: state.isShowLoading
         ? LoadingPage()
         : Column(
@@ -27,7 +27,8 @@ Widget buildView(SheetDetailsState state, Dispatch dispatch, ViewService viewSer
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return _sheetItem(state.list[index], dispatch, index, viewService);
+                      return _sheetItem(state.list[index], dispatch,
+                          index, viewService);
                     },
                     childCount: state.list.length,
                   ),
@@ -37,13 +38,14 @@ Widget buildView(SheetDetailsState state, Dispatch dispatch, ViewService viewSer
         PlayBarPage().buildPage(null)
       ],
     ),
-  ),viewService.context);
+  ), viewService.context);
 }
 
 Widget _sheetTop(SheetDetailsState state, dispatch) {
   var subscribedCount2 = state.playlist.subscribedCount;
-  String scount =
-      subscribedCount2 / 10000 > 1 ? '${subscribedCount2 ~/ 10000}w' : '$subscribedCount2';
+  String scount = subscribedCount2 / 10000 > 1
+      ? '${subscribedCount2 ~/ 10000}w'
+      : '$subscribedCount2';
   return SliverToBoxAdapter(
     child: InkWell(
       child: Card(
@@ -58,9 +60,10 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
                 child: Row(
                   children: <Widget>[
                     Container(
-                      width:  Screens.setHeight(120),
+                      width: Screens.setHeight(120),
                       padding: EdgeInsets.all(3),
-                      child: ImageHelper.getImage(state.playlist.coverImgUrl + "?param=250y250",
+                      child: ImageHelper.getImage(
+                          state.playlist.coverImgUrl + "?param=250y250",
                           height: Screens.setHeight(120)),
                     ),
                     Expanded(
@@ -68,9 +71,11 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
                       children: <Widget>[
                         ListTile(
                           dense: true,
-                          contentPadding: EdgeInsets.only(left: 10, right: 0, bottom: 0, top: 5),
+                          contentPadding: EdgeInsets.only(
+                              left: 10, right: 0, bottom: 0, top: 5),
                           leading: ImageHelper.getImage(
-                              state.playlist.creator.avatarUrl + "?param=100y100",
+                              state.playlist.creator.avatarUrl +
+                                  "?param=100y100",
                               height: Screens.setHeight(35),
                               isRound: true),
                           title: Text(state.playlist.creator.nickname),
@@ -86,7 +91,8 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
                                       size: Screens.text18,
                                       color: Colors.red,
                                     )
-                                  : Icon(Icons.favorite_border, size: Screens.text18),
+                                  : Icon(Icons.favorite_border,
+                                      size: Screens.text18),
                               onPressed: () {
                                 dispatch(SheetDetailsActionCreator.like());
                               },
@@ -126,7 +132,8 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
 Widget _sheetItem(SongBeanEntity track, Dispatch dispatch, index, viewService) {
   return InkWell(
     child: Container(
-      padding: EdgeInsets.symmetric(vertical: Screens.height10, horizontal: Screens.width10),
+      padding: EdgeInsets.symmetric(
+          vertical: Screens.height10, horizontal: Screens.width10),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -157,7 +164,8 @@ Widget _sheetItem(SongBeanEntity track, Dispatch dispatch, index, viewService) {
                   child: Text('${track.singer}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: Screens.text10, color: Colors.grey)))
+                      style: TextStyle(
+                          fontSize: Screens.text10, color: Colors.grey)))
             ],
           )),
 //          track.mv == 0

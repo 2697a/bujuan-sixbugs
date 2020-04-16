@@ -20,7 +20,8 @@ Reducer<GlobalState> buildReducer() {
       GlobalAction.changeSongPos: _onchangeSongPos,
       GlobalAction.changeSongAllPos: _onchangeSongAllPos,
       GlobalAction.changeLyric: _onchangeLyric,
-      GlobalAction.changePlayMode: _changePlayMode
+      GlobalAction.changePlayMode: _changePlayMode,
+      GlobalAction.changeBack: _changeBack
     },
   );
 }
@@ -53,7 +54,11 @@ GlobalState _onchangeCurrSong(GlobalState state, Action action) {
 GlobalState _onchangeSongPos(GlobalState state, Action action) {
   return state.clone()..currSongPos = action.payload;
 }
-
+GlobalState _changeBack(GlobalState state, Action action) {
+  var clone = state.clone();
+  SpUtil.putString(Constants.USER_BACKGROUND, action.payload);
+  return clone..backPath = action.payload;
+}
 GlobalState _onchangeSongAllPos(GlobalState state, Action action) {
   return state.clone()..currSongAllPos = action.payload;
 }

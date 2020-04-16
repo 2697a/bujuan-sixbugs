@@ -21,7 +21,8 @@ Effect<SheetDetailsState> buildEffect() {
     SheetDetailsAction.play: _onPlay,
     Lifecycle.initState: _onInit,
     SheetDetailsAction.infoPage: _openInfo,
-    SheetDetailsAction.like: _onLike
+    SheetDetailsAction.like: _onLike,
+    Lifecycle.dispose: _onDispose
   });
 }
 
@@ -75,7 +76,8 @@ void _onInit(Action action, Context<SheetDetailsState> ctx) async {
   ctx.dispatch(SheetDetailsActionCreator.sheetInfo(playlist));
   ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(newList));
 }
-
+void _onDispose(Action action, Context<SheetDetailsState> ctx){
+}
 void _openInfo(Action action, Context<SheetDetailsState> ctx) {
 //  var i = SpUtil.getInt(Constants.USER_ID, defValue: -1);
 //  var userId2 = ctx.state.playlist.creator.userId;
