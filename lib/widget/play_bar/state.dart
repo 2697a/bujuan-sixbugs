@@ -35,6 +35,9 @@ class PlayBarState implements GlobalBaseState, Cloneable<PlayBarState> {
 
   @override
   String backPath;
+
+  @override
+  double blur;
 }
 
 PlayBarState initState(Map<String, dynamic> args) {

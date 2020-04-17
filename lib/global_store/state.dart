@@ -20,6 +20,8 @@ abstract class GlobalBaseState {
 
   String get backPath;
 
+  double get blur;
+
   PlayModeType get playModeType;
 
   set appTheme(AppTheme appTheme);
@@ -37,6 +39,8 @@ abstract class GlobalBaseState {
   set playModeType(PlayModeType  playModeType);
 
   set backPath(String backPath);
+
+  set blur(double blur);
 }
 
 class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
@@ -49,6 +53,7 @@ class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
       ..currSong = currSong
       ..currSongPos = currSongPos
       ..lyric = lyric
+      ..blur = blur
       ..backPath = backPath
       ..playModeType = playModeType
       ..currSongAllPos = currSongAllPos;
@@ -77,4 +82,7 @@ class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
 
   @override
   String backPath;
+
+  @override
+  double blur;
 }

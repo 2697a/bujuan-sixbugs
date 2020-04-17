@@ -35,6 +35,7 @@ class GlobalStore {
           ..currSong = currSong
           ..currSongPos = 0
           ..lyric = null
+          ..blur =SpUtil.getDouble(Constants.BLUR,defValue: 2)
           ..backPath = backPath
           ..playModeType = PlayModeType.values[mode]
           ..currSongAllPos = 100,

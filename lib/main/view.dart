@@ -11,11 +11,19 @@ import 'state.dart';
 Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
   return MaterialApp(
     title: '不倦',
-    showPerformanceOverlay: true, // 开启
+//    showPerformanceOverlay: true,
+    // 开启
     debugShowCheckedModeBanner: false,
     darkTheme: ThemeData.dark(),
     theme: state.appTheme.dark ? darkTheme : lightTheme,
-    home: BujuanBack.back(Scaffold(body: routes.buildPage('entrance_page', null),), viewService.context,isDark: state.appTheme.dark,backPath: state.backPath),
+    home: BujuanBack.back(
+        Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: routes.buildPage('entrance_page', null),
+        ),
+        viewService.context,
+        isDark: state.appTheme.dark,
+        backPath: state.backPath,blurs: state.blur),
     routes: appRoutes,
     onGenerateRoute: (RouteSettings settings) {
       return MaterialPageRoute<Object>(builder: (BuildContext context) {

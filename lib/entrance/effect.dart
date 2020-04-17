@@ -5,13 +5,11 @@ import 'package:bujuan/api/module.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/fm_entity.dart';
-import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:fish_redux/fish_redux.dart';
-import 'package:flutter/material.dart' hide Action;
 import 'package:flutter/services.dart';
 import 'action.dart';
 import 'state.dart';
@@ -30,7 +28,7 @@ void _onBottomTap(Action action, Context<EntranceState> ctx) {
   ctx.dispatch(EntranceActionCreator.onPageChange(action.payload));
 }
 
-void _onInit(Action action, Context<EntranceState> ctx) {
+void _onInit(Action action, Context<EntranceState> ctx)async {
   urlFMPlugin.setMessageHandler((message) => Future<String>(() async{
     print(message);
     var s;
@@ -81,9 +79,9 @@ Future<String> _getUrl(id) async{
   var answer = await song_url({'id':id,'br':'320000'},BuJuanUtil.getCookie());
   if (answer.status == 200 && answer.body != null) {
     var body = answer.body['data'][0]['url'];
-    return body;
+    return body??'';
   } else
-    return null;
+    return '';
 }
 ///personal_fm
 Future<FmEntity> _getFm() async {

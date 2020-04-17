@@ -22,7 +22,7 @@ Widget buildView(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ImageHelper.getImage(
-                    '${state.currSong.picUrl ?? ''}?param=500y500',
+                    '${state.currSong.picUrl ?? ''}?param=100y100',
                     isRound: true,
                     height: Screens.setHeight(45.0)),
                 Padding(padding: EdgeInsets.only(left: Screens.width10)),

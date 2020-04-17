@@ -1,11 +1,8 @@
 package com.sixbugs.bujuan;
 
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 
 import io.flutter.plugin.common.MethodCall;
@@ -17,11 +14,10 @@ import io.flutter.plugin.common.PluginRegistry;
 import com.lzx.starrysky.StarrySky;
 import com.lzx.starrysky.provider.SongInfo;
 import com.sixbugs.bujuan.entity.SongBean;
-import com.sixbugs.bujuan.imageloader.GsonUtil;
+import com.sixbugs.bujuan.utils.GsonUtil;
 
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

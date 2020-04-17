@@ -1,4 +1,4 @@
-package com.sixbugs.bujuan.imageloader;
+package com.sixbugs.bujuan.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

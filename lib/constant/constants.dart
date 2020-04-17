@@ -12,6 +12,7 @@ class Constants {
   static String playSongHistory = "PLAY_SONG_HISTORY";
   static String playSongListHistory = "PLAY_SONG_LIST_HISTORY";
 
+  static String BLUR = 'BLUR';
   static String COOKIE = 'COOKIE';
 
   static String MINI_PLAY = 'MINNI_PLAY';

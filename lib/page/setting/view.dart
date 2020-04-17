@@ -1,15 +1,18 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/page/setting/action.dart';
+import 'package:bujuan/widget/background_setting.dart';
 import 'package:bujuan/widget/bujuan_background.dart';
+import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
+import 'package:bujuan/widget/cache_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 
-import '../../utils/sp_util.dart';
 import 'state.dart';
 
 Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService) {
@@ -35,7 +38,16 @@ Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService)
                   color: Colors.red,
                 ),//cameraIcon and galleryIcon can change. If no icon provided default icon will be present
               );
-              GlobalStore.store.dispatch(GlobalActionCreator.changeBack(image.path));
+              showBujuanBottomSheet(context: viewService.context, builder: (context){
+                return BackSetting(image);
+              });
+//              GlobalStore.store.dispatch(GlobalActionCreator.changeBack(image.path));
+            },
+          ),
+          ListTile(
+            title: Text('清除全局背景'),
+            onTap: () async{
+              GlobalStore.store.dispatch(GlobalActionCreator.changeBack(null));
             },
           )
         ],

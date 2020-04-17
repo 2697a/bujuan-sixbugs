@@ -50,6 +50,9 @@ class PlayViewState implements GlobalBaseState, Cloneable<PlayViewState> {
 
   @override
   String backPath;
+
+  @override
+  double blur;
 }
 
 PlayViewState initState(Map<String, dynamic> args) {

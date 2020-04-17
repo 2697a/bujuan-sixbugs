@@ -36,6 +36,9 @@ class MainState implements GlobalBaseState, Cloneable<MainState> {
 
   @override
   String backPath;
+
+  @override
+  double blur;
 }
 
 MainState initState(Map<String, dynamic> args) {

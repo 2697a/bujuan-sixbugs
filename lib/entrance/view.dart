@@ -24,65 +24,63 @@ Widget buildView(
 ///body
 Widget _body(EntranceState state, dispatch, ViewService viewService) {
   return WillPopScope(
-      child:  Scaffold(
-        body: SlidingUpPanel(
-          controller: state.panelController,
-          minHeight: Screens.setHeight(62),
-          maxHeight: MediaQuery.of(viewService.context).size.height,
-          boxShadow: null,
-          panel: _leftChild(state, dispatch, viewService),
-          collapsed: PlayBarPage().buildPage(null),
-          body: Column(
-            children: <Widget>[
-              AppBar(
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(Icons.sort, size: Screens.text22),
-                    onPressed: () {
-                      state.panelController.isPanelOpen
-                          ? state.panelController.close()
-                          : state.panelController.open();
-                    }),
-                elevation: 0.0,
-                title: Text(
-                  '归山深浅去，须尽丘壑美。',
-                  style: TextStyle(
-                      fontSize: Screens.text18),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                centerTitle: true,
-                actions: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(Icons.search, size: Screens.text22),
-                    onPressed: () {
-                      Navigator.of(viewService.context)
-                          .pushNamed('search', arguments: null);
-                    },
-                  )
-                ],
+      child:  SlidingUpPanel(
+        controller: state.panelController,
+        minHeight: Screens.setHeight(62),
+        maxHeight: MediaQuery.of(viewService.context).size.height,
+        boxShadow: null,
+        panel: _leftChild(state, dispatch, viewService),
+        collapsed: PlayBarPage().buildPage(null),
+        body: Column(
+          children: <Widget>[
+            AppBar(
+              backgroundColor: Colors.transparent,
+              leading: IconButton(
+                  padding: EdgeInsets.all(0),
+                  icon: Icon(Icons.sort, size: Screens.text22),
+                  onPressed: () {
+                    state.panelController.isPanelOpen
+                        ? state.panelController.close()
+                        : state.panelController.open();
+                  }),
+              elevation: 0.0,
+              title: Text(
+                '归山深浅去，须尽丘壑美。',
+                style: TextStyle(
+                    fontSize: Screens.text18),
+                overflow: TextOverflow.ellipsis,
               ),
-              !state.navBarIsBottom
-                  ? _navBar(state, dispatch)
-                  : Container(),
-              Expanded(
-                child: PageView.builder(
-                  itemBuilder: (context, index) {
-                    return state.pages[index];
+              centerTitle: true,
+              actions: <Widget>[
+                IconButton(
+                  padding: EdgeInsets.all(0),
+                  icon: Icon(Icons.search, size: Screens.text22),
+                  onPressed: () {
+                    Navigator.of(viewService.context)
+                        .pushNamed('search', arguments: null);
                   },
-                  itemCount: state.pages.length,
-                  controller: state.pageController,
-                  onPageChanged: (index) {
-                    dispatch(EntranceActionCreator.onPageChange(index));
-                  },
-                ),
+                )
+              ],
+            ),
+            !state.navBarIsBottom
+                ? _navBar(state, dispatch)
+                : Container(),
+            Expanded(
+              child: PageView.builder(
+                itemBuilder: (context, index) {
+                  return state.pages[index];
+                },
+                itemCount: state.pages.length,
+                controller: state.pageController,
+                onPageChanged: (index) {
+                  dispatch(EntranceActionCreator.onPageChange(index));
+                },
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: Screens.setHeight(64)),
-              )
-            ],
-          ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: Screens.setHeight(64)),
+            )
+          ],
         ),
       ),
       onWillPop: () async {
@@ -103,10 +101,11 @@ Widget _leftChild(EntranceState state, dispatch, ViewService viewService) {
       Expanded(child: Container()),
       ListTile(
         title: Text('設置'),
-        onTap: () {
+        onTap: () async{
 //          dispatch(EntranceActionCreator.openPage(OpenType.SETTING));
-          Navigator.of(viewService.context)
-              .pushNamed('setting', arguments: null); //注意2
+         await Navigator.of(viewService.context)
+              .pushNamed('setting', arguments: null);
+         state.panelController.close();//注意2
         },
       ),
       ListTile(

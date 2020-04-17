@@ -52,9 +52,6 @@ void _onLike(Action action, Context<SheetDetailsState> ctx) async {
 void _onInit(Action action, Context<SheetDetailsState> ctx) async {
   var answer =
       await playlist_detail({'id': ctx.state.sheetId}, BuJuanUtil.getCookie());
-//  Response sheet =
-//      await HttpUtil().post('/playlist/detail', data: {'id': ctx.state.sheetId});
-//  var jsonDecode2 = jsonDecode(sheet.data);
   SheetDetailsEntity sheetDetailsEntity =
       SheetDetailsEntity.fromJson(Map<String, dynamic>.from(answer.body));
   var playlist = sheetDetailsEntity.playlist;

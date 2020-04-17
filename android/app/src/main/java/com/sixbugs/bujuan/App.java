@@ -42,9 +42,9 @@ public class App extends FlutterApplication {
         public void applyOptions(@NonNull Context context, @NonNull StarrySkyBuilder builder) {
             super.applyOptions(context, builder);
             builder.setOpenNotification(true);
-            builder.setOpenCache(true);
-            String destFileDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.sixbugs.bujuan/cache/";
-            builder.setCacheDestFileDir(destFileDir);
+//            builder.setOpenCache(true);
+//            String destFileDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.sixbugs.bujuan/cache/";
+//            builder.setCacheDestFileDir(destFileDir);
         }
 
         @Override

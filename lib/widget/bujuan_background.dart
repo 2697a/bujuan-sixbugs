@@ -10,12 +10,12 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../utils/sp_util.dart';
 import 'cache_image.dart';
-import 'cache_image.dart';
 
 class BujuanBack {
-  static Widget back(Widget body,context,{bool isDark,String backPath}) {
+  static Widget back(Widget body,context,{bool isDark,String backPath,double blurs}) {
     if(isDark==null)isDark = Constants.dark;
     var back = backPath==null?SpUtil.getString(Constants.USER_BACKGROUND, defValue: null):backPath;
+    var blur = blurs==null? SpUtil.getDouble(Constants.BLUR, defValue: 2.0):blurs;
 //    var size2 = MediaQuery.of(context).size;
     return Stack(
       children: <Widget>[
@@ -24,12 +24,13 @@ class BujuanBack {
           child: Stack(
             children: [
               Container(
+                color: Colors.white,
                 child: ImageHelper.getImage(back,height: double.infinity),
               ),
               BackdropFilter(
-                filter: new ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                filter: new ImageFilter.blur(sigmaX: blur, sigmaY: blur),
                 child: new Container(
-                  color: isDark?Color.fromRGBO(28, 28, 28, 1).withOpacity(0.5):Colors.white.withOpacity(0.5),
+                  color: isDark?Colors.grey[850].withOpacity(0.5):Colors.white.withOpacity(0.5),
                 ),
               )
             ],
@@ -38,7 +39,7 @@ class BujuanBack {
         Offstage(
           offstage: back != null,
           child: Container(
-            color: isDark?Color.fromRGBO(28, 28, 28, 1):Colors.white,
+            color: isDark?Colors.grey[850]:Colors.white,
           ),
         ),
         body

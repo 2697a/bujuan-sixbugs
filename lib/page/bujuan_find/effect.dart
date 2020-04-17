@@ -42,7 +42,7 @@ void _onRefresh(Action action, Context<NewFindState> ctx) async {
     }
     if (data is NewSongEntity) if (data != null) {
       List<SongBeanEntity> songs = List();
-      data.result.forEach((song) {
+      Future.forEach(data.result, (song)async{
         SongBeanEntity songBeanEntity = SongBeanEntity();
         songBeanEntity.name = song.name;
         songBeanEntity.picUrl = song.picUrl;
@@ -50,7 +50,7 @@ void _onRefresh(Action action, Context<NewFindState> ctx) async {
         songBeanEntity.singer = song.song.artists[0].name;
         songs.add(songBeanEntity);
       });
-      SpUtil.putString('newSong', jsonEncode(songs));
+//      SpUtil.putString('newSong', jsonEncode(songs));
       ctx.dispatch(NewFindActionCreator.onGetNewSong(NewSongState()
         ..clone()
         ..result = songs));

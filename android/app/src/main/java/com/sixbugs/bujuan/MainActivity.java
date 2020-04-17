@@ -13,7 +13,7 @@ import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.bean.Permissions;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sixbugs.bujuan.entity.SongBean;
-import com.sixbugs.bujuan.imageloader.GsonUtil;
+import com.sixbugs.bujuan.utils.GsonUtil;
 
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.MethodChannel;

@@ -21,7 +21,7 @@ public class GlideLoader implements ImageLoaderStrategy {
 
     @Override
     public void loadImage(Context context, String url, ImageLoaderCallBack callBack) {
-        String imageUrl = url.substring(0, 4).equals("http") ? url + "?param=200y200" : url;
+        String imageUrl = url.substring(0, 4).equals("http") ? url + "?param=250y250" : url;
         Glide.with(context).asBitmap().override(200,200).load(imageUrl)
                 .into(new CustomTarget<Bitmap>() {
                     @Override

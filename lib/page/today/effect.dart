@@ -20,25 +20,27 @@ Effect<TodayState> buildEffect() {
   });
 }
 
-void _onAction(Action action, Context<TodayState> ctx) {
-  _getToday().then((today) {
-    List<SongBeanEntity> newList = List();
-    today.recommend.forEach((details) {
-      var singerStr = '';
-      var ar = details.artists;
-      ar.forEach((singer) {
-        singerStr += ' ${singer.name} ';
-      });
-      SongBeanEntity songBeanEntity = SongBeanEntity(
-          name: details.name,
-          id: details.id.toString(),
-          picUrl: details.album.picUrl,
-          singer: singerStr,
-          mv: details.mvid);
-      newList.add(songBeanEntity);
-    });
-    ctx.dispatch(TodayActionCreator.getSheetDeList(newList));
+void _onAction(Action action, Context<TodayState> ctx) async{
+  Future.delayed(Duration(milliseconds: 300),(){
+    
   });
+  var today = await _getToday();
+  List<SongBeanEntity> newList = List();
+  Future.forEach(today.recommend, (details)async{
+    var singerStr = '';
+    var ar = details.artists;
+    ar.forEach((singer) {
+      singerStr += ' ${singer.name} ';
+    });
+    SongBeanEntity songBeanEntity = SongBeanEntity(
+        name: details.name,
+        id: details.id.toString(),
+        picUrl: details.album.picUrl,
+        singer: singerStr,
+        mv: details.mvid);
+    newList.add(songBeanEntity);
+  });
+  ctx.dispatch(TodayActionCreator.getSheetDeList(newList));
 }
 
 Future<TodaySongEntity> _getToday() async {
