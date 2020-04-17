@@ -16,7 +16,7 @@ import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'state.dart';
 
 Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back(Scaffold(
+  return Scaffold(
     appBar: AppBar(title: Text('设置'),),
     body: Container(
       child: ListView(
@@ -53,5 +53,5 @@ Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService)
         ],
       ),
     ),
-  ),viewService.context);
+  );
 }

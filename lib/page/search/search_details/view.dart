@@ -3,17 +3,15 @@ import 'package:bujuan/page/search/search_sheet/page.dart';
 import 'package:bujuan/page/search/search_singer/page.dart';
 import 'package:bujuan/page/search/search_song/page.dart';
 import 'package:bujuan/widget/app_bar.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 Widget buildView(SearchDetailsState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back(Scaffold(
+  return Scaffold(
     appBar: BujuanAppBar.norAppBar(viewService.context,'Search: "${ state.searchContent}"'),
     body: state.showLoading
         ? LoadingPage()
@@ -43,5 +41,5 @@ Widget buildView(SearchDetailsState state, Dispatch dispatch, ViewService viewSe
             ],
           )),
     ),
-  ), viewService.context);
+  );
 }

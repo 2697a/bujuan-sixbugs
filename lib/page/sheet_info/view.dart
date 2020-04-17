@@ -9,7 +9,7 @@ import 'state.dart';
 
 Widget buildView(
     SheetInfoState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back(Scaffold(
+  return Scaffold(
     body: Container(
       padding: EdgeInsets.only(left: 5, right: 5),
       child: Column(
@@ -63,5 +63,5 @@ Widget buildView(
         ],
       ),
     ),
-  ), viewService.context);
+  );
 }

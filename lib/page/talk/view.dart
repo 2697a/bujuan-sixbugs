@@ -12,7 +12,7 @@ import 'package:flutter_easyrefresh/phoenix_footer.dart';
 import 'state.dart';
 
 Widget buildView(TalkState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back(Scaffold(
+  return Scaffold(
     appBar: AppBar(
       elevation: 0,
       leading: IconButton(
@@ -91,7 +91,7 @@ Widget buildView(TalkState state, Dispatch dispatch, ViewService viewService) {
         ],
       ),
     ),
-  ), viewService.context);
+  );
 }
 
 Widget _talkHotItem(SongTalkHotcommants hotcommants) {

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'state.dart';
 
 Widget buildView(SearchState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back(Scaffold(
+  return Scaffold(
     resizeToAvoidBottomPadding: false,
     appBar: PreferredSize(child: Container(
       padding: EdgeInsets.only(top: MediaQueryData.fromWindow(window).padding.top+5,left: Screens.width5,right: Screens.width5),
@@ -69,5 +69,5 @@ Widget buildView(SearchState state, Dispatch dispatch, ViewService viewService) 
         ],
       ),
     ),
-  ), viewService.context);
+  );
 }

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'state.dart';
 
 Widget buildView(TodayState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back( Scaffold(
+  return Scaffold(
     appBar:BujuanAppBar.norAppBar(viewService.context, '每日推荐'),
     body: state.isShowLoading
         ? LoadingPage()
@@ -27,7 +27,7 @@ Widget buildView(TodayState state, Dispatch dispatch, ViewService viewService) {
         PlayBarPage().buildPage(null)
       ],
     ),
-  ),viewService.context);
+  );
 }
 
 Widget _sheetItem(SongBeanEntity track, Dispatch dispatch,index,viewService) {

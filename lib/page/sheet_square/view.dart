@@ -1,14 +1,12 @@
 import 'package:bujuan/page/sheet_square/sheet_square_details/page.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 Widget buildView(SheetSquareState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back(Scaffold(
+  return Scaffold(
     appBar: AppBar(
       title: Text('歌单广场'),
     ),
@@ -47,5 +45,5 @@ Widget buildView(SheetSquareState state, Dispatch dispatch, ViewService viewServ
             ],
           )),
     ),
-  ), viewService.context);
+  );
 }

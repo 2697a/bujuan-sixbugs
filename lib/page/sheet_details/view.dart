@@ -13,38 +13,36 @@ import 'state.dart';
 
 Widget buildView(
     SheetDetailsState state, Dispatch dispatch, ViewService viewService) {
-  return BujuanBack.back(
-      Scaffold(
-        appBar: BujuanAppBar.norAppBar(viewService.context,
-            state.isShowLoading ? '' : state.playlist.name),
-        body: state.isShowLoading
-            ? LoadingPage()
-            : Column(
-                children: <Widget>[
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          _sheetTop(state, dispatch),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) => _sheetItem(
-                                state.list[index],
-                                dispatch,
-                                index,
-                                viewService),
-                            itemCount: state.list.length,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  PlayBarPage().buildPage(null)
-                ],
-              ),
-      ),
-      viewService.context);
+  return Scaffold(
+    appBar: BujuanAppBar.norAppBar(viewService.context,
+        state.isShowLoading ? '' : state.playlist.name),
+    body: state.isShowLoading
+        ? LoadingPage()
+        : Column(
+      children: <Widget>[
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                _sheetTop(state, dispatch),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => _sheetItem(
+                      state.list[index],
+                      dispatch,
+                      index,
+                      viewService),
+                  itemCount: state.list.length,
+                )
+              ],
+            ),
+          ),
+        ),
+        PlayBarPage().buildPage(null)
+      ],
+    ),
+  );
 }
 
 Widget _sheetTop(SheetDetailsState state, dispatch) {

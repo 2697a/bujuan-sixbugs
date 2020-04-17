@@ -42,7 +42,7 @@ class _LeftPageState extends State<LeftPage>
 
   @override
   Widget build(BuildContext context) {
-    return BujuanBack.back(Scaffold(
+    return Scaffold(
       body: AnimatedContainer(
         duration: Duration(milliseconds: 300),
         child: Stack(
@@ -169,7 +169,7 @@ class _LeftPageState extends State<LeftPage>
         offset: Offset(140, 40),
         child: _buildFab(),
       ),
-    ),context,isDark: val);
+    );
   }
 
   Widget _buildFab() {
