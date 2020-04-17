@@ -27,13 +27,18 @@ class LyricUtil {
   static Duration lyricTimeToDuration(String time) {
     int hourSeparatorIndex = time.indexOf(":");
     int minuteSeparatorIndex = time.indexOf(".");
+
+    var milliseconds = time.substring(minuteSeparatorIndex + 1);
+    if(milliseconds.length>3){
+      milliseconds = milliseconds.substring(0,3);
+    }
     return Duration(
       minutes: int.parse(
         time.substring(0, hourSeparatorIndex),
       ),
       seconds: int.parse(
           time.substring(hourSeparatorIndex + 1, minuteSeparatorIndex)),
-      milliseconds: int.parse(time.substring(minuteSeparatorIndex + 1)),
+      milliseconds: int.parse(milliseconds),
     );
   }
 }

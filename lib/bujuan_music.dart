@@ -49,7 +49,10 @@ class BujuanMusic {
     return await _channel.invokeMethod("seekTo", {'seekNum': seekNum});
   }
   static Future playSingleSong({int index}) async {
-    return await _channel.invokeMethod("playSingleSong", {'index': index});
+    return await _channel.invokeMethod("lyric", {'index': index});
+  }
+  static Future lyric(dark) async {
+    return await _channel.invokeMethod("lyric", {'dark': dark});
   }
 
 }

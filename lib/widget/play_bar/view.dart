@@ -13,7 +13,7 @@ Widget buildView(
     offstage: state.currSong == null,
     child: InkWell(
       child: Container(
-        height: Screens.setHeight(62),
+        height: Screens.setHeight(65),
         padding: EdgeInsets.symmetric(horizontal: Screens.width5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -81,4 +81,48 @@ Widget buildView(
       },
     ),
   );
+//  return ListTile(
+//    dense: true,
+//    leading: ImageHelper.getImage(
+//        '${state.currSong.picUrl ?? ''}?param=100y100',
+//        isRound: true,
+//        height: Screens.setHeight(45.0)),
+//    title: Text(
+//      state.currSong.name,
+//      style: TextStyle(fontSize: Screens.text12),
+//      overflow: TextOverflow.ellipsis,
+//      maxLines: 1,
+//    ),
+//    subtitle: Text(
+//      state.currSong.name,
+//      style: TextStyle(fontSize: Screens.text12),
+//      overflow: TextOverflow.ellipsis,
+//      maxLines: 1,
+//    ),
+//    trailing: Wrap(
+//      children: <Widget>[
+//        InkWell(
+//          child: Container(
+//            height: Screens.setHeight(42),
+//            width: Screens.setWidth(42),
+//            child: state.playStateType == PlayStateType.Stop ||
+//                    state.playStateType == PlayStateType.Pause
+//                ? Icon(Icons.play_arrow, size: Screens.setSp(24))
+//                : Icon(Icons.pause, size: Screens.setSp(24)),
+//          ),
+//          onTap: () => dispatch(PlayBarActionCreator.sendTask()),
+//        ),
+//        Padding(padding: EdgeInsets.symmetric(horizontal: Screens.width5)),
+//        InkWell(
+//          child: Container(
+//            height: Screens.setHeight(42),
+//            width: Screens.setWidth(42),
+//            child: Icon(Icons.skip_next, size: Screens.setSp(24)),
+//          ),
+//          onTap: () => dispatch(PlayBarActionCreator.nextSong()),
+//        ),
+//      ],
+//    ),
+//    onTap: () => dispatch(PlayBarActionCreator.openPlayPage()),
+//  );
 }

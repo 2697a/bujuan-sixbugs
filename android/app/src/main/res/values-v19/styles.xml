@@ -5,4 +5,10 @@
 
     <style name="notification_title" parent="android:TextAppearance.Material.Notification.Title"
            tools:targetApi="lollipop"/>
+
+    <style name="AppTheme.Main" parent="LaunchTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">#00ffffff</item>
+    </style>
 </resources>

@@ -12,8 +12,10 @@ import com.qw.soul.permission.SoulPermission;
 import com.qw.soul.permission.bean.Permission;
 import com.qw.soul.permission.bean.Permissions;
 import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
+import com.sixbugs.bujuan.entity.Lyric;
 import com.sixbugs.bujuan.entity.SongBean;
 import com.sixbugs.bujuan.utils.GsonUtil;
+import com.sixbugs.bujuan.utils.PrefUtils;
 
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.MethodChannel;
@@ -34,6 +36,8 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     private Map<String, String> map = new HashMap<>();
     private BuJuanMusicPlayListenPlugin buJuanMusicPlayListenPlugin;
     public static BasicMessageChannel<Object> basicMessageChannelPlugin;
+    private String zhLyric = "";
+    private String enLyric = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         GeneratedPluginRegistrant.registerWith(this);
         StarrySky.with().addPlayerEventListener(this);
         BujuanMusicPlugin.registerWith(this.registrarFor(BujuanMusicPlugin.CHANNEL));
+        MyViewFlutterPlugin.registerWith(this);
 //        buJuanMusicListenPlugin = BuJuanMusicListenPlugin.registerWith(this.registrarFor(BuJuanMusicListenPlugin.CHANNEL));
         buJuanMusicPlayListenPlugin = BuJuanMusicPlayListenPlugin.registerWith(this.registrarFor(BuJuanMusicPlayListenPlugin.CHANNEL));
         basicMessageChannelPlugin = new BasicMessageChannel<>(getFlutterView(), Config.URL_FM_CHANNEL, StandardMessageCodec.INSTANCE);
@@ -92,6 +97,23 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     }
 
 
+    private void getLyric(String id){
+        map.clear();
+        map.put("type", "getLyric");
+        map.put("id", id);
+        basicMessageChannelPlugin.send(map, reply -> {
+            if (reply != null) {
+                Lyric lyric = GsonUtil.GsonToBean(reply.toString(), Lyric.class);
+                int code = lyric.getCode();
+                if (code == 200) {
+                    if (lyric.getLrc() != null) zhLyric = lyric.getLrc().getLyric();
+                    if (lyric.getTlyric() != null) enLyric = lyric.getTlyric().getLyric();
+                    PrefUtils.putString(MainActivity.this, id + "zh", zhLyric);
+                    PrefUtils.putString(MainActivity.this, id + "en", enLyric);
+                }
+            }
+        });
+    }
     @Override
     public void onBuffering() {
 
@@ -110,6 +132,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         song.setName(songInfo.getSongName());
         song.setSinger(songInfo.getArtist());
         song.setPicUrl(songInfo.getAlbumCover());
+        getLyric(songInfo.getSongId());
         map.clear();
         map.put("type","currSong");
         map.put("data", GsonUtil.GsonString(song));

@@ -26,9 +26,8 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
   return WillPopScope(
       child:  SlidingUpPanel(
         controller: state.panelController,
-        minHeight: Screens.setHeight(62),
+        minHeight: Screens.setHeight(65),
         maxHeight: MediaQuery.of(viewService.context).size.height,
-        boxShadow: null,
         panel: _leftChild(state, dispatch, viewService),
         collapsed: PlayBarPage().buildPage(null),
         body: Column(
@@ -37,7 +36,7 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
               backgroundColor: Colors.transparent,
               leading: IconButton(
                   padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.sort, size: Screens.text22),
+                  icon: Icon(Icons.sort),
                   onPressed: () {
                     state.panelController.isPanelOpen
                         ? state.panelController.close()
@@ -46,15 +45,13 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
               elevation: 0.0,
               title: Text(
                 '归山深浅去，须尽丘壑美。',
-                style: TextStyle(
-                    fontSize: Screens.text18),
                 overflow: TextOverflow.ellipsis,
               ),
               centerTitle: true,
               actions: <Widget>[
                 IconButton(
                   padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.search, size: Screens.text22),
+                  icon: Icon(Icons.search),
                   onPressed: () {
                     Navigator.of(viewService.context)
                         .pushNamed('search', arguments: null);
@@ -78,7 +75,7 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: Screens.setHeight(64)),
+              padding: EdgeInsets.only(bottom: Screens.setHeight(65)),
             )
           ],
         ),

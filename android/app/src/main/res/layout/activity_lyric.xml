@@ -2,11 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lrcMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     tools:context=".LyricActivity">
+    <TextView
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/songName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/songSinger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <me.wcy.lrcview.LrcView
+        app:lrcTextGravity="center"
+        app:lrcDividerHeight="16dp"
         android:id="@+id/lrcView"
+        app:lrcNormalTextSize="16sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

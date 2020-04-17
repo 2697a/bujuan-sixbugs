@@ -1,8 +1,8 @@
 package com.sixbugs.bujuan;
 
 
+import android.content.Intent;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 
 
 import io.flutter.plugin.common.MethodCall;
@@ -72,27 +72,30 @@ public class BujuanMusicPlugin implements MethodCallHandler {
                     StarrySky.with().skipToPrevious();
         } else if (methodCall.method.equals("local_music")) {
             //本地音乐
-            List<SongInfo> songInfos = StarrySky.with().querySongInfoInLocal();
-            List<SongBean> songs = new ArrayList<>();
-            for (SongInfo songInfo : songInfos) {
-                SongBean song = new SongBean();
-                String size = songInfo.getSize();
-                long l = Long.parseLong(size);
-                if (l / 1024 / 1024 > 1) {
-                    song.setId(songInfo.getSongId());
-                    song.setName(songInfo.getSongName());
-//                    song.setUrl(songInfo.getSongUrl());
-                    song.setPicUrl(fileIsExists(songInfo.getAlbumCover()) ? songInfo.getAlbumCover() : null);
-                    song.setSinger(songInfo.getArtist());
-                    songs.add(song);
-                }
-                Log.d("", "onMethodCall: =======" + songInfo.getAlbumHDCover());
-            }
-            String local = GsonUtil.GsonString(songs);
-            result.success(local);
-        } else if (methodCall.method.equals("playSingleSong")) {
-            int index = methodCall.argument("index") == null ? 0 : methodCall.argument("index");
-            StarrySky.with().playMusicByIndex(index);
+//            List<SongInfo> songInfos = StarrySky.with().querySongInfoInLocal();
+//            List<SongBean> songs = new ArrayList<>();
+//            for (SongInfo songInfo : songInfos) {
+//                SongBean song = new SongBean();
+//                String size = songInfo.getSize();
+//                long l = Long.parseLong(size);
+//                if (l / 1024 / 1024 > 1) {
+//                    song.setId(songInfo.getSongId());
+//                    song.setName(songInfo.getSongName());
+////                    song.setUrl(songInfo.getSongUrl());
+//                    song.setPicUrl(fileIsExists(songInfo.getAlbumCover()) ? songInfo.getAlbumCover() : null);
+//                    song.setSinger(songInfo.getArtist());
+//                    songs.add(song);
+//                }
+//                Log.d("", "onMethodCall: =======" + songInfo.getAlbumHDCover());
+//            }
+//            String local = GsonUtil.GsonString(songs);
+            result.success(null);
+        } else if (methodCall.method.equals("lyric")) {
+            Intent intent = new Intent(activity,LyricActivity.class);
+            String dark = methodCall.argument("dark");
+            intent.putExtra("dark",dark);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
         } else if (methodCall.method.equals("seekTo")) {
             String seekNum = methodCall.argument("seekNum");
             if (seekNum != null) {
