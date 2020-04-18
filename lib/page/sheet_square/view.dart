@@ -1,3 +1,4 @@
+import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/page/sheet_square/sheet_square_details/page.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -18,6 +19,7 @@ Widget buildView(SheetSquareState state, Dispatch dispatch, ViewService viewServ
               TabBar(
                 indicatorSize: TabBarIndicatorSize.label,
                 isScrollable: true,
+                labelStyle: TextStyle(fontSize: Screens.text14),
                 tabs: <Widget>[
                   // 全部,华语,欧美,韩语,日语,粤语,小语种,运动,ACG,影视原声,流行,摇滚,后摇,古风,民谣,轻音乐,电子,器乐,说唱,古典,爵士
                   Tab(text: '全部'),

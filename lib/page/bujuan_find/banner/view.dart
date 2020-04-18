@@ -18,7 +18,7 @@ Widget buildView(
           child: Wrap(
             children: <Widget>[
               Container(
-                height: ScreenUtil().setHeight(146),
+                height: Screens.setHeight(146),
                 child: Swiper(
                   autoplay: true,
                   duration: 300,
@@ -80,7 +80,7 @@ Widget _menuItem(title, icon, dispatch, MenuType menuType,ViewService viewServic
       Padding(padding: EdgeInsets.only(top: Screens.setHeight(5))),
       Text(
         title,
-        style: TextStyle(fontSize: Screens.text12),
+        style: TextStyle(fontSize: Screens.text14),
       )
     ],
   );

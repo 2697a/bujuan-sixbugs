@@ -13,7 +13,7 @@ Widget buildView(
     offstage: state.currSong == null,
     child: InkWell(
       child: Container(
-        height: Screens.setHeight(65),
+        height: Screens.setHeight(60),
         padding: EdgeInsets.symmetric(horizontal: Screens.width5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -24,24 +24,24 @@ Widget buildView(
                 ImageHelper.getImage(
                     '${state.currSong.picUrl ?? ''}?param=100y100',
                     isRound: true,
-                    height: Screens.setHeight(45.0)),
+                    height: Screens.setHeight(42)),
                 Padding(padding: EdgeInsets.only(left: Screens.width10)),
                 Expanded(
                     child: Column(
                   children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
-                      height: Screens.setHeight(22),
+                      height: Screens.setHeight(26),
                       child: Text(state.currSong.name,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: Screens.text12)),
+                          style: TextStyle(fontSize: Screens.text14)),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      height: Screens.setHeight(22),
+                      height: Screens.setHeight(26),
                       child: Text(state.currSong.singer,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: Screens.text10)),
+                          style: TextStyle(fontSize: Screens.text12)),
                     )
                   ],
                 )),

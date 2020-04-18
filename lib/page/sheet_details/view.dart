@@ -144,7 +144,7 @@ Widget _sheetItem(SongBeanEntity track, Dispatch dispatch, index, viewService) {
         Expanded(
             child: Text(
           track.name,
-          style: TextStyle(fontSize: Screens.text12),
+          style: TextStyle(fontSize: Screens.text14),
           maxLines: 1,
         ))
       ],

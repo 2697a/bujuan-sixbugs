@@ -426,50 +426,13 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                           left: Screens.width5,
                           top: Screens.setHeight(20),
                           bottom: Screens.setHeight(10))),
-                  Container(
-                    height: Screens.setHeight(150),
-                    padding: EdgeInsets.only(top: 5, left: 5, right: 5),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          child: Wrap(
-                            direction: Axis.vertical,
-                            children: <Widget>[
-                              Container(
-                                padding:
-                                    EdgeInsets.only(right: Screens.width15),
-                                child: ImageHelper.getImage(
-                                    state.createOrderList[index].coverImgUrl +
-                                        "?param=280y280",
-                                    height: Screens.setHeight(100)),
-                              ),
-                              Container(
-                                height: Screens.setHeight(40),
-                                constraints: BoxConstraints(
-                                    maxWidth: Screens.setHeight(95)),
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  state.createOrderList[index].name,
-                                  style: TextStyle(fontSize: Screens.text12),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.of(viewService.context)
-                                .pushNamed('sheet_details', arguments: {
-                              'sheetId': state.createOrderList[index].id
-                            }); //注意
-                          },
-                        );
-                      },
-                      itemCount: state.createOrderList.length,
-                    ),
+                  ListView.builder(
+                    padding: EdgeInsets.all(0),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) =>
+                        _orderItem(state.createOrderList[index], viewService),
+                    itemCount: state.createOrderList.length,
                   ),
                   InkWell(
                     child: Container(
@@ -550,11 +513,11 @@ Widget _orderItem(UserOrderPlaylist orderPlaylist, viewService) {
   return ListTile(
     dense: true,
     contentPadding: EdgeInsets.symmetric(horizontal: 2),
-    leading: ImageHelper.getImage(orderPlaylist.coverImgUrl + "?param=120y120",
+    leading: ImageHelper.getImage(orderPlaylist.coverImgUrl + "?param=100y100",
         height: Screens.setHeight(45), isRound: true),
     title: Text(
       orderPlaylist.name,
-      style: TextStyle(fontSize: Screens.text12),
+      style: TextStyle(fontSize: Screens.text14),
     ),
     subtitle: Text('${orderPlaylist.trackCount} 首单曲',
         style: TextStyle(fontSize: Screens.text12)),

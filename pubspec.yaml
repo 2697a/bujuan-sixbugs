@@ -31,6 +31,7 @@ dependencies:
   sliding_up_panel: ^1.0.2
   flutter_downloader: ^1.4.3
   path_provider: ^1.5.1
+#  fijkplayer: ^0.7.1
 #  flutter_native_image:
 #    git: https://github.com/btastic/flutter_native_image.git
   #api相关

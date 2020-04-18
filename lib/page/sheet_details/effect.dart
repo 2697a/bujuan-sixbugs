@@ -49,14 +49,14 @@ void _onLike(Action action, Context<SheetDetailsState> ctx) async {
       BuJuanUtil.getCookie());
 }
 
-void _onInit(Action action, Context<SheetDetailsState> ctx) async {
+Future _onInit(Action action, Context<SheetDetailsState> ctx) async {
   var answer =
       await playlist_detail({'id': ctx.state.sheetId}, BuJuanUtil.getCookie());
   SheetDetailsEntity sheetDetailsEntity =
       SheetDetailsEntity.fromJson(Map<String, dynamic>.from(answer.body));
   var playlist = sheetDetailsEntity.playlist;
   List<SongBeanEntity> newList = List();
-  playlist.tracks.forEach((details) {
+  Future.forEach(playlist.tracks, (details)async{
     var singerStr = '';
     var ar = details.ar;
     ar.forEach((singer) {
@@ -70,8 +70,9 @@ void _onInit(Action action, Context<SheetDetailsState> ctx) async {
         mv: details.mv);
     newList.add(songBeanEntity);
   });
-  ctx.dispatch(SheetDetailsActionCreator.sheetInfo(playlist));
-  ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(newList));
+  await ctx.dispatch(SheetDetailsActionCreator.sheetInfo(playlist));
+  await ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(newList));
+  ctx.state.isShowLoading = false;
 }
 void _onDispose(Action action, Context<SheetDetailsState> ctx){
 }

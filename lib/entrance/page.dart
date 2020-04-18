@@ -5,7 +5,7 @@ import 'reducer.dart';
 import 'state.dart';
 import 'view.dart';
 
-class EntrancePage extends Page<EntranceState, Map<String, dynamic>>{
+class EntrancePage extends Page<EntranceState, Map<String, dynamic>> with SingleTickerProviderMixin {
   EntrancePage()
       : super(
             initState: initState,

@@ -82,12 +82,12 @@ Widget _sheetItem(SongBeanEntity track, Dispatch dispatch,index,viewService) {
         Text(
           '${index + 1}. ',
           style: TextStyle(
-              color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),
+              color: Colors.blue, fontSize: Screens.text14, fontWeight: FontWeight.bold),
         ),
-        Expanded(child: Text(track.name))
+        Expanded(child: Text(track.name,style: TextStyle(fontSize: Screens.text14),))
       ],
     ),
-    subtitle: Text(track.singer),
+    subtitle: Text(track.singer,style: TextStyle(fontSize: Screens.text12)),
     trailing: track.mv == 0
         ? Container(
       width: 0,

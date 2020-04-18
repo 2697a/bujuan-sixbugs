@@ -16,68 +16,71 @@ import 'state.dart';
 
 Widget buildView(
     EntranceState state, Dispatch dispatch, ViewService viewService) {
-  ScreenUtil.init(viewService.context,
-      width: 375, height: 812, allowFontScaling: false);
+//  ScreenUtil.init(viewService.context,
+//      width: 375, height: 812, allowFontScaling: false);
   return _body(state, dispatch, viewService);
 }
 
 ///body
 Widget _body(EntranceState state, dispatch, ViewService viewService) {
   return WillPopScope(
-      child:  SlidingUpPanel(
-        controller: state.panelController,
-        minHeight: Screens.setHeight(65),
-        maxHeight: MediaQuery.of(viewService.context).size.height,
-        panel: _leftChild(state, dispatch, viewService),
-        collapsed: PlayBarPage().buildPage(null),
-        body: Column(
-          children: <Widget>[
-            AppBar(
-              backgroundColor: Colors.transparent,
-              leading: IconButton(
-                  padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.sort),
-                  onPressed: () {
-                    state.panelController.isPanelOpen
-                        ? state.panelController.close()
-                        : state.panelController.open();
-                  }),
-              elevation: 0.0,
-              title: Text(
-                '归山深浅去，须尽丘壑美。',
-                overflow: TextOverflow.ellipsis,
+      child:  Scaffold(
+        body: SlidingUpPanel(
+          controller: state.panelController,
+          minHeight: Screens.setHeight(60),
+          maxHeight: MediaQuery.of(viewService.context).size.height,
+          panel: _leftChild(state, dispatch, viewService),
+          collapsed: PlayBarPage().buildPage(null),
+          body: Column(
+            children: <Widget>[
+              AppBar(
+                backgroundColor: Colors.transparent,
+                leading: IconButton(
+                    padding: EdgeInsets.all(0),
+                    icon: Icon(Icons.sort,size: Screens.text24,),
+                    onPressed: () {
+                      state.panelController.isPanelOpen
+                          ? state.panelController.close()
+                          : state.panelController.open();
+                    }),
+                elevation: 0.0,
+                title: Text(
+                  '归山深浅去，须尽丘壑美。',
+                  overflow: TextOverflow.ellipsis,
+                ),
+                centerTitle: true,
+                actions: <Widget>[
+                  IconButton(
+                    padding: EdgeInsets.all(0),
+                    icon: Icon(Icons.search,size: Screens.text24,),
+                    onPressed: () {
+                      Navigator.of(viewService.context)
+                          .pushNamed('search', arguments: null);
+                    },
+                  )
+                ],
               ),
-              centerTitle: true,
-              actions: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(viewService.context)
-                        .pushNamed('search', arguments: null);
+              !state.navBarIsBottom
+                  ? _navBar(state, dispatch)
+                  : Container(),
+              Expanded(
+                child: PageView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return state.pages[index];
                   },
-                )
-              ],
-            ),
-            !state.navBarIsBottom
-                ? _navBar(state, dispatch)
-                : Container(),
-            Expanded(
-              child: PageView.builder(
-                itemBuilder: (context, index) {
-                  return state.pages[index];
-                },
-                itemCount: state.pages.length,
-                controller: state.pageController,
-                onPageChanged: (index) {
-                  dispatch(EntranceActionCreator.onPageChange(index));
-                },
+                  itemCount: state.pages.length,
+                  controller: state.pageController,
+                  onPageChanged: (index) {
+                    dispatch(EntranceActionCreator.onPageChange(index));
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: Screens.setHeight(65)),
-            )
-          ],
+              Padding(
+                padding: EdgeInsets.only(bottom: Screens.setHeight(60)),
+              )
+            ],
+          ),
         ),
       ),
       onWillPop: () async {

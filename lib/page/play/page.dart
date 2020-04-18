@@ -18,7 +18,8 @@ class PlayViewPage extends Page<PlayViewState, Map<String, dynamic>>
           dependencies: Dependencies<PlayViewState>(
               adapter: null, slots: <String, Dependent<PlayViewState>>{}),
           middleware: <Middleware<PlayViewState>>[],
-        ) {
+        )
+  {
     this.connectExtraStore<GlobalState>(GlobalStore.store,
         (Object pageState, GlobalState appState) {
       final GlobalBaseState p = pageState;

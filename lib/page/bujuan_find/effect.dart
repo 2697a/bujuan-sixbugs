@@ -11,7 +11,6 @@ import 'package:bujuan/page/bujuan_find/banner/state.dart';
 import 'package:bujuan/page/bujuan_find/new_song/state.dart';
 import 'package:bujuan/page/bujuan_find/sheet/state.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
-import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'state.dart';
 
@@ -22,13 +21,13 @@ Effect<NewFindState> buildEffect() {
   });
 }
 
-void _onInit(Action action, Context<NewFindState> ctx) async {
-  Future.delayed(Duration(milliseconds: 300), () {
-    _onRefresh(action, ctx);
-  });
+Future _onInit(Action action, Context<NewFindState> ctx) async {
+//  Future.delayed(Duration(milliseconds: 300), () {
+   await _onRefresh(action, ctx);
+//  });
 }
 
-void _onRefresh(Action action, Context<NewFindState> ctx) async {
+Future _onRefresh(Action action, Context<NewFindState> ctx) async {
   var wait = await Future.wait([_getBanner(), _getSheet(), _getNewSong()]);
   wait.forEach((data) {
     if (data is BannerEntity) if (data != null) {

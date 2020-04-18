@@ -27,7 +27,6 @@ SheetDetailsState _onGetDeList(SheetDetailsState state, Action action) {
       action.payload ?? <SongBeanEntity>[];
   final SheetDetailsState newState = state.clone();
   newState.list = sheet;
-  newState.isShowLoading = false;
   return newState;
 }
 

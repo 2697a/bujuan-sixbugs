@@ -24,8 +24,8 @@ Effect<MineState> buildEffect() {
 }
 
 Future<void> _getRefresh(Action action, Context<MineState> ctx) async {
-  Future.delayed(Duration(milliseconds: 300), () {
-    _onRefresh(action, ctx);
+  Future.delayed(Duration(milliseconds: 300), ()async {
+    await _onRefresh(action, ctx);
   });
 }
 
@@ -45,7 +45,7 @@ void _exit(Action action, Context<MineState> ctx) {
   ctx.dispatch(MineActionCreator.changeLoginState());
 }
 
-void _onRefresh(Action action, Context<MineState> ctx) async {
+Future _onRefresh(Action action, Context<MineState> ctx) async {
   var login = ctx.state.isLogin;
   var userId = SpUtil.getInt(Constants.USER_ID);
   if (login) {
@@ -62,7 +62,7 @@ void _onRefresh(Action action, Context<MineState> ctx) async {
         List<UserOrderPlaylist> createList = List();
         List<UserOrderPlaylist> collList = List();
         if (data != null) {
-          data.playlist.forEach((list) {
+          Future.forEach(data.playlist, (list)async{
             if (list.creator.userId == userId) {
               createList.add(list);
             } else {
@@ -77,9 +77,10 @@ void _onRefresh(Action action, Context<MineState> ctx) async {
   }
 }
 
-void _init(Action action, Context<MineState> ctx) {
-  //登陆了
-  _onRefresh(action, ctx);
+void _init(Action action, Context<MineState> ctx) async{
+  Future.delayed(Duration(milliseconds: 300), ()async {
+    await _onRefresh(action, ctx);
+  });
 }
 
 Future<UserProfileEntity> _getProfile(userId) async {

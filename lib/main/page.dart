@@ -18,23 +18,5 @@ class MainPage extends Page<MainState, Map<String, dynamic>> {
           dependencies: Dependencies<MainState>(
               adapter: null, slots: <String, Dependent<MainState>>{}),
           middleware: <Middleware<MainState>>[],
-        ){
-    this.connectExtraStore<GlobalState>(GlobalStore.store,
-            (Object pageState, GlobalState appState) {
-          final GlobalBaseState p = pageState;
-          if (p.appTheme != null && p.appTheme.dark == appState.appTheme.dark &&p.backPath!=null&&p.backPath == appState.backPath&&p.blur!=null&&p.blur == appState.blur) {
-            return pageState;
-          } else {
-            if (pageState is Cloneable) {
-              final Object copy = pageState.clone();
-              final GlobalBaseState newState = copy;
-              newState.appTheme = appState.appTheme;
-              newState.backPath = appState.backPath;
-              newState.blur = appState.blur;
-              return newState;
-            }
-            return pageState;
-          }
-        });
-  }
+        );
 }

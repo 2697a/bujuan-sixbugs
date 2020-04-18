@@ -16,10 +16,7 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
     debugShowCheckedModeBanner: false,
     darkTheme: ThemeData.dark(),
     theme: state.appTheme.dark ? darkTheme : lightTheme,
-    home:  Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: routes.buildPage('entrance_page', null),
-    ),
+    home:  routes.buildPage('entrance_page', null),
     routes: appRoutes,
     onGenerateRoute: (RouteSettings settings) {
       return MaterialPageRoute<Object>(builder: (BuildContext context) {

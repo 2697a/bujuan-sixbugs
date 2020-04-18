@@ -47,7 +47,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
       ),
       child: Container(
         width: double.infinity,
-        height: Screens.setHeight(52),
+        height: Screens.setHeight(46),
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
@@ -71,7 +71,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => Size.fromHeight( Screens.setHeight(52));
+  Size get preferredSize => Size.fromHeight( Screens.setHeight(46));
 }
 
 class _ItemWidget extends StatelessWidget {
@@ -101,7 +101,7 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: isSelected ? Screens.setWidth(100) : Screens.setWidth(50),
+      width: isSelected ? Screens.setWidth(110) : Screens.setWidth(50),
       height: double.maxFinite,
       duration: animationDuration,
       padding: EdgeInsets.only(left: 12),

@@ -206,6 +206,7 @@ Widget _topItem(
             child: ImageHelper.getImage(image, height: Screens.setHeight(110)),
           ),
           ListView.builder(
+            padding: EdgeInsets.all(0),
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
@@ -216,7 +217,7 @@ Widget _topItem(
                   '${songs[index].name} (${songs[index].singer})',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: Screens.text12, wordSpacing: 1.2),
+                  style: TextStyle(fontSize: Screens.text14, wordSpacing: 1.2),
                 ),
               );
             },

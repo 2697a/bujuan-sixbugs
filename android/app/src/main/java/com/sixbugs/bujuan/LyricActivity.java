@@ -1,5 +1,6 @@
 package com.sixbugs.bujuan;
 
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
@@ -47,13 +48,12 @@ public class LyricActivity extends AppCompatActivity implements OnPlayerEventLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lyric);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        if (Build.VERSION.SDK_INT >= 21){
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        setContentView(R.layout.activity_lyric);
         lrcMain = findViewById(R.id.lrcMain);
         songSinger = findViewById(R.id.songSinger);
         songName = findViewById(R.id.songName);

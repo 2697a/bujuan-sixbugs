@@ -43,6 +43,6 @@ MineState initState(Map<String, dynamic> args) {
 //    mineState.orderList = collList.map((m) => new UserOrderPlaylist.fromJson(m)).toList();
 //    mineState.isShowLoad = false;
 //  }
-  mineState.isOpen = true;
+  mineState.isOpen = false;
   return mineState;
 }

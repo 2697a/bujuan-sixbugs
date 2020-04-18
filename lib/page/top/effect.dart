@@ -18,8 +18,8 @@ Effect<TopPageState> buildEffect() {
 }
 
 void _init(Action action, Context<TopPageState> ctx) async {
-   Future.delayed(Duration(milliseconds: 300),(){
-     _onRefresh(action, ctx);
+   Future.delayed(Duration(milliseconds: 300),()async{
+     await _onRefresh(action, ctx);
    });
 }
 
@@ -33,7 +33,7 @@ void _onOpen(Action action, Context<TopPageState> ctx) {
 //2: "2884035", //云音乐原创榜
 //3: "19723756", //云音乐飙升榜
 //4: "10520166", //云音乐电音榜
-void _onRefresh(Action action, Context<TopPageState> ctx) async {
+Future _onRefresh(Action action, Context<TopPageState> ctx) async {
   var list = await Future.wait([_getTopData('19723756'),_getTopData('3779629'),_getTopData('2884035'),_getTopData('3778678')]);
  var top1 =  list[0];
 // SpUtil.putString('bs', jsonEncode(changeType(top)));

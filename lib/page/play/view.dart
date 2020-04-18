@@ -31,7 +31,7 @@ Widget _body(PlayViewState state, viewService, dispatch) {
       color: Constants.dark?Colors.grey[850]:Colors.white,
       minHeight: Screens.setHeight(130),
       maxHeight: MediaQuery.of(viewService.context).size.height*0.8,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(15),
 //      border: Border.all(color: Colors.grey,width: 0.1),
       boxShadow: null,
       backdropOpacity: 0,
@@ -57,21 +57,21 @@ Widget _body(PlayViewState state, viewService, dispatch) {
         child: Column(
           children: <Widget>[
             Container(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
                 state.currSong.name,
                 style: TextStyle(
-                    fontSize: Screens.text14, fontWeight: FontWeight.bold),
+                    fontSize: Screens.text16, fontWeight: FontWeight.bold),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               height: Screens.setHeight(42),
             ),
             Container(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
                 state.currSong.singer,
-                style: TextStyle(fontSize: Screens.text12),
+                style: TextStyle(fontSize: Screens.text14),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
