@@ -1,6 +1,9 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
+import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/bujuan_background.dart';
+import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/left_page.dart';
 import 'package:bujuan/widget/mini_nav_bar.dart';
 import 'package:bujuan/widget/nav_bar.dart';
@@ -24,35 +27,45 @@ Widget buildView(
 ///body
 Widget _body(EntranceState state, dispatch, ViewService viewService) {
   return WillPopScope(
-      child:  Scaffold(
+      child: Scaffold(
         body: SlidingUpPanel(
           controller: state.panelController,
-          minHeight: Screens.setHeight(60),
+          minHeight: Screens.setHeight(56),
           maxHeight: MediaQuery.of(viewService.context).size.height,
+          boxShadow: null,
           panel: _leftChild(state, dispatch, viewService),
           collapsed: PlayBarPage().buildPage(null),
           body: Column(
             children: <Widget>[
               AppBar(
                 backgroundColor: Colors.transparent,
-                leading: IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(Icons.sort,size: Screens.text24,),
-                    onPressed: () {
-                      state.panelController.isPanelOpen
-                          ? state.panelController.close()
-                          : state.panelController.open();
-                    }),
-                elevation: 0.0,
-                title: Text(
-                  '归山深浅去，须尽丘壑美。',
-                  overflow: TextOverflow.ellipsis,
+                leading: InkWell(
+                  child: IconButton(
+                      padding: EdgeInsets.all(0),
+                      icon: ImageHelper.getImage(
+                          SpUtil.getString('head',
+                              defValue:
+                              'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
+                          height: 30,
+                          isRound: true),
+                      onPressed: () {
+                        state.panelController.isPanelOpen
+                            ? state.panelController.close()
+                            : state.panelController.open();
+                      }),
+                  onLongPress: (){
+                    BuJuanUtil.showToast('msg');
+                  },
                 ),
+                elevation: 0.0,
+                title: _navBar(state, dispatch),
                 centerTitle: true,
                 actions: <Widget>[
                   IconButton(
                     padding: EdgeInsets.all(0),
-                    icon: Icon(Icons.search,size: Screens.text24,),
+                    icon: Icon(
+                      Icons.youtube_searched_for,
+                    ),
                     onPressed: () {
                       Navigator.of(viewService.context)
                           .pushNamed('search', arguments: null);
@@ -60,9 +73,6 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                   )
                 ],
               ),
-              !state.navBarIsBottom
-                  ? _navBar(state, dispatch)
-                  : Container(),
               Expanded(
                 child: PageView.builder(
                   physics: BouncingScrollPhysics(),
@@ -77,7 +87,7 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: Screens.setHeight(60)),
+                padding: EdgeInsets.only(bottom: Screens.setHeight(56)),
               )
             ],
           ),
@@ -101,11 +111,11 @@ Widget _leftChild(EntranceState state, dispatch, ViewService viewService) {
       Expanded(child: Container()),
       ListTile(
         title: Text('設置'),
-        onTap: () async{
+        onTap: () async {
 //          dispatch(EntranceActionCreator.openPage(OpenType.SETTING));
-         await Navigator.of(viewService.context)
+          await Navigator.of(viewService.context)
               .pushNamed('setting', arguments: null);
-         state.panelController.close();//注意2
+          state.panelController.close(); //注意2
         },
       ),
       ListTile(
@@ -120,12 +130,12 @@ Widget _leftChild(EntranceState state, dispatch, ViewService viewService) {
           dispatch(EntranceActionCreator.openPage(OpenType.DONATION));
         },
       ),
-      SwitchListTile(
-          title: Text('底部导航栏'),
-          value: state.navBarIsBottom,
-          onChanged: (value) {
-            dispatch(EntranceActionCreator.onNavBarSwitch());
-          }),
+//      SwitchListTile(
+//          title: Text('底部导航栏'),
+//          value: state.navBarIsBottom,
+//          onChanged: (value) {
+//            dispatch(EntranceActionCreator.onNavBarSwitch());
+//          }),
       SwitchListTile(
           title: Text('迷你导航栏'),
           value: state.miniNav,
@@ -161,11 +171,11 @@ Widget _navBar(EntranceState state, dispatch) {
                 title: Text('Top'),
                 activeColor: const Color.fromRGBO(0, 153, 37, 1),
               ),
-              BottomMiniNavyBarItem(
-                icon: Icon(Icons.music_video),
-                title: Text('Local'),
-                activeColor: const Color.fromRGBO(51, 105, 232, 1),
-              ),
+//              BottomMiniNavyBarItem(
+//                icon: Icon(Icons.music_video),
+//                title: Text('Local'),
+//                activeColor: const Color.fromRGBO(51, 105, 232, 1),
+//              ),
             ],
           showElevation: false,
           selectedIndex: state.selectIndex,
@@ -179,27 +189,27 @@ Widget _navBar(EntranceState state, dispatch) {
               icon: Icon(
                 IconData(0xe67a, fontFamily: 'iconfont'),
               ),
-              title: Text('Me'),
+              title: Text('Me',style: TextStyle(fontSize: 14),),
               activeColor: const Color.fromRGBO(213, 15, 37, 1),
             ),
             BottomNavyBarItem(
                 icon: Icon(
                   IconData(0xe65d, fontFamily: 'iconfont'),
                 ),
-                title: Text('Find'),
+                title: Text('Find',style: TextStyle(fontSize: 14),),
                 activeColor: const Color.fromRGBO(238, 178, 17, 1)),
             BottomNavyBarItem(
               icon: Icon(
-                Icons.multiline_chart,
+                Icons.whatshot,
               ),
-              title: Text('Top'),
+              title: Text('Top',style: TextStyle(fontSize: 14),),
               activeColor: const Color.fromRGBO(0, 153, 37, 1),
             ),
-            BottomNavyBarItem(
-              icon: Icon(Icons.photo_filter),
-              title: Text('Local'),
-              activeColor: const Color.fromRGBO(51, 105, 232, 1),
-            ),
+//            BottomNavyBarItem(
+//              icon: Icon(Icons.photo_filter),
+//              title: Text('Local'),
+//              activeColor: const Color.fromRGBO(51, 105, 232, 1),
+//            ),
           ],
           selectedIndex: state.selectIndex,
           onItemSelected: (index) {

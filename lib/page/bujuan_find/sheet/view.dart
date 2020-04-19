@@ -9,19 +9,20 @@ Widget buildView(SheetViewState state, Dispatch dispatch, ViewService viewServic
   return Container(
     child: Column(
       children: <Widget>[
-//        Offstage(
-//          offstage: state.result.length == 0,
-//          child: Container(
-//            alignment: Alignment.centerLeft,
-//            child: Text(
-//              '推荐歌单',
-//              style:
-//              TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
-//            ),
-//            padding: EdgeInsets.only(top:0,bottom: 0,left: Screens.width5),
-//          ),
-//        ),
+        Offstage(
+          offstage: state.result.length == 0,
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '推荐歌单',
+              style:
+              TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
+            ),
+            padding: EdgeInsets.only(top:2,bottom: 12,left: Screens.width5),
+          ),
+        ),
         GridView.builder(
+          padding: EdgeInsets.all(0),
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemCount: adapter.itemCount,
@@ -29,7 +30,7 @@ Widget buildView(SheetViewState state, Dispatch dispatch, ViewService viewServic
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               childAspectRatio: 1 / 1.45,
-              crossAxisSpacing: 15.0,
+              crossAxisSpacing: 23.0,
               mainAxisSpacing: 0.0),
         )
       ],

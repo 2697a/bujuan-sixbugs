@@ -101,46 +101,21 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: isSelected ? Screens.setWidth(110) : Screens.setWidth(50),
+      alignment: Alignment.center,
+      width: isSelected ? Screens.setWidth(50) : Screens.setWidth(50),
       height: double.maxFinite,
       duration: animationDuration,
-      padding: EdgeInsets.only(left: 12),
       decoration: BoxDecoration(
         color: isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
         borderRadius: BorderRadius.circular(itemCornerRadius),
       ),
-      child: ListView(
-        padding: EdgeInsets.all(0),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: IconTheme(
-                  data: IconThemeData(
-                      size:  Screens.setSp(20),
-                      color: isSelected
-                          ? item.activeColor.withOpacity(1)
-                          : item.inactiveColor == null ? item.activeColor : item.inactiveColor),
-                  child: item.icon,
-                ),
-              ),
-              isSelected
-                  ? DefaultTextStyle.merge(
-                style: TextStyle(
-                  color: item.activeColor,
-                  fontWeight: FontWeight.bold,
-                ),
-                child: item.title,
-              ) : SizedBox.shrink()
-            ],
-          )
-        ],
+      child:  IconTheme(
+        data: IconThemeData(
+            size:  Screens.setSp(20),
+            color: isSelected
+                ? item.activeColor.withOpacity(1)
+                : item.inactiveColor == null ? item.activeColor : item.inactiveColor),
+        child: item.icon,
       ),
     );
   }

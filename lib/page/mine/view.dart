@@ -3,13 +3,11 @@ import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/page/mine/action.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/loading_page.dart';
-import 'package:bujuan/widget/sliver_head.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
-import 'package:flutter_easyrefresh/taurus_header.dart';
 
 import 'state.dart';
 
@@ -312,81 +310,80 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                 children: <Widget>[
                   Wrap(
                     children: <Widget>[
-                      Container(
-                        padding:
-                            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5),
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: <Widget>[
-                            ImageHelper.getImage(
-                                state.userProfileEntity.profile.avatarUrl +
-                                    "?param=180y180",
-                                height: Screens.setHeight(60),
-                                isRound: true),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    right: Screens.setWidth(20))),
-                            Expanded(
-                                child: Wrap(
-                              direction: Axis.vertical,
-                              children: <Widget>[
-                                Container(
-                                  height: Screens.height30,
-                                  child: Text(
-                                    state.userProfileEntity.profile.nickname,
-                                    style: TextStyle(fontSize: Screens.text16),
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                ),
-                                Container(
-                                  height: Screens.height30,
-                                  child: Text(
-                                    '暂无个性签名',
-                                    style: TextStyle(fontSize: Screens.text12),
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                ),
-                              ],
-                            )),
-                            IconButton(
-                                icon: Icon(
-                                  Icons.exit_to_app,
-                                  size: Screens.text22,
-                                ),
-                                onPressed: () {
-                                  showDialog(
-                                    context: viewService.context,
-                                    builder: (context) => AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        title: Text("退出登录"),
-                                        content: Text("确定要退出登录吗？"),
-                                        actions: <Widget>[
-                                          InkWell(
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 5),
-                                              child: Text('确认'),
-                                            ),
-                                            onTap: () {
-                                              dispatch(
-                                                  MineActionCreator.exit());
-                                            },
-                                          )
-                                        ]),
-                                  );
-                                })
-                          ],
-                        ),
-                      ),
+//                      Container(
+//                        padding:
+//                            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5),
+//                        alignment: Alignment.topLeft,
+//                        child: Row(
+//                          children: <Widget>[
+//                            ImageHelper.getImage(
+//                                state.userProfileEntity.profile.avatarUrl +
+//                                    "?param=180y180",
+//                                height: Screens.setHeight(60),
+//                                isRound: true),
+//                            Padding(
+//                                padding: EdgeInsets.only(
+//                                    right: Screens.setWidth(20))),
+//                            Expanded(
+//                                child: Wrap(
+//                              direction: Axis.vertical,
+//                              children: <Widget>[
+//                                Container(
+//                                  height: Screens.height30,
+//                                  child: Text(
+//                                    state.userProfileEntity.profile.nickname,
+//                                    style: TextStyle(fontSize: Screens.text16),
+//                                  ),
+//                                  alignment: Alignment.centerLeft,
+//                                ),
+//                                Container(
+//                                  height: Screens.height30,
+//                                  child: Text(
+//                                    '暂无个性签名',
+//                                    style: TextStyle(fontSize: Screens.text12),
+//                                  ),
+//                                  alignment: Alignment.centerLeft,
+//                                ),
+//                              ],
+//                            )),
+//                            IconButton(
+//                                icon: Icon(
+//                                  Icons.exit_to_app,
+//                                  size: Screens.text22,
+//                                ),
+//                                onPressed: () {
+//                                  showDialog(
+//                                    context: viewService.context,
+//                                    builder: (context) => AlertDialog(
+//                                        shape: RoundedRectangleBorder(
+//                                            borderRadius:
+//                                                BorderRadius.circular(5)),
+//                                        title: Text("退出登录"),
+//                                        content: Text("确定要退出登录吗？"),
+//                                        actions: <Widget>[
+//                                          InkWell(
+//                                            child: Container(
+//                                              padding: EdgeInsets.symmetric(
+//                                                  horizontal: 10, vertical: 5),
+//                                              child: Text('确认'),
+//                                            ),
+//                                            onTap: () {
+//                                              dispatch(
+//                                                  MineActionCreator.exit());
+//                                            },
+//                                          )
+//                                        ]),
+//                                  );
+//                                })
+//                          ],
+//                        ),
+//                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           IconButton(
                               icon: Icon(
                                 Icons.history,
-                                size: Screens.text22,
                               ),
                               onPressed: () {
                                 Navigator.of(viewService.context)
@@ -395,19 +392,16 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                           IconButton(
                               icon: Icon(
                                 Icons.cloud,
-                                size: Screens.text22,
                               ),
                               onPressed: () {}),
                           IconButton(
                               icon: Icon(
                                 Icons.people,
-                                size: Screens.text22,
                               ),
                               onPressed: () {}),
                           IconButton(
                               icon: Icon(
                                 Icons.store_mall_directory,
-                                size: Screens.text22,
                               ),
                               onPressed: () {}),
                         ],
@@ -513,8 +507,8 @@ Widget _orderItem(UserOrderPlaylist orderPlaylist, viewService) {
   return ListTile(
     dense: true,
     contentPadding: EdgeInsets.symmetric(horizontal: 2),
-    leading: ImageHelper.getImage(orderPlaylist.coverImgUrl + "?param=100y100",
-        height: Screens.setHeight(45), isRound: true),
+    leading: ImageHelper.getImage(orderPlaylist.coverImgUrl + "?param=150y150",
+        height: Screens.setHeight(42), isRound: true),
     title: Text(
       orderPlaylist.name,
       style: TextStyle(fontSize: Screens.text14),

@@ -18,7 +18,7 @@ Widget buildView(
           child: Wrap(
             children: <Widget>[
               Container(
-                height: Screens.setHeight(146),
+                height: Screens.setHeight(136),
                 child: Swiper(
                   autoplay: true,
                   duration: 300,
@@ -27,7 +27,7 @@ Widget buildView(
                     return Container(
 //                    margin: EdgeInsets.only(bottom:Screens.height5),
                       child: ImageHelper.getImage(
-                          state.banners[index].imageUrl + "?param=300y800"),
+                          state.banners[index].imageUrl + "?param=400y900"),
                     );
                   },
                   itemCount: state.banners.length,
@@ -66,13 +66,13 @@ Widget _menuItem(title, icon, dispatch, MenuType menuType,ViewService viewServic
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       Container(
-        width: MediaQuery.of(viewService.context).size.width/8.3,
+        width: MediaQuery.of(viewService.context).size.width/8.6,
         decoration:
-            BoxDecoration(color: Colors.amberAccent, shape: BoxShape.circle),
+            BoxDecoration(color: Colors.amberAccent.withOpacity(.8), shape: BoxShape.circle),
         child: IconButton(
             icon: Icon(icon),
             color: Colors.white,
-            iconSize: MediaQuery.of(viewService.context).size.width/15,
+            iconSize: MediaQuery.of(viewService.context).size.width/18,
             onPressed: () {
               dispatch(NewBannerActionCreator.onOpenPage(menuType));
             }),

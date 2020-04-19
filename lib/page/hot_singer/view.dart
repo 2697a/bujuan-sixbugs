@@ -9,7 +9,8 @@ import 'package:flutter_easyrefresh/phoenix_footer.dart';
 import 'action.dart';
 import 'state.dart';
 
-Widget buildView(HotSingerState state, Dispatch dispatch, ViewService viewService) {
+Widget buildView(
+    HotSingerState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     appBar: AppBar(
       title: Text('热门歌手'),
@@ -25,9 +26,20 @@ Widget buildView(HotSingerState state, Dispatch dispatch, ViewService viewServic
                     (BuildContext context, int index) {
                       return ListTile(
                         dense: true,
-                        leading: ImageHelper.getImage('${state.artists[index].picUrl}?param=100y100', height: 35, isRound: true),
+                        leading: ImageHelper.getImage(
+                            '${state.artists[index].picUrl}?param=100y100',
+                            height: 42,
+                            isRound: true),
                         title: Text('${state.artists[index].name}'),
                         subtitle: Text('${state.artists[index].musicSize} 首单曲'),
+                        onTap: () async {
+                          await Navigator.of(viewService.context)
+                              .pushNamed('singer_details', arguments: {
+                            'id': state.artists[index].id,
+                            'name': state.artists[index].name,
+                            'pic':state.artists[index].picUrl
+                          }); //注意2
+                        },
                       );
                     },
                     childCount: state.artists.length,

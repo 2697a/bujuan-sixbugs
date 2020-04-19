@@ -13,7 +13,7 @@ Widget buildView(
     offstage: state.currSong == null,
     child: InkWell(
       child: Container(
-        height: Screens.setHeight(60),
+        height: Screens.setHeight(56),
         padding: EdgeInsets.symmetric(horizontal: Screens.width5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -22,23 +22,23 @@ Widget buildView(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ImageHelper.getImage(
-                    '${state.currSong.picUrl ?? ''}?param=100y100',
+                    '${state.currSong.picUrl ?? ''}?param=150y150',
                     isRound: true,
-                    height: Screens.setHeight(42)),
+                    height: Screens.setHeight(40)),
                 Padding(padding: EdgeInsets.only(left: Screens.width10)),
                 Expanded(
                     child: Column(
                   children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
-                      height: Screens.setHeight(26),
+                      height: Screens.setHeight(24),
                       child: Text(state.currSong.name,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: Screens.text14)),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      height: Screens.setHeight(26),
+                      height: Screens.setHeight(24),
                       child: Text(state.currSong.singer,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: Screens.text12)),
@@ -53,8 +53,8 @@ Widget buildView(
                         width: Screens.setWidth(42),
                         child: state.playStateType == PlayStateType.Stop ||
                                 state.playStateType == PlayStateType.Pause
-                            ? Icon(Icons.play_arrow, size: Screens.setSp(24))
-                            : Icon(Icons.pause, size: Screens.setSp(24)),
+                            ? Icon(Icons.play_arrow)
+                            : Icon(Icons.pause),
                       ),
                       onTap: () => dispatch(PlayBarActionCreator.sendTask()),
                     ),
@@ -65,7 +65,7 @@ Widget buildView(
                       child: Container(
                         height: Screens.setHeight(42),
                         width: Screens.setWidth(42),
-                        child: Icon(Icons.skip_next, size: Screens.setSp(24)),
+                        child: Icon(Icons.skip_next),
                       ),
                       onTap: () => dispatch(PlayBarActionCreator.nextSong()),
                     ),
