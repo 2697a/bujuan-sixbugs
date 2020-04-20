@@ -24,9 +24,9 @@ Effect<MineState> buildEffect() {
 }
 
 Future<void> _getRefresh(Action action, Context<MineState> ctx) async {
-  Future.delayed(Duration(milliseconds: 300), ()async {
+//  Future.delayed(Duration(milliseconds: 300), ()async {
     await _onRefresh(action, ctx);
-  });
+//  });
 }
 
 //点击登录
@@ -51,7 +51,7 @@ Future _onRefresh(Action action, Context<MineState> ctx) async {
   if (login) {
     var list2 = await Future.wait([_getProfile(userId),_getPlayList(userId)]);
 
-    await _getLoveSong(userId);
+//    await _getLoveSong(userId);
     list2.forEach((data){
       if(data is UserProfileEntity){
         if (data != null) {
@@ -84,14 +84,14 @@ void _init(Action action, Context<MineState> ctx) async{
 }
 
 Future<UserProfileEntity> _getProfile(userId) async {
-  var profile = await user_detail({'uid': userId}, BuJuanUtil.getCookie());
+  var profile = await user_detail({'uid': userId},await BuJuanUtil.getCookie());
   return profile.status == 200
       ? UserProfileEntity.fromJson(profile.body)
       : null;
 }
 
 Future<UserOrderEntity> _getPlayList(userId) async {
-  var playlist = await user_playlist({'uid': userId}, BuJuanUtil.getCookie());
+  var playlist = await user_playlist({'uid': userId},await BuJuanUtil.getCookie());
 //  Response profile =
 //      await HttpUtil().get('/user/playlist', data: {'uid': userId});
 //  var data = profile.data;
@@ -103,7 +103,7 @@ Future<UserOrderEntity> _getPlayList(userId) async {
 
 ///likelist
 Future<void> _getLoveSong(id) async {
-  var likeList = await likelist({'uid': id}, BuJuanUtil.getCookie());
+  var likeList = await likelist({'uid': id},await BuJuanUtil.getCookie());
 //  Response name = await HttpUtil().post('/likelist', data: {'uid': id});
 //  var data = name.data;
 //  var jsonDecode2 = jsonDecode(data);

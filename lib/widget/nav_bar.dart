@@ -48,7 +48,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
       child: Container(
         width: double.infinity,
         height: Screens.setHeight(46),
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
           children: items.map((item) {
@@ -102,20 +102,45 @@ class _ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       alignment: Alignment.center,
-      width: isSelected ? Screens.setWidth(50) : Screens.setWidth(50),
-      height: double.maxFinite,
+      width: isSelected ? Screens.setWidth(46) : Screens.setWidth(56),
+      height: Screens.setWidth(46),
       duration: animationDuration,
       decoration: BoxDecoration(
         color: isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
         borderRadius: BorderRadius.circular(itemCornerRadius),
       ),
-      child:  IconTheme(
-        data: IconThemeData(
-            size:  Screens.setSp(20),
-            color: isSelected
-                ? item.activeColor.withOpacity(1)
-                : item.inactiveColor == null ? item.activeColor : item.inactiveColor),
-        child: item.icon,
+      child: ListView(
+        padding: EdgeInsets.all(0),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(0),
+                child: IconTheme(
+                  data: IconThemeData(
+                      size:  Screens.setSp(20),
+                      color: isSelected
+                          ? item.activeColor.withOpacity(1)
+                          : item.inactiveColor == null ? item.activeColor : item.inactiveColor),
+                  child: item.icon,
+                ),
+              ),
+              isSelected
+                  ? DefaultTextStyle.merge(
+                style: TextStyle(
+                  color: item.activeColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                child: Container(),
+              ) : SizedBox.shrink()
+            ],
+          )
+        ],
       ),
     );
   }

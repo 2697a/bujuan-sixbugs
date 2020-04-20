@@ -54,6 +54,6 @@ void _playSong(Action action, Context<HistoryState> ctx) {
 }
 
 Future<PlayHistoryEntity> _getHistory(id) async {
-  var answer = await user_record({'uid': id}, BuJuanUtil.getCookie());
+  var answer = await user_record({'uid': id},await BuJuanUtil.getCookie());
   return answer.status == 200 ? PlayHistoryEntity.fromJson(answer.body) : null;
 }

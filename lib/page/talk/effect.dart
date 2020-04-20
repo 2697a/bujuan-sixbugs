@@ -45,7 +45,7 @@ Future<SongTalkEntity> _getTalk(id, page) async {
   var answer = await comment_music({
     'id': id,
     'offset': page * 15,
-  }, BuJuanUtil.getCookie());
+  },await BuJuanUtil.getCookie());
   if (answer.status == 200) {
     songTalkEntity = SongTalkEntity.fromJson(answer.body);
   }
@@ -53,7 +53,7 @@ Future<SongTalkEntity> _getTalk(id, page) async {
 }
 
 Future<bool> _sendTalk(id, content) async {
-  var answer = await comment({'id': id, 't': 1, 'type': 0, 'content': content}, BuJuanUtil.getCookie());
+  var answer = await comment({'id': id, 't': 1, 'type': 0, 'content': content},await BuJuanUtil.getCookie());
   if (answer.status == 200) {
     return true;
   }

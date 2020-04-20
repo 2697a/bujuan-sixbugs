@@ -17,7 +17,198 @@ import 'state.dart';
 
 Widget buildView(
     PlayViewState state, Dispatch dispatch, ViewService viewService) {
-  return _body(state, viewService, dispatch);
+//  return _body(state, viewService, dispatch);
+  var d = state.currSongPos / state.currSongAllPos * 100;
+  return Scaffold(
+    body: Container(
+      padding: EdgeInsets.symmetric(horizontal: 13),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              children: <Widget>[
+                ListTile(dense: true,),
+                Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                InkWell(
+                  child: ImageHelper.getImage(
+                      state.currSong.picUrl + "?param=500y500",
+                      height:
+                          MediaQuery.of(viewService.context).size.width / 1.4,
+                      isRound: true),
+                  onTap: () async =>
+                      await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    IconButton(icon: Icon(Icons.sort), onPressed: () {}),
+                    IconButton(
+                        icon: BuJuanUtil.getPlayMode(state.playModeType),
+                        onPressed: () {
+                          dispatch(PlayViewActionCreator.getChangePlayMode());
+                        }),
+                    state.currSong.like != null
+                        ? IconButton(
+                            icon: state.currSong.like
+                                ? Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  )
+                                : Icon(
+                                    Icons.favorite_border,
+                                  ),
+                            onPressed: () {
+                              dispatch(PlayViewActionCreator.getLikeOrUnLike(
+                                  !state.currSong.like));
+                            })
+                        : IconButton(
+                            icon: Icon(Icons.favorite_border),
+                            onPressed: () {}),
+                    IconButton(
+                        icon: Icon(Icons.volume_down),
+                        onPressed: () {
+                          dispatch(PlayViewActionCreator.getChangePlayMode());
+                        }),
+                  ],
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                        state.currSong.singer,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                        state.currSong.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 6)),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 6),
+                  child: SliderTheme(
+                    data: SliderTheme.of(viewService.context).copyWith(
+                      //已拖动的颜色
+                      activeTrackColor:
+                          Constants.dark ? Colors.white : Colors.black,
+                      //未拖动的颜色
+                      inactiveTrackColor: Colors.grey,
+
+                      //提示进度的气泡的背景色
+                      valueIndicatorColor: Colors.amber[0],
+                      //提示进度的气泡文本的颜色
+                      valueIndicatorTextStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+
+                      //滑块中心的颜色
+                      thumbColor: Constants.dark ? Colors.white : Colors.black,
+                      trackHeight: 4,
+                      trackShape: RectangularSliderTrackShape(),
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0),
+                      //滑块边缘的颜色
+                      overlayColor: Colors.white,
+
+                      //divisions对进度线分割后，断续线中间间隔的颜色
+                      inactiveTickMarkColor: Colors.white,
+                    ),
+                    child: Slider(
+                        value: d >= 0 && d <= 100 ? d : 0,
+                        max: 100,
+                        min: 0,
+                        onChangeEnd: (d) {},
+                        onChanged: (value) {
+                          dispatch(PlayViewActionCreator.seekTo(
+                              (value * state.currSongAllPos ~/ 100)
+                                  .toString()));
+                        }),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 35),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        '${BuJuanUtil.unix2Time(state.currSongPos)}',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '${BuJuanUtil.unix2Time(state.currSongAllPos)}',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            flex: 4,
+          ),
+          Expanded(
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.skip_previous),
+                      onPressed: () {
+                        dispatch(PlayViewActionCreator.skipPrevious());
+                      }),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    width: Screens.setWidth(55),
+                    height: Screens.setWidth(55),
+                    decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius:
+                            BorderRadius.circular(Screens.setWidth(55))),
+                    child: IconButton(
+                        icon: state.playStateType == PlayStateType.Stop ||
+                                state.playStateType == PlayStateType.Pause
+                            ? Icon(
+                                Icons.play_arrow,
+                                size: 30,
+                                color: Colors.white,
+                              )
+                            : Icon(
+                                Icons.pause,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                        onPressed: () {
+                          ///操作
+                          dispatch(PlayViewActionCreator.playOrPause());
+                        }),
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.skip_next),
+                      onPressed: () {
+                        dispatch(PlayViewActionCreator.skipNext());
+                      }),
+                ],
+              ),
+            ),
+            flex: 1,
+          )
+        ],
+      ),
+    ),
+  );
 }
 
 Widget _body(PlayViewState state, viewService, dispatch) {
@@ -56,7 +247,10 @@ Widget _body(PlayViewState state, viewService, dispatch) {
         child: Column(
           children: <Widget>[
             Container(
-              child: IconButton(icon: Icon(Icons.keyboard_arrow_up),onPressed: (){},),
+              child: IconButton(
+                icon: Icon(Icons.keyboard_arrow_up),
+                onPressed: () {},
+              ),
             ),
             Container(
               child: Row(
@@ -88,14 +282,17 @@ Widget _body(PlayViewState state, viewService, dispatch) {
             left: Screens.setWidth(10),
             right: Screens.setWidth(10),
             bottom: Screens.setHeight(85),
-            top:MediaQueryData.fromWindow(window).padding.top),
+            top: MediaQueryData.fromWindow(window).padding.top),
         child: Column(
           children: <Widget>[
             ListTile(
               dense: true,
               contentPadding: EdgeInsets.all(0),
               leading: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_down,color:Constants.dark?Colors.white:Colors.black,),
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Constants.dark ? Colors.white : Colors.black,
+                  ),
                   onPressed: () => Navigator.pop(viewService.context)),
               title: Text(
                 '${state.currSong.name}',
@@ -130,7 +327,7 @@ Widget _body(PlayViewState state, viewService, dispatch) {
                   ),
                   Expanded(
                       child: Slider(
-                        activeColor: Colors.amber.withOpacity(.6),
+                          activeColor: Colors.amber.withOpacity(.6),
                           value: d >= 0 && d <= 100 ? d : 0,
                           max: 100,
                           min: 0,

@@ -21,9 +21,6 @@ Effect<TodayState> buildEffect() {
 }
 
 void _onAction(Action action, Context<TodayState> ctx) async{
-  Future.delayed(Duration(milliseconds: 300),(){
-    
-  });
   var today = await _getToday();
   List<SongBeanEntity> newList = List();
   Future.forEach(today.recommend, (details)async{
@@ -44,7 +41,7 @@ void _onAction(Action action, Context<TodayState> ctx) async{
 }
 
 Future<TodaySongEntity> _getToday() async {
-  var answer = await recommend_songs({}, BuJuanUtil.getCookie());
+  var answer = await recommend_songs({}, await BuJuanUtil.getCookie());
 //  Response sheet = await HttpUtil().post('/recommend/songs');
 //  var data = sheet.data;
 //  var jsonDecode2 = jsonDecode(data);

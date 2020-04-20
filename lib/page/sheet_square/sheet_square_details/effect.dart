@@ -28,6 +28,6 @@ Future<HighqualityEntity> _getSheet(type, page) async {
   var answer = await top_playlist({
     'cat': type,
     'offset': page * 15,
-  }, BuJuanUtil.getCookie());
+  },await BuJuanUtil.getCookie());
   return answer.status == 200 ? HighqualityEntity.fromJson(answer.body) : null;
 }

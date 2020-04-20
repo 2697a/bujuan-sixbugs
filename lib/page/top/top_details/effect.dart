@@ -56,7 +56,7 @@ List<SongBeanEntity> _changeType(TopEntity topEntity) {
 }
 
 Future<TopEntity> _getTopData(id) async {
-  var answer = await top_list({'idx': id}, BuJuanUtil.getCookie());
+  var answer = await top_list({'idx': id},await BuJuanUtil.getCookie());
 //  Response top = await HttpUtil().get('/top/list', data: {'idx': id});
 //  var data2 = top.data;
 //  var jsonDecode2 = jsonDecode(data2);

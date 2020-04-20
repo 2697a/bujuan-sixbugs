@@ -19,7 +19,7 @@ void _onInit(Action action, Context<SingerDetailsState> ctx) async{
 }
 
 Future _getSingerDetails(id) async{
-  var answer = await artists({'id':id},BuJuanUtil.getCookie());
+  var answer = await artists({'id':id},await BuJuanUtil.getCookie());
    if(answer.status==200){
      print('=======${answer.body}');
    }

@@ -107,7 +107,7 @@ void _onFm(Action action, Context<NewBannerState> ctx) {
 
 Future<SongDeEntity> _getSongDetails(ids) async {
   // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-  var answer = await song_detail({'ids': ids}, BuJuanUtil.getCookie());
+  var answer = await song_detail({'ids': ids},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SongDeEntity.fromJson(answer.body) : null;
 }
 

@@ -24,6 +24,6 @@ void _doSearch(Action action, Context<SearchState> ctx) {
 }
 
 Future<SearchHotEntity> _hotSearch() async {
-  var answer = await search_hot_details({}, BuJuanUtil.getCookie());
+  var answer = await search_hot_details({},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SearchHotEntity.fromJson(answer.body) : null;
 }
