@@ -4,9 +4,11 @@ import 'dart:ui';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/constant/theme.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
+import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
+import 'package:flutter/services.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -36,6 +38,15 @@ List<Color> _colors = <Color>[
 
 GlobalState _onchangeThemeColor(GlobalState state, Action action) {
   AppTheme appTheme = AppTheme.getInstance(action.payload);
+  if (action.payload) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.grey[850],
+        systemNavigationBarIconBrightness: Brightness.light));
+  }else {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark));
+  }
   return state.clone()..appTheme = appTheme;
 }
 
@@ -55,16 +66,19 @@ GlobalState _onchangeCurrSong(GlobalState state, Action action) {
 GlobalState _onchangeSongPos(GlobalState state, Action action) {
   return state.clone()..currSongPos = action.payload;
 }
+
 GlobalState _changeBack(GlobalState state, Action action) {
   var clone = state.clone();
   SpUtil.putString(Constants.USER_BACKGROUND, action.payload);
   return clone..backPath = action.payload;
 }
+
 GlobalState _changeBlur(GlobalState state, Action action) {
   var clone = state.clone();
   SpUtil.putDouble(Constants.BLUR, action.payload);
   return clone..blur = action.payload;
 }
+
 GlobalState _onchangeSongAllPos(GlobalState state, Action action) {
   return state.clone()..currSongAllPos = action.payload;
 }

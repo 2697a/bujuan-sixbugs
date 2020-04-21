@@ -3,8 +3,6 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/utils/sp_util.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
-import 'package:bujuan/widget/cache_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

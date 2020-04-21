@@ -168,7 +168,7 @@ Future<String> _findLocalPath() async {
 }
 //获取播放地址
 Future<String> _getUrl(id) async{
-  var answer = await song_url({'id':id,'br':'320000'},BuJuanUtil.getCookie());
+  var answer = await song_url({'id':id,'br':'320000'},await BuJuanUtil.getCookie());
   if (answer.status == 200 && answer.body != null) {
     var body = answer.body['data'][0]['url'];
     return body;
@@ -177,7 +177,7 @@ Future<String> _getUrl(id) async{
 }
 void _onLike(Action action, Context<PlayViewState> ctx) async {
   ctx.dispatch(PlayViewActionCreator.getChangeLike());
-  var answer = await like_song({'id': ctx.state.currSong.id, 'like': '${action.payload}'}, BuJuanUtil.getCookie());
+  var answer = await like_song({'id': ctx.state.currSong.id, 'like': '${action.payload}'},await BuJuanUtil.getCookie());
 //  Response data = await HttpUtil().post('/like',
 //      data: {'id': ctx.state.currSong.id, 'like': '${action.payload}'});
   if (answer.status == 200) {
@@ -192,7 +192,7 @@ void _onLike(Action action, Context<PlayViewState> ctx) async {
 }
 
 Future<LyricEntity> _getLyric(id) async {
-  var answer = await lyric({'id': id}, BuJuanUtil.getCookie());
+  var answer = await lyric({'id': id},await BuJuanUtil.getCookie());
 //  Response sheet = await HttpUtil().get('/lyric', data: {'id': id});
 //  var data = sheet.data;
 //  var jsonDecode2 = jsonDecode(data);q

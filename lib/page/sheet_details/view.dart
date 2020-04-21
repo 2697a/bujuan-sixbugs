@@ -1,4 +1,5 @@
 import 'package:bujuan/constant/Screens.dart';
+import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/widget/app_bar.dart';
 import 'package:bujuan/widget/bujuan_background.dart';
@@ -13,32 +14,72 @@ import 'state.dart';
 
 Widget buildView(
     SheetDetailsState state, Dispatch dispatch, ViewService viewService) {
+//  return Scaffold(
+//    appBar: BujuanAppBar.norAppBar(viewService.context,
+//        state.isShowLoading ? '' : state.playlist.name),
+//    body: state.isShowLoading
+//        ? LoadingPage()
+//        : Column(
+//      children: <Widget>[
+//        Expanded(
+//          child: SingleChildScrollView(
+//            child: Column(
+//              children: <Widget>[
+//                _sheetTop(state, dispatch),
+//                ListView.builder(
+//                  shrinkWrap: true,
+//                  physics: NeverScrollableScrollPhysics(),
+//                  itemBuilder: (context, index) => _sheetItem(
+//                      state.list[index],
+//                      dispatch,
+//                      index,
+//                      viewService),
+//                  itemCount: state.list.length,
+//                )
+//              ],
+//            ),
+//          ),
+//        ),
+//        PlayBarPage().buildPage(null)
+//      ],
+//    ),
+//  );
   return Scaffold(
-    appBar: BujuanAppBar.norAppBar(viewService.context,
-        state.isShowLoading ? '' : state.playlist.name),
-    body: state.isShowLoading
-        ? LoadingPage()
-        : Column(
+    body: Column(
       children: <Widget>[
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                _sheetTop(state, dispatch),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => _sheetItem(
-                      state.list[index],
-                      dispatch,
-                      index,
-                      viewService),
-                  itemCount: state.list.length,
-                )
-              ],
+        Expanded(child: state.isShowLoading?LoadingPage(): CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              title: Text('${state.playlist.name}'),
+              expandedHeight: 180.0,
+              elevation: 0,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Stack(
+                  children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      child: ImageHelper.getImage(state.playlist.coverImgUrl + "?param=400y400",height: 180),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Constants.dark?Colors.grey[850].withOpacity(.3):Colors.white.withOpacity(.3)
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              floating: false,
+              pinned: true,
+              snap: false,
             ),
-          ),
-        ),
+            SliverList(
+              delegate: new SliverChildBuilderDelegate(
+                    (context, index) =>  _sheetItem(state.list[index], dispatch, index, viewService),
+                childCount: state.list.length,
+              ),
+            ),
+          ],
+        )),
         PlayBarPage().buildPage(null)
       ],
     ),

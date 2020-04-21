@@ -85,7 +85,7 @@ void _onDispose(Action action, Context<EntranceState> ctx) {
 //获取播放地址
 Future<String> _getUrl(id) async {
   var answer =
-      await song_url({'id': id, 'br': '320000'}, BuJuanUtil.getCookie());
+      await song_url({'id': id, 'br': '320000'},await BuJuanUtil.getCookie());
   if (answer.status == 200 && answer.body != null) {
     var body = answer.body['data'][0]['url'];
     return body ?? '';
@@ -102,7 +102,7 @@ Future<FmEntity> _getFm() async {
 }
 
 Future<LyricEntity> _getLyric(id) async {
-  var answer = await lyric({'id': id}, BuJuanUtil.getCookie());
+  var answer = await lyric({'id': id},await BuJuanUtil.getCookie());
   if (answer.status == 200 && answer.body != null) {
     return LyricEntity.fromJson(answer.body);
   } else

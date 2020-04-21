@@ -3,6 +3,7 @@ import 'package:bujuan/main/page.dart';
 import 'package:bujuan/page/about/page.dart';
 import 'package:bujuan/page/donation/page.dart';
 import 'package:bujuan/page/hot_singer/page.dart';
+import 'package:bujuan/page/hot_singer/singer_details/page.dart';
 import 'package:bujuan/page/local_music/local_list/page.dart';
 import 'package:bujuan/page/local_music/page.dart';
 import 'package:bujuan/page/login/page.dart';
@@ -51,6 +52,7 @@ var routes = new PageRoutes(
     'sheet_square': SheetSquarePage(),
     'hot_singer': HotSingerPage(),
     'local_list': LocalListPage(),
+    'singer_details': SingerDetailsPage(),
   },
   visitor: (String path, Page<Object, dynamic> page) {
     if (page.isTypeof<GlobalBaseState>()) {

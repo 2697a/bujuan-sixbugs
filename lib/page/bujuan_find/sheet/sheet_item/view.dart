@@ -11,13 +11,13 @@ Widget buildView(
       child: Column(
         children: <Widget>[
           ImageHelper.getImage(
-              state.picUrl == null ? null : state.picUrl + "?param=200y200",),
+              state.picUrl == null ? null : state.picUrl + "?param=300y300",),
           Container(
             padding: EdgeInsets.only(top: Screens.height5),
             alignment: Alignment.center,
             child: Text(
               state.name,
-              style: TextStyle(fontSize: Screens.text14),
+              style: TextStyle(fontSize: Screens.text14,height: 1.2),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

@@ -148,7 +148,7 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: isSelected ? 50 : 15,
+      width: isSelected ? 35 : 15,
       height: double.maxFinite,
       duration: animationDuration,
 //      padding: EdgeInsets.only(left: 12),

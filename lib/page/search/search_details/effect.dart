@@ -60,30 +60,30 @@ void _init(Action action, Context<SearchDetailsState> ctx) {
 
 Future<SearchSongEntity> _searchSongData(content) async {
   // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-  var answer = await search({'keywords': content, 'type': 1}, BuJuanUtil.getCookie());
+  var answer = await search({'keywords': content, 'type': 1},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SearchSongEntity.fromJson(answer.body) : null;
 }
 
 Future<SearchSheetEntity> _searchSheetData(content) async {
   // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-  var answer = await search({'keywords': content, 'type': 1000}, BuJuanUtil.getCookie());
+  var answer = await search({'keywords': content, 'type': 1000},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SearchSheetEntity.fromJson(answer.body) : null;
 }
 
 Future<SearchMvEntity> _searchMvData(content) async {
   // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-  var answer = await search({'keywords': content, 'type': 1004}, BuJuanUtil.getCookie());
+  var answer = await search({'keywords': content, 'type': 1004},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SearchMvEntity.fromJson(answer.body) : null;
 }
 
 Future<SearchSingerEntity> _searchSingerData(content) async {
   // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-  var answer = await search({'keywords': content, 'type': 100}, BuJuanUtil.getCookie());
+  var answer = await search({'keywords': content, 'type': 100},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SearchSingerEntity.fromJson(answer.body) : null;
 }
 
 Future<SongDeEntity> _getSongDetails(ids) async {
   // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-  var answer = await song_detail({'ids': ids}, BuJuanUtil.getCookie());
+  var answer = await song_detail({'ids': ids},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SongDeEntity.fromJson(answer.body) : null;
 }

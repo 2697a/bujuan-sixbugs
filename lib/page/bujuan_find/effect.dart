@@ -58,7 +58,7 @@ Future _onRefresh(Action action, Context<NewFindState> ctx) async {
 }
 
 Future<PersonalEntity> _getSheet() async {
-  var answer = await personalized({}, BuJuanUtil.getCookie());
+  var answer = await personalized({},await BuJuanUtil.getCookie());
 //  Response sheet = await HttpUtil().get('/personalized');
 //  var data = sheet.data;
 //  SpUtil.putString('sheet', data);
@@ -67,7 +67,7 @@ Future<PersonalEntity> _getSheet() async {
 }
 
 Future<BannerEntity> _getBanner() async {
-  var answer = await banner({}, BuJuanUtil.getCookie());
+  var answer = await banner({},await BuJuanUtil.getCookie());
 //  Response banner = await HttpUtil().get('/banner', data: {'type': 1});
 //  var data2 = banner.data;
 //  SpUtil.putString('banner', data2);
@@ -76,7 +76,7 @@ Future<BannerEntity> _getBanner() async {
 }
 
 Future<NewSongEntity> _getNewSong() async {
-  var answer = await personalized_newsong({}, BuJuanUtil.getCookie());
+  var answer = await personalized_newsong({},await BuJuanUtil.getCookie());
 //  Response newSong = await HttpUtil().get('/personalized/newsong');
 //  var data2 = newSong.data;
 //  SpUtil.putString('newSong', data2);

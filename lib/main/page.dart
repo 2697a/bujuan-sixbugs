@@ -7,7 +7,7 @@ import 'package:fish_redux/fish_redux.dart';
 
 import 'effect.dart';
 
-class MainPage extends Page<MainState, Map<String, dynamic>> {
+class MainPage extends Page<MainState, Map<String, dynamic>> with WidgetsBindingObserverMixin{
   MainPage()
       : super(
           initState: initState,

@@ -39,7 +39,7 @@ Widget buildView(
                             height: Screens.setHeight(100),
                             margin: EdgeInsets.only(right: Screens.width10),
                             child: ImageHelper.getImage(
-                                state.result[index].picUrl + "?param=200y200",
+                                state.result[index].picUrl + "?param=250y250",
                                 height: Screens.setHeight(100)),
                           ),
                           Container(

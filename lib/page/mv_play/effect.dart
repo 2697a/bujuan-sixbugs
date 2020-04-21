@@ -30,6 +30,6 @@ void _dispose(Action action, Context<MvPlayViewState> ctx) {
 }
 
 Future<MvPlayerEntity> _getMvDetals(mvId) async {
-  var answer = await mv_detail({'mvid': mvId}, BuJuanUtil.getCookie());
+  var answer = await mv_detail({'mvid': mvId},await BuJuanUtil.getCookie());
   return answer.status == 200 ? MvPlayerEntity.fromJson(answer.body) : null;
 }

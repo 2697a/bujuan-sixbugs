@@ -40,7 +40,7 @@ EntranceState initState(Map<String, dynamic> args) {
   state.selectIndex = 1;
   state.navBarIsBottom = SpUtil.getBool(Constants.BOTTOM_NAV, defValue: false);
   state.pageController =
-      PageController(initialPage: state.selectIndex, viewportFraction: 1);
+      PageController(initialPage: state.selectIndex, viewportFraction: .99);
   state.miniNav = SpUtil.getBool(Constants.MINI_NAV, defValue: true);
   state.panelController = PanelController();
   state.val = false;
@@ -48,7 +48,7 @@ EntranceState initState(Map<String, dynamic> args) {
     MinePage().buildPage(null),
     NewFindPage().buildPage(null),
     TopPagePage().buildPage(null),
-    LocalMusicPage().buildPage(null),
+//    LocalMusicPage().buildPage(null),
   ];
   return state;
 }

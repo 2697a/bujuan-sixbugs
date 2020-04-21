@@ -20,6 +20,6 @@ void _init(Action action, Context<HotSingerState> ctx) async {
 }
 
 Future<SingerEntity> _getHotSinger(page) async {
-  var answer = await top_artists({'offset': page * 15}, BuJuanUtil.getCookie());
+  var answer = await top_artists({'offset': page * 15},await BuJuanUtil.getCookie());
   return answer.status == 200 ? SingerEntity.fromJson(answer.body) : null;
 }

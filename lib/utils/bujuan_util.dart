@@ -3,8 +3,10 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/cookie_entity.dart';
 import 'package:bujuan/entity/save_cookie_entity.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 
 class BuJuanUtil {
   static String unix2Time(unix) {
@@ -53,24 +55,28 @@ class BuJuanUtil {
     SpUtil.putObjectList('cookies', cookies);
   }
 
-  static List<Cookie> getCookie() {
-    var objectList = SpUtil.getObjectList('cookies');
-    if (objectList != null) {
-      List<Cookie> cookieList = new List();
-      objectList.forEach((f) {
-        Cookie cookie = new MyCookie();
-        cookie.name = f['name'];
-        cookie.value = f['value'];
-        cookie.maxAge = f['maxAge'];
-        cookie.expires = DateTime.now();
-        cookie.domain = f['domain'];
-        cookie.path = f['path'];
-        cookieList.add(cookie);
-      });
-      return cookieList;
-    } else {
-      return new List();
-    }
+  static Future<List<Cookie>> getCookie() async {
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    CookieJar cookie = new PersistCookieJar(dir: tempPath, ignoreExpires: true);
+    return cookie.loadForRequest(Uri.parse('https://music.163.com/weapi/'));
+//    var objectList = SpUtil.getObjectList('cookies');
+//    if (objectList != null) {
+//      List<Cookie> cookieList = new List();
+//      objectList.forEach((f) {
+//        Cookie cookie = new MyCookie();
+//        cookie.name = f['name'];
+//        cookie.value = f['value'];
+//        cookie.maxAge = f['maxAge'];
+//        cookie.expires = DateTime.now();
+//        cookie.domain = f['domain'];
+//        cookie.path = f['path'];
+//        cookieList.add(cookie);
+//      });
+//      return cookieList;
+//    } else {
+//      return new List();
+//    }
   }
 
   static List<Lyric> getLyric(String lyric) {
