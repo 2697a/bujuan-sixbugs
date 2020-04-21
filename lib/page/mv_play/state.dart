@@ -1,9 +1,9 @@
 import 'package:bujuan/entity/mv_player_entity.dart';
-//import 'package:fijkplayer/fijkplayer.dart';
+import 'package:fijkplayer/fijkplayer.dart';
 import 'package:fish_redux/fish_redux.dart';
 
 class MvPlayViewState implements Cloneable<MvPlayViewState> {
-//  FijkPlayer player;
+  FijkPlayer player;
 
   MvPlayerEntity mvData;
   int mvId;
