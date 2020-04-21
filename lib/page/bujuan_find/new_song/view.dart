@@ -25,7 +25,7 @@ Widget buildView(
                 ),
               ),
               Container(
-                height: Screens.setHeight(150),
+                height: Screens.setHeight(135),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,

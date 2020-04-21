@@ -46,7 +46,7 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                           SpUtil.getString('head',
                               defValue:
                               'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
-                          height: 32,
+                          height: 30,
                           isRound: true),
                       onPressed: () {
                         state.panelController.isPanelOpen
@@ -65,7 +65,6 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                     padding: EdgeInsets.all(0),
                     icon: Icon(
                       Icons.search,
-                      size: 26,
                     ),
                     onPressed: () {
                       Navigator.of(viewService.context)
@@ -201,7 +200,7 @@ Widget _navBar(EntranceState state, dispatch) {
                 activeColor: const Color.fromRGBO(238, 178, 17, 1)),
             BottomNavyBarItem(
               icon: Icon(
-                Icons.whatshot,
+                Icons.filter_list,
               ),
               title: Text('Top',style: TextStyle(fontSize: 14),),
               activeColor: const Color.fromRGBO(0, 153, 37, 1),

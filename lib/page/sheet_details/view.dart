@@ -44,42 +44,60 @@ Widget buildView(
 //      ],
 //    ),
 //  );
+  var height = MediaQuery.of(viewService.context).size.height;
   return Scaffold(
     body: Column(
       children: <Widget>[
-        Expanded(child: state.isShowLoading?LoadingPage(): CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text('${state.playlist.name}'),
-              expandedHeight: 180.0,
-              elevation: 0,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Stack(
-                  children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      child: ImageHelper.getImage(state.playlist.coverImgUrl + "?param=400y400",height: 180),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Constants.dark?Colors.grey[850].withOpacity(.3):Colors.white.withOpacity(.3)
+        Expanded(
+            child: state.isShowLoading
+                ? LoadingPage()
+                : CustomScrollView(
+                    slivers: <Widget>[
+                      SliverAppBar(
+                        expandedHeight: height * 0.35,
+                        elevation: 0,
+                        flexibleSpace: FlexibleSpaceBar(
+                          collapseMode: CollapseMode.pin,
+                          centerTitle: true,
+                          title: Text(
+                            state.playlist.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          background: Stack(
+                            children: <Widget>[
+                              Container(
+                                width: double.infinity,
+                                child: ImageHelper.getImageNoRound(
+                                    state.playlist.coverImgUrl +
+                                        "?param=600y600",
+                                    height: height * 0.35),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Constants.dark
+                                        ? Colors.grey[850].withOpacity(.3)
+                                        : Colors.white.withOpacity(.3)),
+                                child: _sheetTop(state, dispatch),
+                              ),
+                            ],
+                          ),
+                        ),
+                        floating: false,
+                        pinned: true,
+                        snap: false,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              floating: false,
-              pinned: true,
-              snap: false,
-            ),
-            SliverList(
-              delegate: new SliverChildBuilderDelegate(
-                    (context, index) =>  _sheetItem(state.list[index], dispatch, index, viewService),
-                childCount: state.list.length,
-              ),
-            ),
-          ],
-        )),
+                      SliverList(
+                        delegate: new SliverChildBuilderDelegate(
+                          (context, index) => _sheetItem(
+                              state.list[index], dispatch, index, viewService),
+                          childCount: state.list.length,
+                        ),
+                      ),
+                    ],
+                  )),
         PlayBarPage().buildPage(null)
       ],
     ),
@@ -93,20 +111,12 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
       : '$subscribedCount2';
   return InkWell(
     child: Container(
-//          margin: EdgeInsets.only(top: 5),
       height: Screens.setHeight(120),
       child: Column(
         children: <Widget>[
           Expanded(
             child: Row(
               children: <Widget>[
-                Container(
-                  width: Screens.setHeight(120),
-                  padding: EdgeInsets.all(3),
-                  child: ImageHelper.getImage(
-                      state.playlist.coverImgUrl + "?param=250y250",
-                      height: Screens.setHeight(120)),
-                ),
                 Expanded(
                     child: Column(
                   children: <Widget>[
@@ -118,7 +128,7 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
                           state.playlist.creator.avatarUrl + "?param=100y100",
                           height: Screens.setHeight(35),
                           isRound: true),
-                      title: Text(state.playlist.creator.nickname),
+                      title: Text(state.playlist.creator.nickname,style: TextStyle(fontSize: 16),),
                       onTap: () {},
                     ),
                     Expanded(
@@ -128,11 +138,9 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
                           icon: state.playlist.subscribed
                               ? Icon(
                                   Icons.favorite,
-                                  size: Screens.text18,
                                   color: Colors.red,
                                 )
-                              : Icon(Icons.favorite_border,
-                                  size: Screens.text18),
+                              : Icon(Icons.favorite_border),
                           onPressed: () {
                             dispatch(SheetDetailsActionCreator.like());
                           },
@@ -140,14 +148,13 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
                         IconButton(
                           icon: Icon(
                             Icons.message,
-                            size: Screens.text18,
                           ),
                           onPressed: () {},
                         ),
                         Container(
                           child: Text(
                             '$scount 收藏',
-                            style: TextStyle(fontSize: Screens.text12),
+                            style: TextStyle(fontSize: 14),
                           ),
                           padding: EdgeInsets.only(left: 5, right: 5),
                         ),

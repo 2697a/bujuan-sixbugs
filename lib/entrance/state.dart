@@ -40,7 +40,7 @@ EntranceState initState(Map<String, dynamic> args) {
   state.selectIndex = 1;
   state.navBarIsBottom = SpUtil.getBool(Constants.BOTTOM_NAV, defValue: false);
   state.pageController =
-      PageController(initialPage: state.selectIndex, viewportFraction: .99);
+      PageController(initialPage: state.selectIndex, viewportFraction: 1);
   state.miniNav = SpUtil.getBool(Constants.MINI_NAV, defValue: true);
   state.panelController = PanelController();
   state.val = false;

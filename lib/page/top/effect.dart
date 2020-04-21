@@ -21,9 +21,9 @@ Effect<TopPageState> buildEffect() {
 }
 
 void _init(Action action, Context<TopPageState> ctx) async {
-//   Future.delayed(Duration(milliseconds: 300),()async{
+   Future.delayed(Duration(milliseconds: 300),()async{
   await _onRefresh(action, ctx);
-//   });
+   });
 }
 
 void _onOpen(Action action, Context<TopPageState> ctx) {

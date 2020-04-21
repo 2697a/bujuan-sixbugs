@@ -6,7 +6,6 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
-import 'package:flutter_easyrefresh/taurus_header.dart';
 
 import 'state.dart';
 
@@ -35,12 +34,7 @@ Widget buildView(
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    InkWell(
-                      child: Image.asset('assets/images/find.png',height: 140,),
-                      onTap: (){
-                        BuJuanUtil.showToast('点我开启本地音乐');
-                      },
-                    ),
+                    viewService.buildComponent('banner'),
                     viewService.buildComponent('sheet'),
                     viewService.buildComponent('new_song'),
                   ],

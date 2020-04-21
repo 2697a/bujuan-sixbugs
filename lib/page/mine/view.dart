@@ -22,23 +22,18 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
 
 //未登录的页面
 Widget _unLoginView(dispatch, ViewService viewService) {
-  var width = MediaQuery.of(viewService.context).size.width;
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
       Container(
-        width: width,
         child: Image.asset(
-          'assets/images/welcome.png',
+          'assets/images/local.jpg',
           height: Screens.setHeight(160),
         ),
       ),
       Container(
-        padding: EdgeInsets.only(top: 12),
-        width: MediaQuery.of(viewService.context).size.width*0.7,
+        width: MediaQuery.of(viewService.context).size.width*0.6,
         child: MaterialButton(
-          color: Colors.blueAccent[100],
-          textColor: Colors.white,
           onPressed: (){
           dispatch(MineActionCreator.onLogin());
         },child: Text('点我去登录'),),
@@ -290,11 +285,75 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
               padding: EdgeInsets.all(0),
               child: Column(
                 children: <Widget>[
-                  InkWell(
-                    child: Image.asset('assets/images/local.png',height: 130,),
-                    onTap: (){
-                      BuJuanUtil.showToast('点我开启本地音乐');
-                    },
+                  Row(
+                    children: <Widget>[
+                      InkWell(
+                        child: Image.asset('assets/images/find.png',height: 80,),
+                        onTap: (){
+                          BuJuanUtil.showToast('点我开启本地音乐');
+                        },
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                      Expanded(
+                          child: Wrap(
+                            direction: Axis.vertical,
+                            children: <Widget>[
+                              Container(
+                                height: Screens.height30,
+                                child: Text(
+                                  state.userProfileEntity.profile
+                                      .nickname,
+                                  style: TextStyle(
+                                      fontSize: Screens.text18),
+                                ),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              Container(
+                                height: Screens.height30,
+                                child: Text(
+                                  '暂无个性签名',
+                                  style: TextStyle(
+                                      fontSize: Screens.text14),
+                                ),
+                                alignment: Alignment.centerLeft,
+                              ),
+                            ],
+                          )),
+                      IconButton(
+                          icon: Icon(
+                            Icons.exit_to_app,
+                            size: Screens.text22,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: viewService.context,
+                              builder: (context) =>
+                                  AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(
+                                              5)),
+                                      title: Text("退出登录"),
+                                      content: Text("确定要退出登录吗？"),
+                                      actions: <Widget>[
+                                        InkWell(
+                                          child: Container(
+                                            padding:
+                                            EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 5),
+                                            child: Text('确认'),
+                                          ),
+                                          onTap: () {
+                                            dispatch(MineActionCreator
+                                                .exit());
+                                          },
+                                        )
+                                      ]),
+                            );
+                          }),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 4))
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

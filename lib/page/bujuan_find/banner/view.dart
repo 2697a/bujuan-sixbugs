@@ -21,8 +21,8 @@ Widget buildView(
                 height: Screens.setHeight(136),
                 child: Swiper(
                   autoplay: true,
-                  duration: 300,
-                  autoplayDelay: 5000,
+                  duration: 500,
+                  autoplayDelay: 4000,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
 //                    margin: EdgeInsets.only(bottom:Screens.height5),
@@ -32,7 +32,7 @@ Widget buildView(
                   },
                   itemCount: state.banners.length,
                   viewportFraction: 1,
-                  scale: 0.95,
+                  scale: 0.8,
                   onTap: (index) {
                     dispatch(
                         NewBannerActionCreator.onTap(state.banners[index]));
@@ -68,7 +68,7 @@ Widget _menuItem(title, icon, dispatch, MenuType menuType,ViewService viewServic
       Container(
         width: MediaQuery.of(viewService.context).size.width/8.6,
         decoration:
-            BoxDecoration(color: Colors.amberAccent.withOpacity(.8), shape: BoxShape.circle),
+            BoxDecoration(color: Colors.amberAccent, shape: BoxShape.circle),
         child: IconButton(
             icon: Icon(icon),
             color: Colors.white,

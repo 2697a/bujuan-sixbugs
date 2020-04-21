@@ -26,6 +26,7 @@ Widget buildView(
                     (BuildContext context, int index) {
                       return ListTile(
                         dense: true,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
                         leading: ImageHelper.getImage(
                             '${state.artists[index].picUrl}?param=100y100',
                             height: 42,
