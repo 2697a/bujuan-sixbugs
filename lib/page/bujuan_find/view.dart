@@ -1,5 +1,6 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/page/bujuan_find/action.dart';
+import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,12 @@ Widget buildView(
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    viewService.buildComponent('banner'),
+                    InkWell(
+                      child: Image.asset('assets/images/find.png',height: 140,),
+                      onTap: (){
+                        BuJuanUtil.showToast('点我开启本地音乐');
+                      },
+                    ),
                     viewService.buildComponent('sheet'),
                     viewService.buildComponent('new_song'),
                   ],

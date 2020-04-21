@@ -17,7 +17,7 @@ Widget buildView(
             alignment: Alignment.center,
             child: Text(
               state.name,
-              style: TextStyle(fontSize: Screens.text14,height: 1.2),
+              style: TextStyle(fontSize: 13,height: 1.2),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

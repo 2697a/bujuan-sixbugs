@@ -63,31 +63,3 @@ Future<LoginEntity> _loginByPhone(phone, pass) async {
   }
   return null;
 }
-//Future<LoginEntity> _loginByPhone(loginInfo) async {
-//  var phone = loginInfo['phone'];
-//  var pass = loginInfo['password'];
-//  var loginEntity;
-//  if (phone != '' && pass != '') {
-//    var httpClient = new HttpClient();
-//    var uri;
-//    if (BuJuanUtil.isEmail(phone)) {
-//      uri = new Uri.http(
-//          '127.0.0.1:3001', '/login', {'email': phone, 'password': pass});
-//    } else {
-//      uri = new Uri.http('127.0.0.1:3001', '/login/cellphone',
-//          {'phone': phone, 'password': pass});
-//    }
-//    var request = await httpClient.getUrl(uri);
-//    var response = await request.close();
-//    if (response.statusCode == 200) {
-//      String cookie = "";
-//      var responseBody = await response.transform(utf8.decoder).join();
-//      response.cookies.forEach((f) => cookie += f.toString() + ";");
-//      SpUtil.putString(
-//          Constants.COOKIE, cookie.substring(0, cookie.length - 1));
-//      Map<String, dynamic> json = jsonDecode(responseBody);
-//      loginEntity = LoginEntity.fromJson(json);
-//    }
-//  }
-//  return loginEntity;
-//}

@@ -1,6 +1,7 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/page/mine/action.dart';
+import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -22,47 +23,27 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
 //未登录的页面
 Widget _unLoginView(dispatch, ViewService viewService) {
   var width = MediaQuery.of(viewService.context).size.width;
-  return Center(
-    child: Wrap(
-      direction: Axis.vertical,
-      children: <Widget>[
-        Container(
-          width: width,
-          child: Image.asset(
-            'assets/images/logo.png',
-            height: Screens.setHeight(60),
-          ),
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Container(
+        width: width,
+        child: Image.asset(
+          'assets/images/welcome.png',
+          height: Screens.setHeight(160),
         ),
-//        Container(
-//          width: width,
-//          child: Text(
-//            '登录您的账号,体验更多功能',
-//            textAlign: TextAlign.center,
-//            style: TextStyle(fontSize: Screens.text14),
-//          ),
-//          padding: EdgeInsets.only(top: 20, bottom: 20),
-//        ),
-        InkWell(
-          child: Container(
-            width: width - 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Container(
-              child: Text(
-                '点我立即登录',
-                textAlign: TextAlign.center,
-              ),
-              width: Screens.setWidth(120),
-            ),
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-          ),
-          onTap: () {
-            dispatch(MineActionCreator.onLogin());
-          },
-        ),
-      ],
-    ),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 12),
+        width: MediaQuery.of(viewService.context).size.width*0.7,
+        child: MaterialButton(
+          color: Colors.blueAccent[100],
+          textColor: Colors.white,
+          onPressed: (){
+          dispatch(MineActionCreator.onLogin());
+        },child: Text('点我去登录'),),
+      ),
+    ],
   );
 }
 
@@ -306,106 +287,41 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
           padding: EdgeInsets.symmetric(horizontal: Screens.width5),
           child: EasyRefresh(
             child: SingleChildScrollView(
+              padding: EdgeInsets.all(0),
               child: Column(
                 children: <Widget>[
-                  Wrap(
+                  InkWell(
+                    child: Image.asset('assets/images/local.png',height: 130,),
+                    onTap: (){
+                      BuJuanUtil.showToast('点我开启本地音乐');
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-//                      Container(
-//                        padding:
-//                            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5),
-//                        alignment: Alignment.topLeft,
-//                        child: Row(
-//                          children: <Widget>[
-//                            ImageHelper.getImage(
-//                                state.userProfileEntity.profile.avatarUrl +
-//                                    "?param=180y180",
-//                                height: Screens.setHeight(60),
-//                                isRound: true),
-//                            Padding(
-//                                padding: EdgeInsets.only(
-//                                    right: Screens.setWidth(20))),
-//                            Expanded(
-//                                child: Wrap(
-//                              direction: Axis.vertical,
-//                              children: <Widget>[
-//                                Container(
-//                                  height: Screens.height30,
-//                                  child: Text(
-//                                    state.userProfileEntity.profile.nickname,
-//                                    style: TextStyle(fontSize: Screens.text16),
-//                                  ),
-//                                  alignment: Alignment.centerLeft,
-//                                ),
-//                                Container(
-//                                  height: Screens.height30,
-//                                  child: Text(
-//                                    '暂无个性签名',
-//                                    style: TextStyle(fontSize: Screens.text12),
-//                                  ),
-//                                  alignment: Alignment.centerLeft,
-//                                ),
-//                              ],
-//                            )),
-//                            IconButton(
-//                                icon: Icon(
-//                                  Icons.exit_to_app,
-//                                  size: Screens.text22,
-//                                ),
-//                                onPressed: () {
-//                                  showDialog(
-//                                    context: viewService.context,
-//                                    builder: (context) => AlertDialog(
-//                                        shape: RoundedRectangleBorder(
-//                                            borderRadius:
-//                                                BorderRadius.circular(5)),
-//                                        title: Text("退出登录"),
-//                                        content: Text("确定要退出登录吗？"),
-//                                        actions: <Widget>[
-//                                          InkWell(
-//                                            child: Container(
-//                                              padding: EdgeInsets.symmetric(
-//                                                  horizontal: 10, vertical: 5),
-//                                              child: Text('确认'),
-//                                            ),
-//                                            onTap: () {
-//                                              dispatch(
-//                                                  MineActionCreator.exit());
-//                                            },
-//                                          )
-//                                        ]),
-//                                  );
-//                                })
-//                          ],
-//                        ),
-//                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          IconButton(
-                              icon: Icon(
-                                Icons.history,
-                              ),
-                              onPressed: () {
-                                Navigator.of(viewService.context)
-                                    .pushNamed('history', arguments: null);
-                              }),
-                          IconButton(
-                              icon: Icon(
-                                Icons.cloud,
-                              ),
-                              onPressed: () {}),
-                          IconButton(
-                              icon: Icon(
-                                Icons.people,
-                              ),
-                              onPressed: () {}),
-                          IconButton(
-                              icon: Icon(
-                                Icons.store_mall_directory,
-                              ),
-                              onPressed: () {}),
-                        ],
-                      )
+                      IconButton(
+                          icon: Icon(
+                            Icons.history,
+                          ),
+                          onPressed: () {
+                            Navigator.of(viewService.context)
+                                .pushNamed('history', arguments: null);
+                          }),
+                      IconButton(
+                          icon: Icon(
+                            Icons.cloud,
+                          ),
+                          onPressed: () {}),
+                      IconButton(
+                          icon: Icon(
+                            Icons.people,
+                          ),
+                          onPressed: () {}),
+                      IconButton(
+                          icon: Icon(
+                            Icons.store_mall_directory,
+                          ),
+                          onPressed: () {}),
                     ],
                   ),
                   Container(

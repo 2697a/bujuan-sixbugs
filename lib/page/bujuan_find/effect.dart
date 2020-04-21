@@ -28,12 +28,12 @@ Future _onInit(Action action, Context<NewFindState> ctx) async {
 }
 
 Future _onRefresh(Action action, Context<NewFindState> ctx) async {
-  var wait = await Future.wait([_getBanner(), _getSheet(), _getNewSong()]);
+  var wait = await Future.wait([ _getSheet(), _getNewSong()]);
   wait.forEach((data) {
-    if (data is BannerEntity) if (data != null) {
-      ctx.dispatch(NewFindActionCreator.onGetBanner(
-          NewBannerState()..banners = data.banners));
-    }
+//    if (data is BannerEntity) if (data != null) {
+//      ctx.dispatch(NewFindActionCreator.onGetBanner(
+//          NewBannerState()..banners = data.banners));
+//    }
     if (data is PersonalEntity) if (data != null) {
       ctx.dispatch(NewFindActionCreator.onGetSheet(SheetViewState()
         ..clone()

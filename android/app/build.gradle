@@ -77,13 +77,13 @@ flutter {
 }
 
 dependencies {
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.lzx:StarrySkyJava:2.3.6'
-    implementation 'com.google.android:flexbox:1.0.0'
+//    implementation 'com.google.android:flexbox:1.0.0'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.8.0"
     implementation("com.squareup.okhttp3:okhttp:4.1.0")
     implementation 'com.qw:soulpermission:1.2.1'
@@ -91,5 +91,4 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'me.wcy:lrcview:2.1.3'
-//    implementation 'androidx.appcompat:appcompat:1.1.0'
 }

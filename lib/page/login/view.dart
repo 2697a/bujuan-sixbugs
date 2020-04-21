@@ -17,20 +17,26 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: MediaQueryData.fromWindow(window).padding.top + 20),
-            padding: EdgeInsets.all(Screens.setHeight(30)),
+            margin: EdgeInsets.only(
+                top: MediaQueryData.fromWindow(window).padding.top + 10),
+            padding: EdgeInsets.symmetric(vertical: 25),
             width: width2,
             child: Image.asset(
-              'assets/images/logo.png',
-              height: Screens.setHeight(60),
+              'assets/images/login.jpg',
+              height: Screens.setHeight(140),
             ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 25),
+            alignment: Alignment.centerLeft,
+            child: Text('账号&邮箱'),
           ),
           Container(
             margin: EdgeInsets.all(15),
             child: Card(
               elevation: 2,
-              shape:
-              const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
               child: TextField(
                 autofocus: true,
                 keyboardType: TextInputType.emailAddress,
@@ -42,16 +48,22 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                     hintText: '请输入手机号或郵箱',
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(
-                        vertical: Screens.setHeight(12), horizontal: Screens.setWidth(8))),
+                        vertical: Screens.setHeight(12),
+                        horizontal: Screens.setWidth(8))),
               ),
             ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 25),
+            alignment: Alignment.centerLeft,
+            child: Text('密码'),
           ),
           Container(
             margin: EdgeInsets.all(15),
             child: Card(
               elevation: 2,
-              shape:
-              const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
               child: TextField(
                 autofocus: true,
                 keyboardType: TextInputType.text,
@@ -64,30 +76,30 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                     hintText: '请输入密码',
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(
-                        vertical: Screens.setHeight(12), horizontal: Screens.setWidth(8))),
+                        vertical: Screens.setHeight(12),
+                        horizontal: Screens.setWidth(8))),
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: Screens.setHeight(20), left: Screens.setWidth(20), right: Screens.setWidth(20)),
-            width: width2,
-            alignment: Alignment.center,
-            child: InkWell(
-              child: Container(
-                padding: EdgeInsets.only(top: 12, bottom: 12),
-                alignment: Alignment.center,
-                width: width2,
-                child: Text(
-                  '点我登录',
-                  style: TextStyle(color: Colors.blue, fontSize: Screens.text16, fontWeight: FontWeight.bold),
-                ),
-              ),
-              onTap: () {
+            margin: EdgeInsets.only(top: 16),
+            width: MediaQuery.of(viewService.context).size.width * 0.8,
+            child: MaterialButton(
+              color: Colors.blueAccent,
+              textColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  side: BorderSide.none,
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
+              onPressed: () {
                 showDialog(
                   context: viewService.context,
                   builder: (context) => AlertDialog(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      title: Text("正在登录",style: TextStyle(fontSize: Screens.text16),),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      title: Text(
+                        "正在登录",
+                        style: TextStyle(fontSize: Screens.text16),
+                      ),
                       content: Container(
                         height: Screens.setHeight(50),
                         width: Screens.setWidth(50),
@@ -98,8 +110,10 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                         ),
                       )),
                 );
-                dispatch(LoginActionCreator.onLogin(state.phone.text, state.pass.text));
+                dispatch(LoginActionCreator.onLogin(
+                    state.phone.text, state.pass.text));
               },
+              child: Text('立即登录'),
             ),
           ),
         ],

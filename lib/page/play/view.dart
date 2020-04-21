@@ -29,15 +29,22 @@ Widget buildView(
               children: <Widget>[
                 ListTile(dense: true,),
                 Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                InkWell(
-                  child: ImageHelper.getImage(
-                      state.currSong.picUrl + "?param=500y500",
-                      height:
-                          MediaQuery.of(viewService.context).size.width / 1.4,
-                      isRound: true),
-                  onTap: () async =>
-                      await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
+                IconButton(
+                  icon:ImageHelper.getImage(
+                      state.currSong.picUrl + "?param=500y500"),
+                  iconSize: MediaQuery.of(viewService.context).size.width / 1.3,
+                  onPressed: () async =>
+                  await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
                 ),
+//                InkWell(
+//                  child: ImageHelper.getImage(
+//                      state.currSong.picUrl + "?param=500y500",
+//                      height:
+//                          MediaQuery.of(viewService.context).size.width / 1.4,
+//                      isRound: true),
+//                  onTap: () async =>
+//                      await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
+//                ),
                 Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

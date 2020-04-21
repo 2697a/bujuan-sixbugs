@@ -2,6 +2,7 @@ package com.sixbugs.bujuan;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.widget.Toast;
 
 import com.lzx.starrysky.StarrySky;
@@ -31,17 +32,21 @@ import io.flutter.plugin.common.StandardMessageCodec;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity implements OnPlayerEventListener {
-//    private BuJuanMusicListenPlugin buJuanMusicListenPlugin;
+    //    private BuJuanMusicListenPlugin buJuanMusicListenPlugin;
     private TimerTaskManager mTimerTask;
     private Map<String, String> map = new HashMap<>();
     private BuJuanMusicPlayListenPlugin buJuanMusicPlayListenPlugin;
     public static BasicMessageChannel<Object> basicMessageChannelPlugin;
     private String zhLyric = "";
     private String enLyric = "";
+    private PowerManager.WakeLock wakeLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
+        getLookWake();
         GeneratedPluginRegistrant.registerWith(this);
         StarrySky.with().addPlayerEventListener(this);
         BujuanMusicPlugin.registerWith(this.registrarFor(BujuanMusicPlugin.CHANNEL));
@@ -61,6 +66,10 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
                     }
                 }
         );
+    }
+
+    private void getLookWake() {
+        wakeLock.acquire();
     }
 
     private void getRead() {
@@ -97,7 +106,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     }
 
 
-    private void getLyric(String id){
+    private void getLyric(String id) {
         map.clear();
         map.put("type", "getLyric");
         map.put("id", id);
@@ -114,6 +123,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
             }
         });
     }
+
     @Override
     public void onBuffering() {
 
@@ -134,7 +144,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         song.setPicUrl(songInfo.getAlbumCover());
         getLyric(songInfo.getSongId());
         map.clear();
-        map.put("type","currSong");
+        map.put("type", "currSong");
         map.put("data", GsonUtil.GsonString(song));
         basicMessageChannelPlugin.send(map);
 //        buJuanMusicListenPlugin.eventSink.success(map);
@@ -143,7 +153,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     @Override
     public void onPlayCompletion(@NotNull SongInfo songInfo) {
         map.clear();
-        map.put("type","state");
+        map.put("type", "state");
         map.put("data", "completion");
         mTimerTask.stopToUpdateProgress();
     }
@@ -151,7 +161,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     @Override
     public void onPlayerPause() {
         map.clear();
-        map.put("type","state");
+        map.put("type", "state");
         map.put("data", "pause");
         basicMessageChannelPlugin.send(map);
         mTimerTask.stopToUpdateProgress();
@@ -160,7 +170,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     @Override
     public void onPlayerStart() {
         map.clear();
-        map.put("type","state");
+        map.put("type", "state");
         map.put("data", "start");
         basicMessageChannelPlugin.send(map);
         mTimerTask.startToUpdateProgress();
@@ -169,7 +179,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     @Override
     public void onPlayerStop() {
         map.clear();
-        map.put("type","state");
+        map.put("type", "state");
         map.put("data", "start");
         basicMessageChannelPlugin.send(map);
         mTimerTask.stopToUpdateProgress();
@@ -177,9 +187,10 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        wakeLock.release();
         StarrySky.with().removePlayerEventListener(this);
         StarrySky.with().stopMusic();
         mTimerTask.removeUpdateProgressTask();
+        super.onDestroy();
     }
 }

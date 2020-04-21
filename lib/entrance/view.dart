@@ -64,7 +64,8 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                   IconButton(
                     padding: EdgeInsets.all(0),
                     icon: Icon(
-                      Icons.youtube_searched_for,
+                      Icons.search,
+                      size: 26,
                     ),
                     onPressed: () {
                       Navigator.of(viewService.context)

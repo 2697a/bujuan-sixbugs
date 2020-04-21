@@ -75,7 +75,7 @@ packages:
     dependency: "direct main"
     description:
       name: cookie_jar
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
   crypto:
@@ -171,7 +171,7 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_statusbarcolor
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.3"
   flutter_swiper:

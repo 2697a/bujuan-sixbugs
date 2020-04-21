@@ -153,7 +153,7 @@ class _ItemWidget extends StatelessWidget {
       duration: animationDuration,
 //      padding: EdgeInsets.only(left: 12),
       decoration: BoxDecoration(
-        color: item.activeColor.withOpacity(0.4),
+        color: item.activeColor.withOpacity(0.6),
         borderRadius: BorderRadius.circular(itemCornerRadius),
       ),
     );

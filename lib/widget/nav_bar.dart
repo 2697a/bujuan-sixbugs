@@ -106,7 +106,7 @@ class _ItemWidget extends StatelessWidget {
       height: Screens.setWidth(46),
       duration: animationDuration,
       decoration: BoxDecoration(
-        color: isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
+        color: isSelected ? item.activeColor.withOpacity(0.3) : backgroundColor,
         borderRadius: BorderRadius.circular(itemCornerRadius),
       ),
       child: ListView(

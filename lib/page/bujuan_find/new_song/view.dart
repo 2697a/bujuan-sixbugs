@@ -51,7 +51,7 @@ Widget buildView(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: Screens.text14,
+                                fontSize: 13,
                               ),
                             ),
                           ),
