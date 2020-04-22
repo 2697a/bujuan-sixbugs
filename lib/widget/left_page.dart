@@ -3,6 +3,7 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -41,7 +42,8 @@ class _LeftPageState extends State<LeftPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedContainer(
+      body: BujuanBack.bujuanBack(AnimatedContainer(
+        margin: EdgeInsets.only(top: 65),
         duration: Duration(milliseconds: 300),
         child: Stack(
           children: <Widget>[
@@ -161,7 +163,7 @@ class _LeftPageState extends State<LeftPage>
             ),
           ],
         ),
-      ),
+      )),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: Transform.translate(
         offset: Offset(140, 40),
@@ -223,5 +225,12 @@ class _LeftPageState extends State<LeftPage>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 }

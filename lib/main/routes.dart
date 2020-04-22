@@ -19,6 +19,7 @@ import 'package:bujuan/page/sheet_square/page.dart';
 import 'package:bujuan/page/talk/page.dart';
 import 'package:bujuan/page/today/page.dart';
 import 'package:bujuan/page/top/top_details/page.dart';
+import 'package:bujuan/page/user_clound/page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter/widgets.dart' hide Action;
@@ -53,6 +54,7 @@ var routes = new PageRoutes(
     'hot_singer': HotSingerPage(),
     'local_list': LocalListPage(),
     'singer_details': SingerDetailsPage(),
+    'user_clound': CloundPagePage(),
   },
   visitor: (String path, Page<Object, dynamic> page) {
     if (page.isTypeof<GlobalBaseState>()) {

@@ -36,14 +36,16 @@ Widget buildView(TodayState state, Dispatch dispatch, ViewService viewService) {
         Expanded(child: state.isShowLoading?LoadingPage(): CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              title: Text('Today'),
-              expandedHeight: 180.0,
+              expandedHeight: 230.0,
               flexibleSpace: FlexibleSpaceBar(
+                title: Text('${(DateTime.now())}'),
+                centerTitle: true,
+                collapseMode: CollapseMode.pin,
                 background: Stack(
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      child: ImageHelper.getImage(state.list[0].picUrl + "?param=400y400",height: 180),
+                      child: Image.asset('assets/images/find_back.png',height: 230,),
                     ),
                     Container(
                       decoration: BoxDecoration(

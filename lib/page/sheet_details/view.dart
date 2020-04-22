@@ -63,7 +63,6 @@ Widget buildView(
                             state.playlist.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           background: Stack(
                             children: <Widget>[

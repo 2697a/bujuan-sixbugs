@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bujuan/main/routes.dart';
-import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,9 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
     debugShowCheckedModeBanner: false,
     darkTheme: ThemeData.dark(),
     theme: state.appTheme.dark ? darkTheme : lightTheme,
-    home:  routes.buildPage('entrance_page', null),
+    home:  Scaffold(
+      body: BujuanBack.bujuanBack(routes.buildPage('entrance_page', null),path: state.backPath,dark: state.appTheme.dark),
+    ),
     routes: appRoutes,
     onGenerateRoute: (RouteSettings settings) {
       return MaterialPageRoute<Object>(builder: (BuildContext context) {

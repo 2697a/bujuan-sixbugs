@@ -15,20 +15,6 @@ Widget buildView(
       ? LoadingPage()
       : Container(
           padding: EdgeInsets.symmetric(horizontal: Screens.width5),
-//          child: EasyRefresh.custom(
-//              header: TaurusHeader(),
-//              slivers: <Widget>[
-//                SliverToBoxAdapter(
-//                  child: viewService.buildComponent('banner'),
-//                ),
-//                SliverToBoxAdapter(
-//                  child: viewService.buildComponent('sheet'),
-//                ),
-//                SliverToBoxAdapter(
-//                  child:  viewService.buildComponent('new_song'),
-//                )
-//              ],
-//              onRefresh: () => dispatch(NewFindActionCreator.onGetRefresh())),
           child: EasyRefresh(
             header: MaterialHeader(valueColor: AlwaysStoppedAnimation(Color.fromRGBO(238, 178, 17, .6)),),
               child: SingleChildScrollView(

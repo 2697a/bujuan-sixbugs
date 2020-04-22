@@ -7,6 +7,7 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/page/play/page.dart';
+import 'package:bujuan/page/play2/page.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
 import 'package:fish_redux/fish_redux.dart';

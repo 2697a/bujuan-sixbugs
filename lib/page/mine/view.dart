@@ -370,7 +370,10 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                           icon: Icon(
                             Icons.cloud,
                           ),
-                          onPressed: () {}),
+                          onPressed: () {
+                            Navigator.of(viewService.context)
+                                .pushNamed('user_clound', arguments: null);
+                          }),
                       IconButton(
                           icon: Icon(
                             Icons.people,
