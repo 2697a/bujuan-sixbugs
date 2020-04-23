@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bujuan/main/routes.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,14 +20,11 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
   }
   return MaterialApp(
     title: '不倦',
-//    showPerformanceOverlay: true,
+    showPerformanceOverlay: true,
     // 开启
     debugShowCheckedModeBanner: false,
     darkTheme: ThemeData.dark(),
     theme: state.appTheme.dark ? darkTheme : lightTheme,
-//    home:  Scaffold(
-//      body: BujuanBack.bujuanBack(routes.buildPage('entrance_page', null),path: state.backPath,dark: state.appTheme.dark),
-//    ),
     home: routes.buildPage('entrance_page', null),
     routes: appRoutes,
     onGenerateRoute: (RouteSettings settings) {

@@ -73,6 +73,6 @@ void openPlayViewAndSendHistory(Context<PlayBarState> ctx, Action action) {
 //  SpUtil.putObjectList(Constants.playSongListHistory, songs);
   var element = ctx.state.currSong;
   var indexWhere = songs.indexWhere((item) => item.id == element.id);
-  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(element));
+//  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(element));
   BujuanMusic.sendSongInfo(songInfo: jsonEncode(songs), index: indexWhere);
 }

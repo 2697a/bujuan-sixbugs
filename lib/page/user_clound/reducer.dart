@@ -6,12 +6,14 @@ import 'state.dart';
 Reducer<CloundPageState> buildReducer() {
   return asReducer(
     <Object, Reducer<CloundPageState>>{
-      CloundPageAction.action: _onAction,
+      CloundPageAction.getCloud: _onAction,
     },
   );
 }
 
 CloundPageState _onAction(CloundPageState state, Action action) {
   final CloundPageState newState = state.clone();
+  newState.list = action.payload;
+  newState.isShowLoading = false;
   return newState;
 }

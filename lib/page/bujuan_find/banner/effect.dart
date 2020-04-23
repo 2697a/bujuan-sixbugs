@@ -65,7 +65,7 @@ void _onTap(Action action, Context<NewBannerState> ctx) {
 
           SpUtil.putBool(Constants.ISFM, false);
           var index2 = 0;
-          GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(newList[index2]));
+//          GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(newList[index2]));
           SpUtil.putObjectList(Constants.playSongListHistory, newList);
           var jsonEncode2 = jsonEncode(newList);
           BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
@@ -98,7 +98,7 @@ void _onFm(Action action, Context<NewBannerState> ctx) {
       songs.add(songBeanEntity);
     });
 
-    GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
+//    GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
     SpUtil.putObjectList(Constants.playSongListHistory, songs);
     var jsonEncode2 = jsonEncode(songs);
     BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: 0);
