@@ -70,7 +70,7 @@ Widget buildView(
                                 width: double.infinity,
                                 child: ImageHelper.getImageNoRound(
                                     state.playlist.coverImgUrl +
-                                        "?param=600y600",
+                                        "?param=500y500",
                                     height: height * 0.35),
                               ),
                               Container(

@@ -27,7 +27,7 @@ Widget buildView(
                     return Container(
 //                    margin: EdgeInsets.only(bottom:Screens.height5),
                       child: ImageHelper.getImage(
-                          state.banners[index].imageUrl + "?param=400y900"),
+                          state.banners[index].imageUrl + "?param=300y800"),
                     );
                   },
                   itemCount: state.banners.length,

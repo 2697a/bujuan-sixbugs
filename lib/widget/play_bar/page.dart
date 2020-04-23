@@ -17,7 +17,8 @@ class PlayBarPage extends Page<PlayBarState, Map<String, dynamic>> {
           dependencies: Dependencies<PlayBarState>(
               adapter: null, slots: <String, Dependent<PlayBarState>>{}),
           middleware: <Middleware<PlayBarState>>[],
-        ) {
+        )
+  {
     this.connectExtraStore<GlobalState>(GlobalStore.store,
         (Object pageState, GlobalState appState) {
       final GlobalBaseState p = pageState;

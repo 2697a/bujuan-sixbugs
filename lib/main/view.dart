@@ -14,7 +14,7 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.grey[850],
         systemNavigationBarIconBrightness: Brightness.light));
-  }else {
+  } else {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark));
@@ -26,9 +26,10 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
     debugShowCheckedModeBanner: false,
     darkTheme: ThemeData.dark(),
     theme: state.appTheme.dark ? darkTheme : lightTheme,
-    home:  Scaffold(
-      body: BujuanBack.bujuanBack(routes.buildPage('entrance_page', null),path: state.backPath,dark: state.appTheme.dark),
-    ),
+//    home:  Scaffold(
+//      body: BujuanBack.bujuanBack(routes.buildPage('entrance_page', null),path: state.backPath,dark: state.appTheme.dark),
+//    ),
+    home: routes.buildPage('entrance_page', null),
     routes: appRoutes,
     onGenerateRoute: (RouteSettings settings) {
       return MaterialPageRoute<Object>(builder: (BuildContext context) {

@@ -27,15 +27,15 @@ class ImageHelper {
                 fit: BoxFit.cover,
                 height: height,
                 width: height,
-                placeholder: (context, url) => new Container(
-                  height: height,
-                  width: height,
-                  alignment: Alignment.center,
-                  child: ColorLoader3(
-                    radius: 20.0,
-                    dotRadius: 3.0,
-                  ),
-                ),
+//                placeholder: (context, url) => new Container(
+//                  height: height,
+//                  width: height,
+//                  alignment: Alignment.center,
+//                  child: ColorLoader3(
+//                    radius: 20.0,
+//                    dotRadius: 3.0,
+//                  ),
+//                ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               )
             : Image.file(
@@ -70,15 +70,15 @@ class ImageHelper {
               fit: BoxFit.cover,
               height: height,
               width: height,
-              placeholder: (context, url) => new Container(
-                height: height,
-                width: height,
-                alignment: Alignment.center,
-                child: ColorLoader3(
-                  radius: 20.0,
-                  dotRadius: 3.0,
-                ),
-              ),
+//              placeholder: (context, url) => new Container(
+//                height: height,
+//                width: height,
+//                alignment: Alignment.center,
+//                child: ColorLoader3(
+//                  radius: 20.0,
+//                  dotRadius: 3.0,
+//                ),
+//              ),
               errorWidget: (context, url, error) => Icon(Icons.error),
             )
           : Image.file(
@@ -119,15 +119,15 @@ class ImageHelper {
                 fit: BoxFit.cover,
                 height: height,
                 width: height,
-                placeholder: (context, url) => new Container(
-                  height: height,
-                  width: height,
-                  alignment: Alignment.center,
-                  child: ColorLoader3(
-                    radius: 20.0,
-                    dotRadius: 3.0,
-                  ),
-                ),
+//                placeholder: (context, url) => new Container(
+//                  height: height,
+//                  width: height,
+//                  alignment: Alignment.center,
+//                  child: ColorLoader3(
+//                    radius: 20.0,
+//                    dotRadius: 3.0,
+//                  ),
+//                ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               )
             : Image.file(

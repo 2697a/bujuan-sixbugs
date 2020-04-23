@@ -42,7 +42,7 @@ class _LeftPageState extends State<LeftPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BujuanBack.bujuanBack(AnimatedContainer(
+      body: AnimatedContainer(
         margin: EdgeInsets.only(top: 65),
         duration: Duration(milliseconds: 300),
         child: Stack(
@@ -163,7 +163,7 @@ class _LeftPageState extends State<LeftPage>
             ),
           ],
         ),
-      )),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: Transform.translate(
         offset: Offset(140, 40),

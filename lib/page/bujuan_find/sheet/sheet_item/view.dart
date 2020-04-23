@@ -11,7 +11,7 @@ Widget buildView(
       child: Column(
         children: <Widget>[
           ImageHelper.getImage(
-              state.picUrl == null ? null : state.picUrl + "?param=300y300",),
+              state.picUrl == null ? null : state.picUrl + "?param=250y250",),
           Container(
             padding: EdgeInsets.only(top: Screens.height5),
             alignment: Alignment.center,

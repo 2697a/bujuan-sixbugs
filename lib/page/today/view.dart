@@ -38,7 +38,7 @@ Widget buildView(TodayState state, Dispatch dispatch, ViewService viewService) {
             SliverAppBar(
               expandedHeight: 230.0,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text('${(DateTime.now())}'),
+                title: Text('${DateTime.now().month} / ${DateTime.now().day}'),
                 centerTitle: true,
                 collapseMode: CollapseMode.pin,
                 background: Stack(
