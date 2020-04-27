@@ -33,10 +33,12 @@ void _onOpenPlay(Action action, Context<PlayBarState> ctx) {
       context: ctx.context,
       builder: (BuildContext context) {
         var width = MediaQuery.of(context).size.height;
-        if (miniPlay) width = width / 1.15;
+//        if (miniPlay) width = width / 1.15;
         return Container(
           height: width,
-          child: PlayView2Page().buildPage(null),
+          child: miniPlay
+              ? PlayViewPage().buildPage(null)
+              : PlayView2Page().buildPage(null),
         );
       },
     );

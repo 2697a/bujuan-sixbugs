@@ -1,14 +1,10 @@
 import 'dart:io';
-import 'dart:ui';
 
-import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/page/setting/action.dart';
 import 'package:bujuan/widget/background_setting.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
-import 'package:bujuan/widget/cache_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
@@ -22,7 +18,7 @@ Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService)
       child: ListView(
         children: <Widget>[
           SwitchListTile(
-              title: Text('迷你播放页'),
+              title: Text('切换播放页ui'),
               value: state.miniPlay,
               onChanged: (value) {
                 dispatch(SettingActionCreator.onMiniPlay());
