@@ -36,15 +36,6 @@ Widget buildView(
                   onPressed: () async =>
                   await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
                 ),
-//                InkWell(
-//                  child: ImageHelper.getImage(
-//                      state.currSong.picUrl + "?param=500y500",
-//                      height:
-//                          MediaQuery.of(viewService.context).size.width / 1.4,
-//                      isRound: true),
-//                  onTap: () async =>
-//                      await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
-//                ),
                 Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -155,7 +155,7 @@ class _LyricWidgetState extends State<LyricWidget> {
               if (temOffset < 0 && temOffset >= -totalHeight) {
                 widget.controller.draggingOffset = temOffset;
                 widget.controller.draggingLine =
-                    getCurrentDraggingLine(temOffset);
+                    getCurrentDraggingLine(temOffset+widget.lyricGap);
                 _lyricPainter.draggingLine = widget.controller.draggingLine;
                 widget.controller.draggingProgress =
                     widget.lyrics[widget.controller.draggingLine].startTime +

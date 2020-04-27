@@ -2,7 +2,6 @@ import 'package:bujuan/widget/cache_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 Widget buildView(SearchMvState state, Dispatch dispatch, ViewService viewService) {

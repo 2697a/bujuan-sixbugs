@@ -29,14 +29,11 @@ Effect<SheetDetailsState> buildEffect() {
 void _onPlay(Action action, Context<SheetDetailsState> ctx) {
   SpUtil.putBool(Constants.ISFM, false);
   var index2 = action.payload;
-//  GlobalStore.store
-//      .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.list[index2]));
+  GlobalStore.store
+      .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.list[index2]));
   SpUtil.putObjectList(Constants.playSongListHistory, ctx.state.list);
 
-  var songBean = SongBean(players: ctx.state.list);
-  var json = songBean.toJson();
   var jsonEncode2 = jsonEncode( ctx.state.list);
-  println('aaaaaa======$jsonEncode2');
   BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }
 

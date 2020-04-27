@@ -26,11 +26,11 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
               height: Screens.setHeight(140),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 25),
-            alignment: Alignment.centerLeft,
-            child: Text('账号&邮箱'),
-          ),
+//          Container(
+//            margin: EdgeInsets.only(left: 25),
+//            alignment: Alignment.centerLeft,
+//            child: Text('账号&邮箱'),
+//          ),
           Container(
             margin: EdgeInsets.all(15),
             child: Card(
@@ -53,11 +53,11 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 25),
-            alignment: Alignment.centerLeft,
-            child: Text('密码'),
-          ),
+//          Container(
+//            margin: EdgeInsets.only(left: 25),
+//            alignment: Alignment.centerLeft,
+//            child: Text('密码'),
+//          ),
           Container(
             margin: EdgeInsets.all(15),
             child: Card(

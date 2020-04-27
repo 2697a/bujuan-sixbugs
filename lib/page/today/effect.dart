@@ -52,7 +52,7 @@ void _onPlay(Action action, Context<TodayState> ctx) {
   SpUtil.putBool(Constants.ISFM, false);
   var index2 = action.payload;
   var list2 = ctx.state.list;
-//  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(list2[index2]));
+  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(list2[index2]));
   SpUtil.putObjectList(Constants.playSongListHistory, list2);
   var jsonEncode2 = jsonEncode(list2);
   BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);

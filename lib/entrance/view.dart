@@ -141,7 +141,7 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
             IconButton(
               padding: EdgeInsets.all(0),
               icon: Icon(
-                Icons.search,
+                IconData(0xe606, fontFamily: 'iconfont'),
               ),
               onPressed: () {
                 Navigator.of(viewService.context)
@@ -255,7 +255,7 @@ Widget _navBar(EntranceState state, dispatch) {
           items: [
             BottomNavyBarItem(
               icon: Icon(
-                IconData(0xe67a, fontFamily: 'iconfont'),
+                IconData(0xe6c8, fontFamily: 'iconfont'),size: 22,
               ),
               title: Text(
                 'Me',
@@ -265,7 +265,7 @@ Widget _navBar(EntranceState state, dispatch) {
             ),
             BottomNavyBarItem(
                 icon: Icon(
-                  IconData(0xe65d, fontFamily: 'iconfont'),
+                  IconData(0xe620, fontFamily: 'iconfont'),size: 22,
                 ),
                 title: Text(
                   'Find',
@@ -274,7 +274,7 @@ Widget _navBar(EntranceState state, dispatch) {
                 activeColor: const Color.fromRGBO(238, 178, 17, 1)),
             BottomNavyBarItem(
               icon: Icon(
-                Icons.filter_list,
+                IconData(0xe67b, fontFamily: 'iconfont'),size: 22,
               ),
               title: Text(
                 'Top',

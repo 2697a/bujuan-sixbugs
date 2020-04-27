@@ -29,7 +29,9 @@ class LyricUtil {
     int minuteSeparatorIndex = time.indexOf(".");
 
     var milliseconds = time.substring(minuteSeparatorIndex + 1);
+    var microseconds = 0;
     if(milliseconds.length>3){
+      microseconds = int.parse(milliseconds.substring(3,milliseconds.length));
       milliseconds = milliseconds.substring(0,3);
     }
     return Duration(
@@ -39,6 +41,7 @@ class LyricUtil {
       seconds: int.parse(
           time.substring(hourSeparatorIndex + 1, minuteSeparatorIndex)),
       milliseconds: int.parse(milliseconds),
+      microseconds: microseconds,
     );
   }
 }

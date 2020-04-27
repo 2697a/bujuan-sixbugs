@@ -33,7 +33,6 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = (backgroundColor == null) ? Theme.of(context).bottomAppBarColor : backgroundColor;
 
     return Container(
       decoration: BoxDecoration(
@@ -48,7 +47,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
       child: Container(
         width: double.infinity,
         height: Screens.setHeight(46),
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
           children: items.map((item) {
@@ -102,7 +101,7 @@ class _ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       alignment: Alignment.center,
-      width: isSelected ? Screens.setWidth(46) : Screens.setWidth(56),
+      width: isSelected ? Screens.setWidth(36) : Screens.setWidth(46),
       height: Screens.setWidth(46),
       duration: animationDuration,
       decoration: BoxDecoration(
