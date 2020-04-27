@@ -28,18 +28,17 @@ Widget buildView(
             alignment: Alignment.center,
             child: SleekCircularSlider(
               appearance: CircularSliderAppearance(
-                  size: MediaQuery.of(viewService.context).size.width/1.2,
-                  startAngle: 90,
-                  angleRange: 270,
-                  customWidths: CustomSliderWidths(
-                    trackWidth: 3,
-                    progressBarWidth: 8
-                  )),
+                  size: MediaQuery.of(viewService.context).size.width / 1.2,
+                  startAngle: 45,
+                  angleRange: 300,
+                  customColors: CustomSliderColors(
+                      progressBarColor: Color.fromRGBO(220, 190, 251, 1.0)),
+                  customWidths:
+                      CustomSliderWidths(trackWidth: 3, progressBarWidth: 5)),
               min: 0,
               max: state.currSongAllPos.toDouble(),
               initialValue: state.currSongPos.toDouble(),
-              onChange: (double value) {
-              },
+              onChange: (double value) {},
               onChangeStart: (double startValue) {
                 // callback providing a starting value (when a pan gesture starts)
               },
@@ -51,8 +50,11 @@ Widget buildView(
                 return Center(
                   child: InkWell(
                     child: ImageHelper.getImage(
-                        state.currSong.picUrl + "?param=500y500",height: MediaQuery.of(viewService.context).size.width/1.26,isRound: true),
-                    onTap: ()async{
+                        state.currSong.picUrl + "?param=500y500",
+                        height: MediaQuery.of(viewService.context).size.width /
+                            1.26,
+                        isRound: true),
+                    onTap: () async {
                       await BujuanMusic.lyric(Constants.dark ? '1' : '0');
                     },
                   ),
@@ -78,8 +80,7 @@ Widget buildView(
                   state.currSong.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               )
             ],
@@ -96,21 +97,20 @@ Widget buildView(
                   }),
               state.currSong.like != null
                   ? IconButton(
-                  icon: state.currSong.like
-                      ? Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  )
-                      : Icon(
-                    Icons.favorite_border,
-                  ),
-                  onPressed: () {
-                    dispatch(PlayViewActionCreator.getLikeOrUnLike(
-                        !state.currSong.like));
-                  })
+                      icon: state.currSong.like
+                          ? Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            )
+                          : Icon(
+                              Icons.favorite_border,
+                            ),
+                      onPressed: () {
+                        dispatch(PlayViewActionCreator.getLikeOrUnLike(
+                            !state.currSong.like));
+                      })
                   : IconButton(
-                  icon: Icon(Icons.favorite_border),
-                  onPressed: () {}),
+                      icon: Icon(Icons.favorite_border), onPressed: () {}),
               IconButton(
                   icon: Icon(Icons.volume_down),
                   onPressed: () {
@@ -135,20 +135,20 @@ Widget buildView(
                     decoration: BoxDecoration(
                         color: Colors.amber,
                         borderRadius:
-                        BorderRadius.circular(Screens.setWidth(55))),
+                            BorderRadius.circular(Screens.setWidth(55))),
                     child: IconButton(
                         icon: state.playStateType == PlayStateType.Stop ||
-                            state.playStateType == PlayStateType.Pause
+                                state.playStateType == PlayStateType.Pause
                             ? Icon(
-                          Icons.play_arrow,
-                          size: 30,
-                          color: Colors.white,
-                        )
+                                Icons.play_arrow,
+                                size: 30,
+                                color: Colors.white,
+                              )
                             : Icon(
-                          Icons.pause,
-                          size: 30,
-                          color: Colors.white,
-                        ),
+                                Icons.pause,
+                                size: 30,
+                                color: Colors.white,
+                              ),
                         onPressed: () {
                           ///操作
                           dispatch(PlayViewActionCreator.playOrPause());
