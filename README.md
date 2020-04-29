@@ -10,9 +10,7 @@ flutter run --release
 
 
 ### Screenshots
-<img src="https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/me.jpg" width="30%">
-<img src="https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/find.jpg" width="30%">
-<img src="https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/top.jpg" width="30%">
+<img src="https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/me.jpg" width="30%"><img src="https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/find.jpg" width="30%"><img src="https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/top.jpg" width="30%">
 
 
 
