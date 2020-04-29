@@ -24,7 +24,7 @@ Effect<MineState> buildEffect() {
 }
 
 Future<void> _getRefresh(Action action, Context<MineState> ctx) async {
-  Future.delayed(Duration(milliseconds: 300), () async {
+  Future.delayed(Duration(milliseconds: 500), () async {
     await _onRefresh(action, ctx);
   });
 }

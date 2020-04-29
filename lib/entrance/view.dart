@@ -44,8 +44,8 @@ Widget buildView(
                       icon: ImageHelper.getImage(
                           SpUtil.getString('head',
                               defValue:
-                              'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
-                          height: 30,
+                                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
+                          height: 32,
                           isRound: true),
                       onPressed: () {
                         state.panelController.isPanelOpen
@@ -122,7 +122,7 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                 icon: ImageHelper.getImage(
                     SpUtil.getString('head',
                         defValue:
-                        'https: //ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
+                            'https: //ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
                     height: 30,
                     isRound: true),
                 onPressed: () {
@@ -255,7 +255,8 @@ Widget _navBar(EntranceState state, dispatch) {
           items: [
             BottomNavyBarItem(
               icon: Icon(
-                IconData(0xe6c8, fontFamily: 'iconfont'),size: 22,
+                IconData(0xe6c8, fontFamily: 'iconfont'),
+                size: 22,
               ),
               title: Text(
                 'Me',
@@ -265,7 +266,8 @@ Widget _navBar(EntranceState state, dispatch) {
             ),
             BottomNavyBarItem(
                 icon: Icon(
-                  IconData(0xe620, fontFamily: 'iconfont'),size: 22,
+                  IconData(0xe620, fontFamily: 'iconfont'),
+                  size: 22,
                 ),
                 title: Text(
                   'Find',
@@ -274,7 +276,8 @@ Widget _navBar(EntranceState state, dispatch) {
                 activeColor: const Color.fromRGBO(238, 178, 17, 1)),
             BottomNavyBarItem(
               icon: Icon(
-                IconData(0xe67b, fontFamily: 'iconfont'),size: 22,
+                IconData(0xe67b, fontFamily: 'iconfont'),
+                size: 22,
               ),
               title: Text(
                 'Top',

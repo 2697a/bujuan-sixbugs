@@ -17,7 +17,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class EntranceState implements Cloneable<EntranceState> {
   int selectIndex;
   PageController pageController;
-  bool navBarIsBottom;
   bool val;
   bool miniNav;
   PanelController panelController;
@@ -29,7 +28,6 @@ class EntranceState implements Cloneable<EntranceState> {
       ..pages = pages
       ..selectIndex = selectIndex
       ..pageController = pageController
-      ..navBarIsBottom = navBarIsBottom
       ..panelController = panelController
       ..miniNav = miniNav;
   }
@@ -38,10 +36,9 @@ class EntranceState implements Cloneable<EntranceState> {
 EntranceState initState(Map<String, dynamic> args) {
   final EntranceState state = EntranceState();
   state.selectIndex = 1;
-  state.navBarIsBottom = SpUtil.getBool(Constants.BOTTOM_NAV, defValue: false);
   state.pageController =
       PageController(initialPage: state.selectIndex, viewportFraction: 1);
-  state.miniNav = SpUtil.getBool(Constants.MINI_NAV, defValue: true);
+  state.miniNav = SpUtil.getBool(Constants.MINI_NAV, defValue: false);
   state.panelController = PanelController();
   state.val = false;
   state.pages = [

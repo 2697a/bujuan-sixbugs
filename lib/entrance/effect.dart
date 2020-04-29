@@ -28,7 +28,6 @@ Effect<EntranceState> buildEffect() {
 
 void _onBottomTap(Action action, Context<EntranceState> ctx) {
   ctx.state.pageController.jumpToPage(action.payload);
-  ctx.dispatch(EntranceActionCreator.onPageChange(action.payload));
 }
 
 void _onInit(Action action, Context<EntranceState> ctx) async {
