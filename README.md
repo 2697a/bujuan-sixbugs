@@ -10,7 +10,7 @@ flutter run --release
 
 
 ### Screenshots
-
+| ![main_playlist](https://github.com/2697a/bujuan-sixbugs/screenshots/find.jpg) |
 
 
 
