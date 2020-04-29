@@ -10,7 +10,7 @@ flutter run --release
 
 
 ### Screenshots
-| ![find页面](https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/find.jpg) |
+| ![find页面](https://github.com/2697a/bujuan-sixbugs/blob/master/screenshots/find.jpg=300x900) |
 
 
 
