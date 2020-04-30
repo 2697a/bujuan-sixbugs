@@ -41,19 +41,19 @@ class BuJuanUtil {
     return icon;
   }
 
-  static void saveCookie(List<Cookie> cookie) {
-    List<SaveCookieEntity> cookies = new List();
-    cookie.forEach((Cookie c) {
-      SaveCookieEntity myCookie = new SaveCookieEntity(
-          name: c.name,
-          value: c.value,
-          maxAge: c.maxAge,
-          domain: c.domain,
-          path: c.path);
-      cookies.add(myCookie);
-    });
-    SpUtil.putObjectList('cookies', cookies);
-  }
+//  static void saveCookie(List<Cookie> cookie) {
+//    List<SaveCookieEntity> cookies = new List();
+//    cookie.forEach((Cookie c) {
+//      SaveCookieEntity myCookie = new SaveCookieEntity(
+//          name: c.name,
+//          value: c.value,
+//          maxAge: c.maxAge,
+//          domain: c.domain,
+//          path: c.path);
+//      cookies.add(myCookie);
+//    });
+//    SpUtil.putObjectList('cookies', cookies);
+//  }
 
   static Future<List<Cookie>> getCookie() async {
     Directory tempDir = await getTemporaryDirectory();

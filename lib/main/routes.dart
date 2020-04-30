@@ -10,6 +10,7 @@ import 'package:bujuan/page/login/page.dart';
 import 'package:bujuan/page/mine/history/page.dart';
 import 'package:bujuan/page/mv_play/page.dart';
 import 'package:bujuan/page/play/page.dart';
+import 'package:bujuan/page/radio/page.dart';
 import 'package:bujuan/page/search/page.dart';
 import 'package:bujuan/page/search/search_details/page.dart';
 import 'package:bujuan/page/setting/page.dart';
@@ -53,8 +54,10 @@ var routes = new PageRoutes(
     'sheet_square': SheetSquarePage(),
     'hot_singer': HotSingerPage(),
     'local_list': LocalListPage(),
+    'local_music': LocalMusicPage(),
     'singer_details': SingerDetailsPage(),
     'user_clound': CloundPagePage(),
+    'radio': RadioPage(),
   },
   visitor: (String path, Page<Object, dynamic> page) {
     if (page.isTypeof<GlobalBaseState>()) {

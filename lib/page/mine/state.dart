@@ -13,6 +13,7 @@ class MineState implements Cloneable<MineState> {
   List<UserOrderPlaylist> createOrderList;
   List<UserOrderPlaylist> orderList;
   bool isOpen;
+  bool isCreateOpen;
 
   @override
   MineState clone() {
@@ -22,6 +23,7 @@ class MineState implements Cloneable<MineState> {
       ..isShowLoad = isShowLoad
       ..createOrderList = createOrderList
       ..isOpen = isOpen
+      ..isCreateOpen = isCreateOpen
       ..orderList = orderList;
   }
 }
@@ -31,18 +33,7 @@ MineState initState(Map<String, dynamic> args) {
   var cookie = SpUtil.getInt(Constants.USER_ID, defValue: -1);
   mineState.isLogin = cookie != -1;
   mineState.isShowLoad = true;
-//  var profile = SpUtil.getString('profile', defValue: null);
-//  var create = SpUtil.getString('create', defValue: null);
-//  var coll = SpUtil.getString('coll', defValue: null);
-//  if (profile != null && create != null && coll != null) {
-//    var responseJson = json.decode(profile);
-//    mineState.userProfileEntity = UserProfileEntity.fromJson(responseJson);
-//    List createList = json.decode(create);
-//    mineState.createOrderList = createList.map((m) => new UserOrderPlaylist.fromJson(m)).toList();
-//    List collList = json.decode(coll);
-//    mineState.orderList = collList.map((m) => new UserOrderPlaylist.fromJson(m)).toList();
-//    mineState.isShowLoad = false;
-//  }
-  mineState.isOpen = true;
+  mineState.isCreateOpen = true;
+  mineState.isOpen = false;
   return mineState;
 }

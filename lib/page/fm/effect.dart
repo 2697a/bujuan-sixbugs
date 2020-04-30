@@ -7,11 +7,12 @@ import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
-import 'package:bujuan/page/play2/action.dart';
+import 'package:bujuan/page/fm/action.dart';
 import 'package:bujuan/page/talk/page.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
+import 'package:bujuan/widget/lyric/lyric_controller.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter/services.dart';
@@ -22,41 +23,41 @@ import 'state.dart';
 
 StreamSubscription listen;
 const playPlugin = const EventChannel('com.sixbugs.bujuan/music_play');
-Effect<PlayView2State> buildEffect() {
-  return combineEffects(<Object, Effect<PlayView2State>>{
+Effect<FmPlayViewState> buildEffect() {
+  return combineEffects(<Object, Effect<FmPlayViewState>>{
     Lifecycle.initState: _onInit,
-    PlayView2Action.playOrPause: _onTask,
-    PlayView2Action.skipPrevious: _onPrevious,
-    PlayView2Action.skipNext: _onNext,
-    PlayView2Action.seekTo: _onSeekTo,
-    PlayView2Action.playSingleSong: _onPlaySingleSong,
-    PlayView2Action.getTalk: _onGetTalk,
-    PlayView2Action.changePlayMode: _onPlayMode,
-    PlayView2Action.likeOrUnLike: _onLike,
-    PlayView2Action.getUrl:_onGetUrl,
+    FmPlayViewAction.playOrPause: _onTask,
+    FmPlayViewAction.skipPrevious: _onPrevious,
+    FmPlayViewAction.skipNext: _onNext,
+    FmPlayViewAction.seekTo: _onSeekTo,
+    FmPlayViewAction.playSingleSong: _onPlaySingleSong,
+    FmPlayViewAction.getTalk: _onGetTalk,
+    FmPlayViewAction.changePlayMode: _onPlayMode,
+    FmPlayViewAction.likeOrUnLike: _onLike,
+    FmPlayViewAction.getUrl:_onGetUrl,
     Lifecycle.dispose: _dispose,
   });
 }
 
-void _onInit(Action action, Context<PlayView2State> ctx)  {
+void _onInit(Action action, Context<FmPlayViewState> ctx)  {
   TickerProvider t = (ctx.stfState) as TickerProvider;
-//  var lyricController = LyricController(vsync: t);
-//   ctx.dispatch(PlayViewActionCreator.changeTickerProvider(lyricController));
-//  if (ctx.state.lyric == null)
-//    _getLyric(ctx.state.currSong.id).then((lyric) {
-//      GlobalStore.store.dispatch(GlobalActionCreator.changeLyric(lyric));
-//    });
+  var lyricController = LyricController(vsync: t);
+   ctx.dispatch(PlayViewActionCreator.changeTickerProvider(lyricController));
+  if (ctx.state.lyric == null)
+    _getLyric(ctx.state.currSong.id).then((lyric) {
+      GlobalStore.store.dispatch(GlobalActionCreator.changeLyric(lyric));
+    });
   Stream stream = playPlugin.receiveBroadcastStream();
   listen = stream.listen((_) {
     _onEvent(_, ctx);
   }, onError: _onError);
 }
 
-void _dispose(Action action, Context<PlayView2State> ctx) {
+void _dispose(Action action, Context<FmPlayViewState> ctx) {
   listen?.cancel();
 }
 
-void _onPlayMode(Action action, Context<PlayView2State> ctx) {
+void _onPlayMode(Action action, Context<FmPlayViewState> ctx) {
   PlayModeType playModeType2 = ctx.state.playModeType;
   GlobalStore.store.dispatch(GlobalActionCreator.getChangePlayMode());
   switch (playModeType2) {
@@ -76,7 +77,7 @@ void _onPlayMode(Action action, Context<PlayView2State> ctx) {
 }
 
 
-void _onEvent(Object event, Context<PlayView2State> ctx) {
+void _onEvent(Object event, Context<FmPlayViewState> ctx) {
   Map<String, dynamic> tag = Map<String, dynamic>.from(event);
   var pos = tag['currSongPos'];
   var allPos = tag['currSongAllPos'];
@@ -96,35 +97,35 @@ void _onError(Object error) {
 }
 
 //控制播放或暂停
-void _onTask(Action action, Context<PlayView2State> ctx) {
+void _onTask(Action action, Context<FmPlayViewState> ctx) {
   if (ctx.state.playStateType != PlayStateType.Stop) BujuanMusic.control(task: ctx.state.playStateType == PlayStateType.Playing ? 'pause' : 'play');
 }
 
 //下一首
-void _onNext(Action action, Context<PlayView2State> ctx) {
+void _onNext(Action action, Context<FmPlayViewState> ctx) {
   if (ctx.state.playStateType != PlayStateType.Stop) {
     BujuanMusic.control(task: 'next');
   }
 }
 
 //上一首
-void _onPrevious(Action action, Context<PlayView2State> ctx) {
+void _onPrevious(Action action, Context<FmPlayViewState> ctx) {
   if (ctx.state.playStateType != PlayStateType.Stop) {
     BujuanMusic.control(task: 'previous');
   }
 }
 
 //改变播放进度
-void _onSeekTo(Action action, Context<PlayView2State> ctx) {
+void _onSeekTo(Action action, Context<FmPlayViewState> ctx) {
   BujuanMusic.seekTo(action.payload);
 }
 
 //播放单手音乐
-void _onPlaySingleSong(Action action, Context<PlayView2State> ctx) {
+void _onPlaySingleSong(Action action, Context<FmPlayViewState> ctx) {
   BujuanMusic.playIndex(index: action.payload);
 }
 
-void _onGetTalk(Action action, Context<PlayView2State> ctx) {
+void _onGetTalk(Action action, Context<FmPlayViewState> ctx) {
   showBujuanBottomSheet(
     context: ctx.context,
     shape: RoundedRectangleBorder(
@@ -143,7 +144,7 @@ void _onGetTalk(Action action, Context<PlayView2State> ctx) {
   );
 }
 
-void _onGetUrl(Action action, Context<PlayView2State> ctx) async {
+void _onGetUrl(Action action, Context<FmPlayViewState> ctx) async {
   var url = await _getUrl(ctx.state.currSong.id);
   var _localPath = (await _findLocalPath()) + Platform.pathSeparator + 'Download';
 
@@ -174,7 +175,7 @@ Future<String> _getUrl(id) async{
   } else
     return null;
 }
-void _onLike(Action action, Context<PlayView2State> ctx) async {
+void _onLike(Action action, Context<FmPlayViewState> ctx) async {
   ctx.dispatch(PlayViewActionCreator.getChangeLike());
   var answer = await like_song({'id': ctx.state.currSong.id, 'like': '${action.payload}'},await BuJuanUtil.getCookie());
 //  Response data = await HttpUtil().post('/like',

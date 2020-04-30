@@ -5,7 +5,7 @@ import android.app.Activity;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.PluginRegistry;
 
-public class BuJuanMusicPlayListenPlugin implements EventChannel.StreamHandler {
+public class BuJuanMusicPlayListenPlugin implements EventChannel.StreamHandler  {
 
     public static String CHANNEL = "com.sixbugs.bujuan/music_play";
 

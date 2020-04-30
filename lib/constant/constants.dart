@@ -3,17 +3,13 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 class Constants {
   static bool dark = false;
 
-  static List<SongBeanEntity> readyToPlayList = List();
-
-  static SongBeanEntity songBeanEntity;
-
-  static List<SongBeanEntity> list;
-
   static String playSongHistory = "PLAY_SONG_HISTORY";
   static String playSongListHistory = "PLAY_SONG_LIST_HISTORY";
 
   static String BLUR = 'BLUR';
   static String COOKIE = 'COOKIE';
+
+  static String HIGH = 'HIGH';
 
   static String MINI_PLAY = 'MINNI_PLAY';
 

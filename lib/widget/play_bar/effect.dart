@@ -6,6 +6,7 @@ import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
+import 'package:bujuan/page/fm/page.dart';
 import 'package:bujuan/page/play/page.dart';
 import 'package:bujuan/page/play2/page.dart';
 import 'package:bujuan/utils/sp_util.dart';
@@ -29,6 +30,7 @@ void _onAction(Action action, Context<PlayBarState> ctx) {}
 void _onOpenPlay(Action action, Context<PlayBarState> ctx) {
   if (ctx.state.playStateType != PlayStateType.Stop) {
     var miniPlay = SpUtil.getBool(Constants.MINI_PLAY, defValue: false);
+    var isFm = SpUtil.getBool(Constants.ISFM, defValue: false);
     showBujuanBottomSheet(
       context: ctx.context,
       builder: (BuildContext context) {
@@ -36,9 +38,11 @@ void _onOpenPlay(Action action, Context<PlayBarState> ctx) {
 //        if (miniPlay) width = width / 1.15;
         return Container(
           height: width,
-          child: miniPlay
-              ? PlayViewPage().buildPage(null)
-              : PlayView2Page().buildPage(null),
+          child: isFm
+              ? FmPlayViewPage().buildPage(null)
+              : miniPlay
+                  ? PlayViewPage().buildPage(null)
+                  : PlayView2Page().buildPage(null),
         );
       },
     );

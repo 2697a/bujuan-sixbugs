@@ -15,7 +15,11 @@ Widget buildView(SearchSingerState state, Dispatch dispatch, ViewService viewSer
           dense: true,
           title: Text('${state.artists[index].name}'),
           subtitle: Text('${state.artists[index].albumSize} 张专辑',overflow: TextOverflow.ellipsis,maxLines: 1,),
-          onTap: (){
+          onTap: () async{
+            await Navigator.of(viewService.context)
+                .pushNamed('singer_details', arguments: {
+              'id': state.artists[index].id
+            });
           },
         );
       },

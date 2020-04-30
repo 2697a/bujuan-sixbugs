@@ -26,7 +26,7 @@ Effect<SheetDetailsState> buildEffect() {
   });
 }
 
-void _onPlay(Action action, Context<SheetDetailsState> ctx) {
+void _onPlay(Action action, Context<SheetDetailsState> ctx) async{
   SpUtil.putBool(Constants.ISFM, false);
   var index2 = action.payload;
   GlobalStore.store
@@ -34,7 +34,7 @@ void _onPlay(Action action, Context<SheetDetailsState> ctx) {
   SpUtil.putObjectList(Constants.playSongListHistory, ctx.state.list);
 
   var jsonEncode2 = jsonEncode( ctx.state.list);
-  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
+  await BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }
 
 ///playlist/subscribe"

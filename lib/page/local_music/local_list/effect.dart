@@ -25,5 +25,6 @@ void _onPlayMusic(Action action, Context<LocalListState> ctx) {
       .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.list[index2]));
   SpUtil.putObjectList(Constants.playSongListHistory, ctx.state.list);
   var jsonEncode2 = jsonEncode(ctx.state.list);
+  print('播放=====$jsonEncode2');
   BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }

@@ -17,22 +17,21 @@ import 'state.dart';
 
 Widget buildView(
     PlayViewState state, Dispatch dispatch, ViewService viewService) {
-//  return _body(state, viewService, dispatch);
   var d = state.currSongPos / state.currSongAllPos * 100;
   return Scaffold(
+    key: state.scaffoldKey,
     body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 13),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: <Widget>[
           Expanded(
             child: Column(
               children: <Widget>[
-                ListTile(dense: true,),
-                Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                Padding(padding: EdgeInsets.symmetric(vertical: MediaQueryData.fromWindow(window).padding.top)),
                 IconButton(
                   icon:ImageHelper.getImage(
                       state.currSong.picUrl + "?param=500y500"),
-                  iconSize: MediaQuery.of(viewService.context).size.width / 1.3,
+                  iconSize: MediaQuery.of(viewService.context).size.width / 1.4,
                   onPressed: () async =>
                   await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
                 ),
@@ -40,7 +39,9 @@ Widget buildView(
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    IconButton(icon: Icon(Icons.sort), onPressed: () {}),
+                    IconButton(icon: Icon(Icons.sort), onPressed: () {
+                      state.scaffoldKey.currentState.openDrawer();
+                    }),
                     IconButton(
                         icon: BuJuanUtil.getPlayMode(state.playModeType),
                         onPressed: () {
@@ -62,11 +63,14 @@ Widget buildView(
                             })
                         : IconButton(
                             icon: Icon(Icons.favorite_border),
-                            onPressed: () {}),
+                            onPressed: () {
+                              dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.like));
+                            }),
                     IconButton(
-                        icon: Icon(Icons.volume_down),
+                        icon: Icon(Icons.message),
                         onPressed: () {
-                          dispatch(PlayViewActionCreator.getChangePlayMode());
+                          dispatch(PlayViewActionCreator.getSongTalk(
+                              state.currSong.id.toString()));
                         }),
                   ],
                 ),
@@ -206,6 +210,54 @@ Widget buildView(
         ],
       ),
     ),
+      drawer:  Drawer(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 20)),
+              ListTile(
+                dense: true,
+                title: Text(
+                  '${state.currSong.name}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: Screens.text14, color: Colors.red),
+                ),
+                subtitle: Text('${state.currSong.singer}',
+                    style:
+                    TextStyle(fontSize: Screens.text14, color: Colors.red)),
+                trailing: IconButton(
+                    icon: Icon(
+                      Icons.play_circle_filled,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {}),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        dense: true,
+                        title: Text(
+                          '${index + 1}. ${state.songList[index].name}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: Screens.text14),
+                        ),
+                        subtitle: Text('${state.songList[index].singer}',
+                            style: TextStyle(fontSize: Screens.text14)),
+                        onTap: () async {
+                          await BujuanMusic.playIndex(index: index);
+                        },
+                      );
+                    },
+                    itemCount: state.songList.length,
+                  ))
+            ],
+          ),
+        ),
+      )
   );
 }
 
@@ -364,7 +416,9 @@ Widget _body(PlayViewState state, viewService, dispatch) {
                                 !state.currSong.like));
                           })
                       : IconButton(
-                          icon: Icon(Icons.favorite_border), onPressed: () {}),
+                          icon: Icon(Icons.favorite_border), onPressed: () {
+                            dispatch(PlayViewActionCreator.getLikeOrUnLike(state.currSong.like));
+                  }),
                   IconButton(
                       icon: Icon(Icons.skip_previous),
                       onPressed: () {

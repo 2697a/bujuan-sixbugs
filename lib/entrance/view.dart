@@ -4,7 +4,6 @@ import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/left_page.dart';
 import 'package:bujuan/widget/mini_nav_bar.dart';
@@ -12,7 +11,6 @@ import 'package:bujuan/widget/nav_bar.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../android_back_desktop.dart';
@@ -23,7 +21,6 @@ Widget buildView(
     EntranceState state, Dispatch dispatch, ViewService viewService) {
 //  ScreenUtil.init(viewService.context,
 //      width: 375, height: 812, allowFontScaling: false);
-//  return _body(state, dispatch, viewService);
   return WillPopScope(
       child: Scaffold(
         body: SlidingUpPanel(
@@ -122,7 +119,7 @@ Widget _body(EntranceState state, dispatch, ViewService viewService) {
                 icon: ImageHelper.getImage(
                     SpUtil.getString('head',
                         defValue:
-                            'https: //ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
+                            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
                     height: 30,
                     isRound: true),
                 onPressed: () {
@@ -178,32 +175,22 @@ Widget _leftChild(EntranceState state, dispatch, ViewService viewService) {
     children: <Widget>[
       Expanded(child: Container()),
       ListTile(
-        title: Text('設置'),
+        title: Text('设置'),
         onTap: () async {
 //          dispatch(EntranceActionCreator.openPage(OpenType.SETTING));
           await Navigator.of(viewService.context)
               .pushNamed('setting', arguments: null);
-          state.panelController?.close(); //注意2
+//          state.panelController?.close();
         },
       ),
       ListTile(
-        title: Text('關於'),
-        onTap: () {
-          dispatch(EntranceActionCreator.openPage(OpenType.ABOUT));
+        title: Text('关于'),
+        onTap: () async{
+          await
+          Navigator.of(viewService.context)
+              .pushNamed('about', arguments: null);
         },
       ),
-      ListTile(
-        title: Text('捐贈'),
-        onTap: () {
-          dispatch(EntranceActionCreator.openPage(OpenType.DONATION));
-        },
-      ),
-//      SwitchListTile(
-//          title: Text('底部导航栏'),
-//          value: state.navBarIsBottom,
-//          onChanged: (value) {
-//            dispatch(EntranceActionCreator.onNavBarSwitch());
-//          }),
       SwitchListTile(
           title: Text('迷你导航栏'),
           value: state.miniNav,

@@ -1,34 +1,34 @@
+import 'package:bujuan/entity/singer_album.dart';
+import 'package:bujuan/entity/singer_song.dart';
+import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
 
 class SingerDetailsState implements Cloneable<SingerDetailsState> {
   bool isShowLoading;
   String singerId;
-  String singerPic;
-  String singerName;
   List<String> tabs;
-
+  Artist artistBean;
+  List<HotAlbums> albums;
+  List<SongBeanEntity> songs;
   @override
   SingerDetailsState clone() {
     return SingerDetailsState()
       ..isShowLoading = isShowLoading
       ..singerId = singerId
-      ..singerName = singerName
-      ..tabs =tabs
-      ..singerPic = singerPic;
+      ..artistBean = artistBean
+      ..tabs = tabs
+      ..albums = albums
+      ..songs = songs;
   }
 }
 
 SingerDetailsState initState(Map<String, dynamic> args) {
   var singerDetailsState = SingerDetailsState();
   var id = args['id'];
-  var url = args['pic'];
-  var name = args['name'];
   singerDetailsState.singerId = '$id';
-  singerDetailsState.singerPic = url;
-  singerDetailsState.singerName = name;
   singerDetailsState.isShowLoading = true;
   singerDetailsState.tabs = <String>[
-    "单曲",
+    "热门单曲",
     "专辑",
     "视频",
   ];

@@ -14,6 +14,7 @@ Reducer<MineState> buildReducer() {
       MineAction.getOrderList: _onOrderList,
       MineAction.getCreateOrderList: _onCreateOrderList,
       MineAction.setOPen: _onSetOpen,
+      MineAction.setCreateOpen: _onSetCreateOpen,
       MineAction.changeLoginState: _changeLoginState
     },
   );
@@ -61,5 +62,12 @@ MineState _onSetOpen(MineState state, Action action) {
   final bool isOpen = !state.isOpen;
   final MineState newState = state.clone();
   newState.isOpen = isOpen;
+  return newState;
+}
+
+MineState _onSetCreateOpen(MineState state, Action action) {
+  final bool isOpen = !state.isCreateOpen;
+  final MineState newState = state.clone();
+  newState.isCreateOpen = isOpen;
   return newState;
 }

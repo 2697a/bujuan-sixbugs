@@ -18,32 +18,38 @@ Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService)
       child: ListView(
         children: <Widget>[
           SwitchListTile(
-              title: Text('切换播放页ui'),
+              title: Text('切换播放页ui(目前就两种，做的比较简陋)',style: TextStyle(fontSize: 14),),
               value: state.miniPlay,
               onChanged: (value) {
                 dispatch(SettingActionCreator.onMiniPlay());
               }),
+          SwitchListTile(
+              title: Text('开启高音质',style: TextStyle(fontSize: 14),),
+              value: state.isHigh,
+              onChanged: (value) {
+                dispatch(SettingActionCreator.onIsHigh());
+              }),
           ListTile(
-            title: Text('全局背景'),
+            title: Text('全局背景(暂时关闭)',style: TextStyle(fontSize: 14),),
             onTap: () async{
-              File image = await ImagePickerGC.pickImage(
-                context: viewService.context,
-                source: ImgSource.Gallery,
-                cameraIcon: Icon(
-                  Icons.add,
-                  color: Colors.red,
-                ),//cameraIcon and galleryIcon can change. If no icon provided default icon will be present
-              );
-              showBujuanBottomSheet(context: viewService.context, builder: (context){
-                return BackSetting(image);
-              });
+//              File image = await ImagePickerGC.pickImage(
+//                context: viewService.context,
+//                source: ImgSource.Gallery,
+//                cameraIcon: Icon(
+//                  Icons.add,
+//                  color: Colors.red,
+//                ),//cameraIcon and galleryIcon can change. If no icon provided default icon will be present
+//              );
+//              showBujuanBottomSheet(context: viewService.context, builder: (context){
+//                return BackSetting(image);
+//              });
 //              GlobalStore.store.dispatch(GlobalActionCreator.changeBack(image.path));
             },
           ),
           ListTile(
-            title: Text('清除全局背景'),
+            title: Text('清除全局背景(暂时关闭)',style: TextStyle(fontSize: 14),),
             onTap: () async{
-              GlobalStore.store.dispatch(GlobalActionCreator.changeBack(null));
+//              GlobalStore.store.dispatch(GlobalActionCreator.changeBack(null));
             },
           )
         ],

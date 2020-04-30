@@ -1,15 +1,13 @@
 import 'dart:convert';
 
-import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
-import 'package:bujuan/global_store/action.dart';
-import 'package:bujuan/global_store/store.dart';
-import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
-import '../../bujuan_music.dart';
+import 'package:flutter/services.dart';
 import 'action.dart';
 import 'state.dart';
 
+const urlFMPlugin =
+const BasicMessageChannel('url_fm_plugin', StandardMessageCodec());
 Effect<LocalMusicState> buildEffect() {
   return combineEffects(<Object, Effect<LocalMusicState>>{
     Lifecycle.initState: _initState,
@@ -23,15 +21,16 @@ void _initState(Action action, Context<LocalMusicState> ctx) {
 }
 
 void _ref(Action action, Context<LocalMusicState> ctx) async {
-  BujuanMusic.local().then((local) {
-    List responseJson = json.decode(local);
-    List<SongBeanEntity> songs =
-        responseJson.map((m) => new SongBeanEntity.fromJson(m)).toList();
-    Future.delayed(Duration(milliseconds: 200), () {
-      ctx.dispatch(LocalMusicActionCreator.getLocalMusic(songs));
-    });
-  });
+  var name = await urlFMPlugin.send('local');
+  var jsonDecode2 = jsonDecode(name);
 
+  print('本地音乐$name');
+  List<SongBeanEntity> songs = [];
+  jsonDecode2.forEach((s){
+    SongBeanEntity song =  SongBeanEntity.fromJson(s);
+    songs.add(song);
+  });
+  ctx.dispatch(LocalMusicActionCreator.getLocalMusic(songs));
 }
 
 void _onChangeIndex(Action action, Context<LocalMusicState> ctx) {

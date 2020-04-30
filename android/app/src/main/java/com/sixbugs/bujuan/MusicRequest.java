@@ -27,7 +27,8 @@ public class MusicRequest {
         map.put("type", "getUrl");
         map.put("id", songId);
         basicMessageChannelPlugin.send(map, reply -> {
-            callback.onSuccess(reply.toString());
+            Map<String,String> map = (Map<String, String>) reply;
+            callback.onSuccess(map.get("url"));
         });
     }
 

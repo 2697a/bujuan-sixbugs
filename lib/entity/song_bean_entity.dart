@@ -37,6 +37,7 @@ class SongBeanEntity {
     id = json['id'];
     picUrl = json['picUrl'];
     singer = json['singer'];
+    url = json['url'];
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -44,6 +45,7 @@ class SongBeanEntity {
     data['id'] = this.id;
     data['picUrl'] = this.picUrl;
     data['singer'] = this.singer;
+    data['url'] = this.url;
     return data;
   }
 

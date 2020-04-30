@@ -11,7 +11,7 @@ description: music for lgs
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.3+4
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -32,6 +32,7 @@ dependencies:
   flutter_downloader: ^1.4.3
   path_provider: ^1.5.1
   sleek_circular_slider: ^1.1.0
+  url_launcher: ^5.4.2
   #api相关
   encrypt: ^3.0.0
   dartin: ^0.0.1

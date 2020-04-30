@@ -3,6 +3,7 @@ package com.sixbugs.bujuan;
 
 import android.content.Intent;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 
 import io.flutter.plugin.common.MethodCall;
@@ -15,6 +16,7 @@ import com.lzx.starrysky.StarrySky;
 import com.lzx.starrysky.provider.SongInfo;
 import com.sixbugs.bujuan.entity.SongBean;
 import com.sixbugs.bujuan.utils.GsonUtil;
+import com.sixbugs.bujuan.utils.PrefUtils;
 
 
 import java.io.File;
@@ -44,6 +46,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
     @Override
     public void onMethodCall(MethodCall methodCall, Result result) {
         if (methodCall.method.equals("songInfo")) {
+            PrefUtils.putBoolean(activity,"isFm",false);
             String readList = methodCall.argument("readList");
             int playIndex = methodCall.argument("playIndex");
             List<SongBean> songs = GsonUtil.jsonToList(readList, SongBean.class);
@@ -54,7 +57,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
                 songInfo.setAlbumCover(song.getPicUrl() == null ? "" : song.getPicUrl());
                 songInfo.setSongId(song.getId() == null ? "001" : song.getId());
                 songInfo.setArtist(song.getSinger() == null ? "" : song.getSinger());
-//                songInfo.setSongUrl(null);
+                songInfo.setSongUrl(song.getUrl()==null?"":song.getUrl());
                 songInfos.add(songInfo);
             }
             StarrySky.with().playMusic(songInfos, playIndex);
@@ -70,32 +73,31 @@ public class BujuanMusicPlugin implements MethodCallHandler {
                     StarrySky.with().skipToNext();
                 else if (task.equals("previous"))
                     StarrySky.with().skipToPrevious();
-        } else if (methodCall.method.equals("local_music")) {
-            //本地音乐
-//            List<SongInfo> songInfos = StarrySky.with().querySongInfoInLocal();
-//            List<SongBean> songs = new ArrayList<>();
-//            for (SongInfo songInfo : songInfos) {
-//                SongBean song = new SongBean();
-//                String size = songInfo.getSize();
-//                long l = Long.parseLong(size);
-//                if (l / 1024 / 1024 > 1) {
-//                    song.setId(songInfo.getSongId());
-//                    song.setName(songInfo.getSongName());
-////                    song.setUrl(songInfo.getSongUrl());
-//                    song.setPicUrl(fileIsExists(songInfo.getAlbumCover()) ? songInfo.getAlbumCover() : null);
-//                    song.setSinger(songInfo.getArtist());
-//                    songs.add(song);
-//                }
-//                Log.d("", "onMethodCall: =======" + songInfo.getAlbumHDCover());
-//            }
-//            String local = GsonUtil.GsonString(songs);
-            result.success(null);
+        } else if (methodCall.method.equals("fm")) {
+            String readList = methodCall.argument("fmList");
+            PrefUtils.putBoolean(activity,"isFm",true);
+            List<SongBean> songs = GsonUtil.jsonToList(readList, SongBean.class);
+            List<SongInfo> songInfos = new ArrayList<>();
+            for (SongBean song : songs) {
+                SongInfo songInfo = new SongInfo();
+                songInfo.setSongName(song.getName() == null ? "" : song.getName());
+                songInfo.setAlbumCover(song.getPicUrl() == null ? "" : song.getPicUrl());
+                songInfo.setSongId(song.getId() == null ? "001" : song.getId());
+                songInfo.setArtist(song.getSinger() == null ? "" : song.getSinger());
+                songInfo.setSongUrl(song.getUrl()==null?"":song.getUrl());
+                songInfos.add(songInfo);
+            }
+            StarrySky.with().playMusic(songInfos, 0);
+            result.success("success");
         } else if (methodCall.method.equals("lyric")) {
-            Intent intent = new Intent(activity,LyricActivity.class);
+            Intent intent = new Intent(activity, LyricActivity.class);
             String dark = methodCall.argument("dark");
-            intent.putExtra("dark",dark);
+            intent.putExtra("dark", dark);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(intent);
+        }else if (methodCall.method.equals("playIndex")) {
+            int index = methodCall.argument("index");
+            StarrySky.with().playMusicByIndex(index);
         } else if (methodCall.method.equals("seekTo")) {
             String seekNum = methodCall.argument("seekNum");
             if (seekNum != null) {

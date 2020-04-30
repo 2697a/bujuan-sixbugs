@@ -107,7 +107,8 @@ public class LyricActivity extends AppCompatActivity implements OnPlayerEventLis
             map.put("id", id);
             basicMessageChannelPlugin.send(map, reply -> {
                 if (reply != null) {
-                    Lyric lyric = GsonUtil.GsonToBean(reply.toString(), Lyric.class);
+                    Map<String,String> lyricMap = (Map<String, String>) reply;
+                    Lyric lyric = GsonUtil.GsonToBean(lyricMap.get("lyric"), Lyric.class);
                     int code = lyric.getCode();
                     if (code == 200) {
                         if (lyric.getLrc() != null) zhLyric = lyric.getLrc().getLyric();

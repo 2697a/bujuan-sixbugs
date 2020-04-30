@@ -23,7 +23,9 @@ import io.flutter.plugin.common.MethodChannel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.app.FlutterActivity;
@@ -39,19 +41,14 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     public static BasicMessageChannel<Object> basicMessageChannelPlugin;
     private String zhLyric = "";
     private String enLyric = "";
-    private PowerManager.WakeLock wakeLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
-        getLookWake();
         GeneratedPluginRegistrant.registerWith(this);
         StarrySky.with().addPlayerEventListener(this);
         BujuanMusicPlugin.registerWith(this.registrarFor(BujuanMusicPlugin.CHANNEL));
         MyViewFlutterPlugin.registerWith(this);
-//        buJuanMusicListenPlugin = BuJuanMusicListenPlugin.registerWith(this.registrarFor(BuJuanMusicListenPlugin.CHANNEL));
         buJuanMusicPlayListenPlugin = BuJuanMusicPlayListenPlugin.registerWith(this.registrarFor(BuJuanMusicPlayListenPlugin.CHANNEL));
         basicMessageChannelPlugin = new BasicMessageChannel<>(getFlutterView(), Config.URL_FM_CHANNEL, StandardMessageCodec.INSTANCE);
         listenerPos();
@@ -66,11 +63,28 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
                     }
                 }
         );
+        basicMessageChannelPlugin.setMessageHandler((message, reply) -> {
+            if (message.equals("local")) {
+                List<SongInfo> songInfos = StarrySky.with().querySongInfoInLocal();
+                List<SongBean> songs = new ArrayList<>();
+                for (SongInfo songInfo : songInfos) {
+                    SongBean song = new SongBean();
+                    String size = songInfo.getSize();
+                    long l = Long.parseLong(size);
+                    if (l / 1024 / 1024 > 1) {
+                        song.setId(songInfo.getSongId());
+                        song.setName(songInfo.getSongName());
+                        song.setUrl(songInfo.getSongUrl());
+                        song.setPicUrl(songInfo.getAlbumCover());
+                        song.setSinger(songInfo.getArtist());
+                        songs.add(song);
+                    }
+                }
+                reply.reply(GsonUtil.GsonString(songs));
+            }
+        });
     }
 
-    private void getLookWake() {
-        wakeLock.acquire();
-    }
 
     private void getRead() {
         SoulPermission.getInstance().checkAndRequestPermissions(
@@ -147,7 +161,29 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         map.put("type", "currSong");
         map.put("data", GsonUtil.GsonString(song));
         basicMessageChannelPlugin.send(map);
-//        buJuanMusicListenPlugin.eventSink.success(map);
+        boolean isFM = PrefUtils.getBoolean(MainActivity.this, "isFm", false);
+        if (isFM) {
+            //是fm的话播放完一首就在获取下
+            map.clear();
+            map.put("type", "getFm");
+            basicMessageChannelPlugin.send(map, reply -> {
+                Map<String, String> fm = (Map<String, String>) reply;
+                List<SongBean> songs = GsonUtil.jsonToList(fm.get("fm"), SongBean.class);
+                List<SongInfo> songInfos = new ArrayList<>();
+                for (SongBean song_bean : songs) {
+                    SongInfo songa = new SongInfo();
+                    songa.setSongName(song_bean.getName() == null ? "" : song_bean.getName());
+                    songa.setAlbumCover(song_bean.getPicUrl() == null ? "" : song_bean.getPicUrl());
+                    songa.setSongId(song_bean.getId() == null ? "001" : song_bean.getId());
+                    songa.setArtist(song_bean.getSinger() == null ? "" : song_bean.getSinger());
+                    songInfos.add(songa);
+                }
+                if (songInfos.size() > 0)
+                    StarrySky.with().addSongInfo(songInfos.get(0));
+            });
+        }else {
+        }
+
     }
 
     @Override
@@ -187,7 +223,6 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
 
     @Override
     protected void onDestroy() {
-        wakeLock.release();
         StarrySky.with().removePlayerEventListener(this);
         StarrySky.with().stopMusic();
         mTimerTask.removeUpdateProgressTask();

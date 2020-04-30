@@ -16,10 +16,13 @@ import 'action.dart';
 import 'state.dart';
 
 Effect<NewBannerState> buildEffect() {
-  return combineEffects(<Object, Effect<NewBannerState>>{NewBannerAction.openPage: _onOpenPage, NewBannerAction.getFm: _onFm, NewBannerAction.onTap: _onTap});
+  return combineEffects(<Object, Effect<NewBannerState>>{
+    NewBannerAction.openPage: _onOpenPage,
+    NewBannerAction.onTap: _onTap
+  });
 }
 
-void _onOpenPage(Action action, Context<NewBannerState> ctx) {
+void _onOpenPage(Action action, Context<NewBannerState> ctx) async {
   MenuType menuType = action.payload;
   switch (menuType) {
     case MenuType.TODAY:
@@ -32,14 +35,13 @@ void _onOpenPage(Action action, Context<NewBannerState> ctx) {
       Navigator.of(ctx.context).pushNamed('sheet_square', arguments: null);
       break;
     case MenuType.SINGER:
-      // TODO: Handle this case.
       Navigator.of(ctx.context).pushNamed('hot_singer', arguments: null);
       break;
     case MenuType.RADIO:
-      // TODO: Handle this case.
+      Navigator.of(ctx.context).pushNamed('radio', arguments: null);
       break;
     case MenuType.FM:
-      // TODO: Handle this case.
+       _onFm();
       break;
   }
 }
@@ -59,7 +61,12 @@ void _onTap(Action action, Context<NewBannerState> ctx) {
             ar.forEach((singer) {
               singerStr += ' ${singer.name} ';
             });
-            SongBeanEntity songBeanEntity = SongBeanEntity(name: details.name, id: details.id.toString(), picUrl: details.al.picUrl, singer: singerStr, mv: details.mv);
+            SongBeanEntity songBeanEntity = SongBeanEntity(
+                name: details.name,
+                id: details.id.toString(),
+                picUrl: details.al.picUrl,
+                singer: singerStr,
+                mv: details.mv);
             newList.add(songBeanEntity);
           });
 
@@ -77,44 +84,42 @@ void _onTap(Action action, Context<NewBannerState> ctx) {
     case 100:
       break;
     case 1004:
-      Navigator.of(ctx.context).pushNamed('mv_play', arguments: {'mvId': payload.targetId}); //注意2
+      Navigator.of(ctx.context)
+          .pushNamed('mv_play', arguments: {'mvId': payload.targetId}); //注意2
       break;
     case 1000:
       break;
   }
 }
 
-void _onFm(Action action, Context<NewBannerState> ctx) {
-  _getFm().then((fm) {
-    SpUtil.putBool(Constants.ISFM, true);
-    List<SongBeanEntity> songs = List();
-    fm.data.forEach((data) {
-      SongBeanEntity songBeanEntity = SongBeanEntity();
-      songBeanEntity.id = data.id.toString();
-      songBeanEntity.name = data.name;
-      songBeanEntity.singer = data.artists[0].name;
-      songBeanEntity.picUrl = data.album.picUrl;
-      songBeanEntity.mv = data.mvid;
-      songs.add(songBeanEntity);
-    });
-
-//    GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
-    SpUtil.putObjectList(Constants.playSongListHistory, songs);
-    var jsonEncode2 = jsonEncode(songs);
-    BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: 0);
+void _onFm() async {
+  var fm = await _getFm();
+  SpUtil.putBool(Constants.ISFM, true);
+  List<SongBeanEntity> songs = List();
+  fm.data.forEach((data) {
+    SongBeanEntity songBeanEntity = SongBeanEntity();
+    songBeanEntity.id = data.id.toString();
+    songBeanEntity.name = data.name;
+    songBeanEntity.singer = data.artists[0].name;
+    songBeanEntity.picUrl = data.album.picUrl;
+    songBeanEntity.mv = data.mvid;
+    songs.add(songBeanEntity);
   });
+
+  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
+  SpUtil.putObjectList(Constants.playSongListHistory, songs);
+  var jsonEncode2 = jsonEncode(songs);
+  await BujuanMusic.fm(jsonEncode2);
 }
 
 Future<SongDeEntity> _getSongDetails(ids) async {
   // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-  var answer = await song_detail({'ids': ids},await BuJuanUtil.getCookie());
+  var answer = await song_detail({'ids': ids}, await BuJuanUtil.getCookie());
   return answer.status == 200 ? SongDeEntity.fromJson(answer.body) : null;
 }
 
 ///personal_fm
 Future<FmEntity> _getFm() async {
-//  Response sheet = await HttpUtil().get('/personal_fm');
-//  var data = sheet.data;
-//  var jsonDecode2 = jsonDecode(data);
-//  return FmEntity.fromJson(jsonDecode2);
+  var answer = await personal_fm({}, await BuJuanUtil.getCookie());
+  return answer.status == 200 ? FmEntity.fromJson(answer.body) : null;
 }

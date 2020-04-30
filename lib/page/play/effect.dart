@@ -43,10 +43,10 @@ void _onInit(Action action, Context<PlayViewState> ctx)  {
   TickerProvider t = (ctx.stfState) as TickerProvider;
   var lyricController = LyricController(vsync: t);
    ctx.dispatch(PlayViewActionCreator.changeTickerProvider(lyricController));
-  if (ctx.state.lyric == null)
-    _getLyric(ctx.state.currSong.id).then((lyric) {
-      GlobalStore.store.dispatch(GlobalActionCreator.changeLyric(lyric));
-    });
+//  if (ctx.state.lyric == null)
+//    _getLyric(ctx.state.currSong.id).then((lyric) {
+//      GlobalStore.store.dispatch(GlobalActionCreator.changeLyric(lyric));
+//    });
   Stream stream = playPlugin.receiveBroadcastStream();
   listen = stream.listen((_) {
     _onEvent(_, ctx);
@@ -122,7 +122,7 @@ void _onSeekTo(Action action, Context<PlayViewState> ctx) {
 
 //播放单手音乐
 void _onPlaySingleSong(Action action, Context<PlayViewState> ctx) {
-  BujuanMusic.playSingleSong(index: action.payload);
+  BujuanMusic.playIndex(index: action.payload);
 }
 
 void _onGetTalk(Action action, Context<PlayViewState> ctx) {

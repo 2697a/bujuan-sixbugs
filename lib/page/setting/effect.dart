@@ -8,6 +8,7 @@ import 'state.dart';
 Effect<SettingState> buildEffect() {
   return combineEffects(<Object, Effect<SettingState>>{
     SettingAction.miniPlay: _onAction,
+    SettingAction.isHigh: _onIsHigh,
     SettingAction.changeBlur: _onChangeBlur
   });
 }
@@ -16,6 +17,12 @@ void _onAction(Action action, Context<SettingState> ctx) {
   SpUtil.putBool(Constants.MINI_PLAY, !ctx.state.miniPlay);
   ctx.dispatch(SettingActionCreator.onMiniPlayState(!ctx.state.miniPlay));
 }
+
+void _onIsHigh(Action action, Context<SettingState> ctx) {
+  SpUtil.putBool(Constants.HIGH, !ctx.state.isHigh);
+  ctx.dispatch(SettingActionCreator.onHighState(!ctx.state.isHigh));
+}
+
 void _onChangeBlur(Action action, Context<SettingState> ctx) {
   BuJuanUtil.showToast('msg');
   ctx.dispatch(SettingActionCreator.onChangeBlur(action.payload));

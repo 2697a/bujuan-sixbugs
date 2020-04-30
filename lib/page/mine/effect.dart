@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:bujuan/api/module.dart';
 import 'package:bujuan/constant/constants.dart';
@@ -39,7 +38,7 @@ void _onLogin(Action action, Context<MineState> ctx) {
   });
 }
 
-void _exit(Action action, Context<MineState> ctx) {
+void _exit(Action action, Context<MineState> ctx) async{
   SpUtil.putInt(Constants.USER_ID, null);
   Navigator.pop(ctx.context);
   ctx.dispatch(MineActionCreator.changeLoginState());

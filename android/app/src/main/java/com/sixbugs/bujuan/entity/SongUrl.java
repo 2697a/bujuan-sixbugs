@@ -2,7 +2,7 @@ package com.sixbugs.bujuan.entity;
 
 import java.util.List;
 
-public class SongUrl {
+public class SongUrl  {
 
     /**
      * data : [{"id":1333335577,"url":"http://m10.music.126.net/20191130032254/bc76b51a4ca4db102876ba920c1920cf/ymusic/0652/025f/0108/18227a204f556b2574fd6b3f964ae633.mp3","br":128000,"size":3558130,"md5":"18227a204f556b2574fd6b3f964ae633","code":200,"expi":1200,"type":"mp3","gain":0,"fee":8,"uf":null,"payed":0,"flag":4,"canExtend":false,"freeTrialInfo":null,"level":"standard","encodeType":"mp3"}]

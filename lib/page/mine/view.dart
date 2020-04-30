@@ -32,11 +32,13 @@ Widget _unLoginView(dispatch, ViewService viewService) {
         ),
       ),
       Container(
-        width: MediaQuery.of(viewService.context).size.width*0.6,
+        width: MediaQuery.of(viewService.context).size.width * 0.6,
         child: MaterialButton(
-          onPressed: (){
-          dispatch(MineActionCreator.onLogin());
-        },child: Text('点我去登录'),),
+          onPressed: () {
+            dispatch(MineActionCreator.onLogin());
+          },
+          child: Text('点我去登录'),
+        ),
       ),
     ],
   );
@@ -285,40 +287,34 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
               padding: EdgeInsets.all(0),
               child: Column(
                 children: <Widget>[
+                  Padding(padding: EdgeInsets.symmetric(vertical: 8)),
                   Row(
                     children: <Widget>[
-                      InkWell(
-                        child: Image.asset('assets/images/find.png',height: 80,),
-                        onTap: (){
-                          BuJuanUtil.showToast('点我开启本地音乐');
-                        },
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
                       Expanded(
                           child: Wrap(
-                            direction: Axis.vertical,
-                            children: <Widget>[
-                              Container(
-                                height: Screens.height30,
-                                child: Text(
-                                  state.userProfileEntity.profile
-                                      .nickname,
-                                  style: TextStyle(
-                                      fontSize: Screens.text18),
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              Container(
-                                height: Screens.height30,
-                                child: Text(
-                                  '暂无个性签名',
-                                  style: TextStyle(
-                                      fontSize: Screens.text14),
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                            ],
-                          )),
+                        direction: Axis.vertical,
+                        children: <Widget>[
+                          Container(
+                            height: Screens.height30,
+                            child: Text(
+                              state.userProfileEntity.profile.nickname,
+                              style: TextStyle(fontSize: Screens.text18),
+                            ),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          Container(
+                            height: Screens.height30,
+                            child: Text(
+                              state.userProfileEntity != null
+                                  ? '${state.userProfileEntity.profile.signature}'
+                                  : '暂无个性签名',
+                              style: TextStyle(fontSize: Screens.text14),
+                            ),
+                            alignment: Alignment.centerLeft,
+                          ),
+                        ],
+                      )),
                       IconButton(
                           icon: Icon(
                             Icons.exit_to_app,
@@ -327,34 +323,29 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                           onPressed: () {
                             showDialog(
                               context: viewService.context,
-                              builder: (context) =>
-                                  AlertDialog(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                              5)),
-                                      title: Text("退出登录"),
-                                      content: Text("确定要退出登录吗？"),
-                                      actions: <Widget>[
-                                        InkWell(
-                                          child: Container(
-                                            padding:
-                                            EdgeInsets.symmetric(
-                                                horizontal: 10,
-                                                vertical: 5),
-                                            child: Text('确认'),
-                                          ),
-                                          onTap: () {
-                                            dispatch(MineActionCreator
-                                                .exit());
-                                          },
-                                        )
-                                      ]),
+                              builder: (context) => AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  title: Text("退出登录"),
+                                  content: Text("确定要退出登录吗？"),
+                                  actions: <Widget>[
+                                    InkWell(
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 5),
+                                        child: Text('确认'),
+                                      ),
+                                      onTap: () {
+                                        dispatch(MineActionCreator.exit());
+                                      },
+                                    )
+                                  ]),
                             );
                           }),
                       Padding(padding: EdgeInsets.symmetric(horizontal: 4))
                     ],
                   ),
+                  Padding(padding: EdgeInsets.symmetric(vertical: 8)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -378,34 +369,53 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                           icon: Icon(
                             Icons.people,
                           ),
-                          onPressed: () {}),
+                          onPressed: () {
+                            BuJuanUtil.showToast('暂不可用');
+                          }),
                       IconButton(
                           icon: Icon(
-                            Icons.store_mall_directory,
+                            Icons.queue_music,
                           ),
-                          onPressed: () {}),
+                          onPressed: () {
+                            Navigator.of(viewService.context).pushNamed('local_music', arguments: null);
+                          }),
                     ],
                   ),
-                  Container(
-                      child: Text(
-                        '我创建的歌单 (${state.createOrderList.length})',
-                        style: TextStyle(
-                            fontSize: Screens.text14,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          left: Screens.width5,
-                          top: Screens.setHeight(20),
-                          bottom: Screens.setHeight(10))),
-                  ListView.builder(
-                    padding: EdgeInsets.all(0),
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) =>
-                        _orderItem(state.createOrderList[index], viewService),
-                    itemCount: state.createOrderList.length,
+                  InkWell(
+                    child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              '我创建的歌单 (${state.createOrderList.length})',
+                              style: TextStyle(
+                                  fontSize: Screens.text14,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Icon(state.isCreateOpen
+                                ? Icons.keyboard_arrow_down
+                                : Icons.keyboard_arrow_right)
+                          ],
+                        ),
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(
+                            left: Screens.width5,
+                            top: Screens.setHeight(20),
+                            bottom: Screens.setHeight(10))),
+                    onTap: () {
+                      dispatch(MineActionCreator.setCreateOpen());
+                      },
                   ),
+                  state.isCreateOpen
+                      ? ListView.builder(
+                          padding: EdgeInsets.all(0),
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => _orderItem(
+                              state.createOrderList[index], viewService),
+                          itemCount: state.createOrderList.length,
+                        )
+                      : Container(),
                   InkWell(
                     child: Container(
                         child: Row(
@@ -445,7 +455,9 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
               ),
             ),
             onRefresh: () => dispatch(MineActionCreator.getRefresh()),
-            header: MaterialHeader(valueColor: AlwaysStoppedAnimation(Color.fromRGBO(213, 15, 37, .6))),
+            header: MaterialHeader(
+                valueColor:
+                    AlwaysStoppedAnimation(Color.fromRGBO(213, 15, 37, .6))),
           ))
       : LoadingPage();
 }

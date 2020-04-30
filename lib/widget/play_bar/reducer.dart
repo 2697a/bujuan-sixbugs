@@ -18,17 +18,17 @@ Reducer<PlayBarState> buildReducer() {
   );
 }
 
-PlayBarState _onAction(PlayBarState state, Action action) {
-  final PlayBarState newState = state.clone();
-  return newState;
-}
-PlayBarState _changePlayState(PlayBarState state, Action action) {
-  PlayStateType playStateType = action.payload;
-  return state.clone()..playStateType = playStateType;
-}
-
-PlayBarState _changeCurrSong(PlayBarState state, Action action) {
-  final SongBeanEntity songBeanEntity = SongBeanEntity.fromJson(jsonDecode(action.payload));
-  Constants.songBeanEntity = songBeanEntity;
-  return state.clone();
-}
+//PlayBarState _onAction(PlayBarState state, Action action) {
+//  final PlayBarState newState = state.clone();
+//  return newState;
+//}
+//PlayBarState _changePlayState(PlayBarState state, Action action) {
+//  PlayStateType playStateType = action.payload;
+//  return state.clone()..playStateType = playStateType;
+//}
+//
+//PlayBarState _changeCurrSong(PlayBarState state, Action action) {
+//  final SongBeanEntity songBeanEntity = SongBeanEntity.fromJson(jsonDecode(action.payload));
+//  Constants.songBeanEntity = songBeanEntity;
+//  return state.clone();
+//}

@@ -10,6 +10,7 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/services.dart';
 import 'action.dart';
@@ -31,12 +32,13 @@ void _onBottomTap(Action action, Context<EntranceState> ctx) {
 }
 
 void _onInit(Action action, Context<EntranceState> ctx) async {
-  urlFMPlugin.setMessageHandler((message) => Future<String>(() async {
-        print(message);
+  urlFMPlugin.setMessageHandler((message) => Future<Object>(() async {
+        print('原生来获取了====$message');
         var s;
         Map map = new Map<String, String>.from(message);
         if (map['type'] == 'getUrl') {
-          s = await _getUrl(map['id']);
+          var url = await _getUrl(map['id']);
+          s = {'url':url};
           return s;
         } else if (map['type'] == 'currSong') {
           var currSong = map['data'];
@@ -69,7 +71,21 @@ void _onInit(Action action, Context<EntranceState> ctx) async {
           return s;
         } else if (map['type'] == 'getLyric') {
           var t = await _getLyric(map['id']);
-          return  jsonEncode(t);
+          var data = {'lyric':jsonEncode(t)};
+          return data;
+        } else if (map['type'] == 'getFm') {
+          var t = await _getFm();
+          List<SongBeanEntity> songs = List();
+          t.data.forEach((data) {
+            SongBeanEntity songBeanEntity = SongBeanEntity();
+            songBeanEntity.id = data.id.toString();
+            songBeanEntity.name = data.name;
+            songBeanEntity.singer = data.artists[0].name;
+            songBeanEntity.picUrl = data.album.picUrl;
+            songBeanEntity.mv = data.mvid;
+            songs.add(songBeanEntity);
+          });
+          return {'fm':jsonEncode(songs)};
         } else {
           return s;
         }
@@ -83,8 +99,9 @@ void _onDispose(Action action, Context<EntranceState> ctx) {
 
 //获取播放地址
 Future<String> _getUrl(id) async {
+  var isHigh = SpUtil.getBool(Constants.HIGH,defValue: false);
   var answer =
-      await song_url({'id': id, 'br': '320000'},await BuJuanUtil.getCookie());
+      await song_url({'id': id, 'br': isHigh?'320000':'128000'}, await BuJuanUtil.getCookie());
   if (answer.status == 200 && answer.body != null) {
     var body = answer.body['data'][0]['url'];
     return body ?? '';
@@ -94,14 +111,15 @@ Future<String> _getUrl(id) async {
 
 ///personal_fm
 Future<FmEntity> _getFm() async {
-//  Response sheet = await HttpUtil().get('/personal_fm');
-//  var data = sheet.data;
-//  var jsonDecode2 = jsonDecode(data);
-//  return FmEntity.fromJson(jsonDecode2);
+  var answer = await personal_fm({}, await BuJuanUtil.getCookie());
+  if (answer.status == 200 && answer.body != null) {
+    return FmEntity.fromJson(answer.body);
+  } else
+    return null;
 }
 
 Future<LyricEntity> _getLyric(id) async {
-  var answer = await lyric({'id': id},await BuJuanUtil.getCookie());
+  var answer = await lyric({'id': id}, await BuJuanUtil.getCookie());
   if (answer.status == 200 && answer.body != null) {
     return LyricEntity.fromJson(answer.body);
   } else

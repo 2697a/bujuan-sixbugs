@@ -26,7 +26,7 @@ Widget buildView(
                     (BuildContext context, int index) {
                       return ListTile(
                         dense: true,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 15),
                         leading: ImageHelper.getImage(
                             '${state.artists[index].picUrl}?param=100y100',
                             height: 42,
@@ -36,10 +36,8 @@ Widget buildView(
                         onTap: () async {
                           await Navigator.of(viewService.context)
                               .pushNamed('singer_details', arguments: {
-                            'id': state.artists[index].id,
-                            'name': state.artists[index].name,
-                            'pic':state.artists[index].picUrl
-                          }); //注意2
+                            'id': state.artists[index].id
+                          });
                         },
                       );
                     },

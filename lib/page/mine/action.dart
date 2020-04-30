@@ -4,7 +4,7 @@ import 'package:bujuan/main/action.dart';
 import 'package:fish_redux/fish_redux.dart';
 
 //TODO replace with your own action
-enum MineAction { action ,login,loginResult,getUserProfile,getOrderList,getCreateOrderList,getRefresh,setOPen,exit,changeLoginState}
+enum MineAction { action ,login,loginResult,getUserProfile,getOrderList,getCreateOrderList,getRefresh,setOPen,setCreateOpen,exit,changeLoginState}
 
 class MineActionCreator {
   static Action onAction() {
@@ -35,6 +35,9 @@ class MineActionCreator {
   }
   static Action setOPen(){
     return Action(MineAction.setOPen);
+  }
+  static Action setCreateOpen(){
+    return Action(MineAction.setCreateOpen);
   }
   static Action exit(){
     return Action(MineAction.exit);

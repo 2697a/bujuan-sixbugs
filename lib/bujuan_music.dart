@@ -42,14 +42,14 @@ class BujuanMusic {
   static Future setMode(int mode) async {
     return await _channel.invokeMethod("playMode", {'mode': mode});
   }
-  static Future<String> local() async {
-    return await _channel.invokeMethod("local_music");
+  static Future<String> fm(fmSongs) async {
+    return await _channel.invokeMethod("fm",{'fmList':fmSongs});
   }
   static Future seekTo(seekNum) async{
     return await _channel.invokeMethod("seekTo", {'seekNum': seekNum});
   }
-  static Future playSingleSong({int index}) async {
-    return await _channel.invokeMethod("lyric", {'index': index});
+  static Future playIndex({int index}) async {
+    return await _channel.invokeMethod("playIndex", {'index': index});
   }
   static Future lyric(dark) async {
     return await _channel.invokeMethod("lyric", {'dark': dark});

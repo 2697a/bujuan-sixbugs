@@ -28,6 +28,25 @@ Widget buildView(TalkState state, Dispatch dispatch, ViewService viewService) {
       padding: EdgeInsets.only(left: 10, right: 5, bottom: 3),
       child: Column(
         children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 5, right: 5),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                    child: Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      elevation: 2,
+                      child: TextField(
+                        controller: state.textEditingController,
+                        decoration: InputDecoration(isDense: true, hintText: '祝你说出热评', border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8)),
+                      ),
+                    )),
+                IconButton(icon: Icon(Icons.send), onPressed: () {
+                  dispatch(TalkActionCreator.sendTalk());
+                })
+              ],
+            ),
+          ),
           Expanded(
               child: EasyRefresh.custom(
                 footer: MaterialFooter(),
@@ -69,25 +88,6 @@ Widget buildView(TalkState state, Dispatch dispatch, ViewService viewService) {
                 ],
                 onLoad: () => dispatch(TalkActionCreator.loadNextTalk()),
               )),
-          Container(
-            padding: EdgeInsets.only(left: 5, right: 5),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                    child: Card(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      elevation: 2,
-                      child: TextField(
-                        controller: state.textEditingController,
-                        decoration: InputDecoration(isDense: true, hintText: '祝你说出热评', border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8)),
-                      ),
-                    )),
-                IconButton(icon: Icon(Icons.send), onPressed: () {
-                  dispatch(TalkActionCreator.sendTalk());
-                })
-              ],
-            ),
-          )
         ],
       ),
     ),

@@ -2,11 +2,12 @@ package com.sixbugs.bujuan.entity;
 
 import java.io.Serializable;
 
-public class SongBean implements Serializable {
+public class SongBean implements Serializable  {
    private String name;
     private String id;
     private String picUrl;
     private String singer;
+    private String url;
 
     public SongBean() {
     }
@@ -41,5 +42,13 @@ public class SongBean implements Serializable {
 
     public void setSinger(String singer) {
         this.singer = singer;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

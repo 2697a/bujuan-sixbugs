@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
  * @date 2018/3/26
  */
 
-public class ActivityUtils {
+public class ActivityUtils  {
 
     public static boolean activityIsAlive(Context context) {
         if (context == null) {

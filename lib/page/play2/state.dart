@@ -6,13 +6,14 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/state.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PlayView2State implements GlobalBaseState, Cloneable<PlayView2State> {
   List<SongBeanEntity> songList;
   bool isMinni;
   bool showSelect ;
-  PanelController panelController;
+  GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   PlayView2State clone() {
@@ -23,7 +24,7 @@ class PlayView2State implements GlobalBaseState, Cloneable<PlayView2State> {
       ..currSong = currSong
       ..isMinni = isMinni
       ..showSelect = showSelect
-      ..panelController = panelController
+      ..scaffoldKey = scaffoldKey
       ..songList = songList;
   }
 
@@ -65,6 +66,6 @@ PlayView2State initState(Map<String, dynamic> args) {
   playViewState.songList = songs;
   playViewState.isMinni = SpUtil.getBool(Constants.MINI_PLAY, defValue: false);
   playViewState.showSelect =false;
-  if(args!=null)playViewState.panelController = args['panel'];
+  playViewState.scaffoldKey =  GlobalKey();
   return playViewState;
 }
