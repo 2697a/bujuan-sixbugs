@@ -1,8 +1,7 @@
 # bujuan
 
-# 不倦(三方网易云App)
-
-One Paragraph of project description goes here
+# 不倦(flutter仿网易云音乐)
+暂不支持ios设备
 
 ## 开始
 
