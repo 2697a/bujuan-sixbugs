@@ -1,5 +1,3 @@
-import 'package:bujuan/global_store/state.dart';
-import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/main/reducer.dart';
 import 'package:bujuan/main/state.dart';
 import 'package:bujuan/main/view.dart';

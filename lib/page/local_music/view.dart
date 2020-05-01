@@ -98,7 +98,7 @@ Widget buildView(LocalMusicState state, Dispatch dispatch, ViewService viewServi
           Container(
             width: width2,
             child: Image.asset(
-              'assets/images/logo.png',
+              'assets/images/loading.jpg',
               height: 60,
             ),
           ),

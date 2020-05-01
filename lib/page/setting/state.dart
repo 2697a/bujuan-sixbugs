@@ -16,6 +16,6 @@ SettingState initState(Map<String, dynamic> args) {
   var settingState = SettingState();
   settingState.miniPlay = SpUtil.getBool(Constants.MINI_PLAY, defValue: false);
   settingState.blur = 2;
-  settingState.isHigh = false;
+  settingState.isHigh = SpUtil.getBool(Constants.HIGH, defValue: false);
   return settingState;
 }

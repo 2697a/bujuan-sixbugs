@@ -8,6 +8,7 @@ enum EntranceAction {
   navBarSwitch,
   miniNavBarSwitch,
   openPage,
+  changeUpdate
 }
 
 class EntranceActionCreator {
@@ -22,11 +23,18 @@ class EntranceActionCreator {
   static Action onNavBarSwitch() {
     return Action(EntranceAction.navBarSwitch);
   }
+
+  //迷你导航栏
   static Action onMiniNavBarSwitch() {
     return Action(EntranceAction.miniNavBarSwitch);
   }
 
+  //打开其他页面
   static Action openPage(OpenType openType) {
-    return Action(EntranceAction.openPage,payload: openType);
+    return Action(EntranceAction.openPage, payload: openType);
+  }
+
+  static Action onUpdate() {
+    return Action(EntranceAction.changeUpdate);
   }
 }

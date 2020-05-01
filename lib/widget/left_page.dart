@@ -134,7 +134,7 @@ class _LeftPageState extends State<LeftPage>
                 children: <Widget>[
                   Expanded(child: widget.child),
                   ListTile(
-                    title: Text('主题切换'),
+                    title: Text('主题切换',style: TextStyle(fontSize: 14),),
                     trailing: DayNightSwitch(
                       value: val,
                       moonImage: AssetImage('assets/images/moon.png'),

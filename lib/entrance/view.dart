@@ -175,24 +175,44 @@ Widget _leftChild(EntranceState state, dispatch, ViewService viewService) {
     children: <Widget>[
       Expanded(child: Container()),
       ListTile(
-        title: Text('设置'),
+        title: Text(
+          '设置',
+          style: TextStyle(fontSize: 14),
+        ),
         onTap: () async {
 //          dispatch(EntranceActionCreator.openPage(OpenType.SETTING));
+          //打开设置也
           await Navigator.of(viewService.context)
               .pushNamed('setting', arguments: null);
-//          state.panelController?.close();
+          //关闭滑出页面
+          state.panelController?.close();
         },
       ),
       ListTile(
-        title: Text('关于'),
-        onTap: () async{
-          await
-          Navigator.of(viewService.context)
+        title: Text(
+          '关于',
+          style: TextStyle(fontSize: 14),
+        ),
+        onTap: () async {
+          await Navigator.of(viewService.context)
               .pushNamed('about', arguments: null);
+          state.panelController?.close();
+        },
+      ),
+      ListTile(
+        title: Text(
+          '检测更新',
+          style: TextStyle(fontSize: 14),
+        ),
+        onTap: () async {
+          dispatch(EntranceActionCreator.onUpdate());
         },
       ),
       SwitchListTile(
-          title: Text('迷你导航栏'),
+          title: Text(
+            '迷你导航栏',
+            style: TextStyle(fontSize: 14),
+          ),
           value: state.miniNav,
           onChanged: (value) {
             dispatch(EntranceActionCreator.onMiniNavBarSwitch());

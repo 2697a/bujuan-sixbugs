@@ -34,7 +34,6 @@ import io.flutter.plugin.common.StandardMessageCodec;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity implements OnPlayerEventListener {
-    //    private BuJuanMusicListenPlugin buJuanMusicListenPlugin;
     private TimerTaskManager mTimerTask;
     private Map<String, String> map = new HashMap<>();
     private BuJuanMusicPlayListenPlugin buJuanMusicPlayListenPlugin;
@@ -48,7 +47,6 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         GeneratedPluginRegistrant.registerWith(this);
         StarrySky.with().addPlayerEventListener(this);
         BujuanMusicPlugin.registerWith(this.registrarFor(BujuanMusicPlugin.CHANNEL));
-        MyViewFlutterPlugin.registerWith(this);
         buJuanMusicPlayListenPlugin = BuJuanMusicPlayListenPlugin.registerWith(this.registrarFor(BuJuanMusicPlayListenPlugin.CHANNEL));
         basicMessageChannelPlugin = new BasicMessageChannel<>(getFlutterView(), Config.URL_FM_CHANNEL, StandardMessageCodec.INSTANCE);
         listenerPos();
@@ -67,17 +65,19 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
             if (message.equals("local")) {
                 List<SongInfo> songInfos = StarrySky.with().querySongInfoInLocal();
                 List<SongBean> songs = new ArrayList<>();
-                for (SongInfo songInfo : songInfos) {
-                    SongBean song = new SongBean();
-                    String size = songInfo.getSize();
-                    long l = Long.parseLong(size);
-                    if (l / 1024 / 1024 > 1) {
-                        song.setId(songInfo.getSongId());
-                        song.setName(songInfo.getSongName());
-                        song.setUrl(songInfo.getSongUrl());
-                        song.setPicUrl(songInfo.getAlbumCover());
-                        song.setSinger(songInfo.getArtist());
-                        songs.add(song);
+                if(songInfos!=null){
+                    for (SongInfo songInfo : songInfos) {
+                        SongBean song = new SongBean();
+                        String size = songInfo.getSize();
+                        long l = Long.parseLong(size);
+                        if (l / 1024 / 1024 > 1) {
+                            song.setId(songInfo.getSongId());
+                            song.setName(songInfo.getSongName());
+                            song.setUrl(songInfo.getSongUrl());
+                            song.setPicUrl(songInfo.getAlbumCover());
+                            song.setSinger(songInfo.getArtist());
+                            songs.add(song);
+                        }
                     }
                 }
                 reply.reply(GsonUtil.GsonString(songs));
@@ -181,9 +181,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
                 if (songInfos.size() > 0)
                     StarrySky.with().addSongInfo(songInfos.get(0));
             });
-        }else {
         }
-
     }
 
     @Override

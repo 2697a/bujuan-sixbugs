@@ -30,19 +30,18 @@ Widget buildView(
                   startAngle: 45,
                   angleRange: 300,
                   customColors: CustomSliderColors(
-                      progressBarColor: Color.fromRGBO(220, 190, 251, 1.0)),
+                      trackColor: Colors.grey.withOpacity(.6),
+                      progressBarColor: Color.fromRGBO(220, 190, 251, .6)),
                   customWidths:
-                  CustomSliderWidths(trackWidth: 3, progressBarWidth: 5)),
+                  CustomSliderWidths(trackWidth: 1, progressBarWidth: 4)),
               min: 0,
               max: state.currSongAllPos.toDouble(),
               initialValue: state.currSongPos.toDouble(),
               onChange: (double value) {},
               onChangeStart: (double startValue) {
-                // callback providing a starting value (when a pan gesture starts)
               },
               onChangeEnd: (double endValue) {
                 BujuanMusic.seekTo(endValue.toInt().toString());
-                // ucallback providing an ending value (when a pan gesture ends)
               },
               innerWidget: (double value) {
                 return Center(
