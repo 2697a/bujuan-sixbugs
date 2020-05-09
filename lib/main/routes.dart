@@ -22,8 +22,8 @@ import 'package:bujuan/page/today/page.dart';
 import 'package:bujuan/page/top/top_details/page.dart';
 import 'package:bujuan/page/user_clound/page.dart';
 import 'package:fish_redux/fish_redux.dart';
-import 'package:flutter/material.dart' hide Action;
-import 'package:flutter/widgets.dart' hide Action;
+import 'package:flutter/material.dart' hide Action,Page;
+import 'package:flutter/widgets.dart' hide Action,Page;
 
 import '../global_store/state.dart';
 import '../global_store/store.dart';

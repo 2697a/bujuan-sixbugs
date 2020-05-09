@@ -26,10 +26,10 @@ public class MusicRequest {
         }
         map.put("type", "getUrl");
         map.put("id", songId);
-        basicMessageChannelPlugin.send(map, reply -> {
+        MainActivity.activity.runOnUiThread(() -> basicMessageChannelPlugin.send(map, reply -> {
             Map<String,String> map = (Map<String, String>) reply;
             callback.onSuccess(map.get("url"));
-        });
+        }));
     }
 
     interface RequestCallback {

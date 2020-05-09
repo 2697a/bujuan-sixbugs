@@ -246,11 +246,6 @@ Widget _navBar(EntranceState state, dispatch) {
                 title: Text('Top'),
                 activeColor: const Color.fromRGBO(0, 153, 37, 1),
               ),
-//              BottomMiniNavyBarItem(
-//                icon: Icon(Icons.music_video),
-//                title: Text('Local'),
-//                activeColor: const Color.fromRGBO(51, 105, 232, 1),
-//              ),
             ],
           showElevation: false,
           selectedIndex: state.selectIndex,
@@ -263,7 +258,7 @@ Widget _navBar(EntranceState state, dispatch) {
             BottomNavyBarItem(
               icon: Icon(
                 IconData(0xe6c8, fontFamily: 'iconfont'),
-                size: 22,
+                size: 24,
               ),
               title: Text(
                 'Me',
@@ -274,7 +269,7 @@ Widget _navBar(EntranceState state, dispatch) {
             BottomNavyBarItem(
                 icon: Icon(
                   IconData(0xe620, fontFamily: 'iconfont'),
-                  size: 22,
+                  size: 24,
                 ),
                 title: Text(
                   'Find',
@@ -284,7 +279,7 @@ Widget _navBar(EntranceState state, dispatch) {
             BottomNavyBarItem(
               icon: Icon(
                 IconData(0xe67b, fontFamily: 'iconfont'),
-                size: 22,
+                size: 24,
               ),
               title: Text(
                 'Top',

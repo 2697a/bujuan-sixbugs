@@ -57,7 +57,7 @@ public class LyricActivity extends AppCompatActivity implements OnPlayerEventLis
         lrcMain = findViewById(R.id.lrcMain);
         songSinger = findViewById(R.id.songSinger);
         songName = findViewById(R.id.songName);
-        SongInfo nowPlayingSongInfo = StarrySky.with().getNowPlayingSongInfo();
+        SongInfo nowPlayingSongInfo = StarrySky.Companion.with().getNowPlayingSongInfo();
         if (nowPlayingSongInfo != null) {
             songSinger.setText(nowPlayingSongInfo.getSongName());
             songName.setText(nowPlayingSongInfo.getArtist());
@@ -75,20 +75,20 @@ public class LyricActivity extends AppCompatActivity implements OnPlayerEventLis
         lrcView = findViewById(R.id.lrcView);
 //        lrcView.setCurrentColor(Color.GREEN);
         if (mTimerTask == null) mTimerTask = new TimerTaskManager();
-        StarrySky.with().addPlayerEventListener(this);
-        getLyric(StarrySky.with().getNowPlayingSongId());
+        StarrySky.Companion.with().addPlayerEventListener(this);
+        getLyric(StarrySky.Companion.with().getNowPlayingSongId());
         listenerPos();
         //获取当前歌曲的播放进度，更新歌词位置
-        long playingPosition = StarrySky.with().getPlayingPosition();
+        long playingPosition = StarrySky.Companion.with().getPlayingPosition();
         lrcView.updateTime(playingPosition);
         //如果正在播放开始监听
-        boolean playing = StarrySky.with().isPlaying();
+        boolean playing = StarrySky.Companion.with().isPlaying();
         if (playing) {
             mTimerTask.startToUpdateProgress();
         }
         //歌词滑动监听
         lrcView.setDraggable(true, time -> {
-            StarrySky.with().seekTo(time);
+            StarrySky.Companion.with().seekTo(time);
             return true;
         });
     }
@@ -126,9 +126,9 @@ public class LyricActivity extends AppCompatActivity implements OnPlayerEventLis
     private void listenerPos() {
         //设置更新回调
         mTimerTask.setUpdateProgressTask(() -> {
-            long position = StarrySky.with().getPlayingPosition();
-            long duration = StarrySky.with().getDuration();
-            long buffered = StarrySky.with().getBufferedPosition();
+            long position = StarrySky.Companion.with().getPlayingPosition();
+            long duration = StarrySky.Companion.with().getDuration();
+            long buffered = StarrySky.Companion.with().getBufferedPosition();
             lrcView.updateTime(position);
         });
     }
@@ -173,7 +173,7 @@ public class LyricActivity extends AppCompatActivity implements OnPlayerEventLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        StarrySky.with().removePlayerEventListener(this);
+        StarrySky.Companion.with().removePlayerEventListener(this);
         mTimerTask.removeUpdateProgressTask();
     }
 }

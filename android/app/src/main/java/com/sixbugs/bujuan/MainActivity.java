@@ -2,7 +2,6 @@ package com.sixbugs.bujuan;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.widget.Toast;
 
 import com.lzx.starrysky.StarrySky;
@@ -38,6 +37,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     private Map<String, String> map = new HashMap<>();
     private BuJuanMusicPlayListenPlugin buJuanMusicPlayListenPlugin;
     public static BasicMessageChannel<Object> basicMessageChannelPlugin;
+    public static MainActivity activity;
     private String zhLyric = "";
     private String enLyric = "";
 
@@ -45,12 +45,12 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GeneratedPluginRegistrant.registerWith(this);
-        StarrySky.with().addPlayerEventListener(this);
+        activity = this;
+        StarrySky.Companion.with().addPlayerEventListener(this);
         BujuanMusicPlugin.registerWith(this.registrarFor(BujuanMusicPlugin.CHANNEL));
         buJuanMusicPlayListenPlugin = BuJuanMusicPlayListenPlugin.registerWith(this.registrarFor(BuJuanMusicPlayListenPlugin.CHANNEL));
         basicMessageChannelPlugin = new BasicMessageChannel<>(getFlutterView(), Config.URL_FM_CHANNEL, StandardMessageCodec.INSTANCE);
         listenerPos();
-        getRead();
         //通讯名称,回到手机桌面
         String CHANNEL = "android/back/desktop";
         new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
@@ -63,21 +63,21 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         );
         basicMessageChannelPlugin.setMessageHandler((message, reply) -> {
             if (message.equals("local")) {
-                List<SongInfo> songInfos = StarrySky.with().querySongInfoInLocal();
+                List<SongInfo> songInfos = StarrySky.Companion.with().querySongInfoInLocal();
                 List<SongBean> songs = new ArrayList<>();
                 if(songInfos!=null){
                     for (SongInfo songInfo : songInfos) {
                         SongBean song = new SongBean();
-                        String size = songInfo.getSize();
-                        long l = Long.parseLong(size);
-                        if (l / 1024 / 1024 > 1) {
+//                        String size = songInfo.getSize();
+//                        long l = Long.parseLong(size);
+//                        if (l / 1024 / 1024 > 1) {
                             song.setId(songInfo.getSongId());
                             song.setName(songInfo.getSongName());
                             song.setUrl(songInfo.getSongUrl());
-                            song.setPicUrl(songInfo.getAlbumCover());
+                            song.setPicUrl(songInfo.getSongCover());
                             song.setSinger(songInfo.getArtist());
                             songs.add(song);
-                        }
+//                        }
                     }
                 }
                 reply.reply(GsonUtil.GsonString(songs));
@@ -85,31 +85,13 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         });
     }
 
-
-    private void getRead() {
-        SoulPermission.getInstance().checkAndRequestPermissions(
-                Permissions.build(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                new CheckRequestPermissionsListener() {
-                    @Override
-                    public void onAllPermissionOk(Permission[] allPermissions) {
-                    }
-
-                    @Override
-                    public void onPermissionDenied(Permission[] refusedPermissions) {
-                        Toast.makeText(MainActivity.this, "没有给权限，缓存将会失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
     private void listenerPos() {
         mTimerTask = new TimerTaskManager();
         //设置更新回调
         mTimerTask.setUpdateProgressTask(() -> {
-            long position = StarrySky.with().getPlayingPosition();
-            long duration = StarrySky.with().getDuration();
-            long buffered = StarrySky.with().getBufferedPosition();
+            long position = StarrySky.Companion.with().getPlayingPosition();
+            long duration = StarrySky.Companion.with().getDuration();
+            long buffered = StarrySky.Companion.with().getBufferedPosition();
             map.clear();
             map.put("currSongPos", String.valueOf(position));
             map.put("currSongAllPos", String.valueOf(duration));
@@ -146,7 +128,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
     @Override
     public void onError(int i, @NotNull String s) {
         mTimerTask.stopToUpdateProgress();
-        StarrySky.with().skipToNext();
+        StarrySky.Companion.with().skipToNext();
     }
 
     @Override
@@ -155,7 +137,7 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         song.setId(songInfo.getSongId());
         song.setName(songInfo.getSongName());
         song.setSinger(songInfo.getArtist());
-        song.setPicUrl(songInfo.getAlbumCover());
+        song.setPicUrl(songInfo.getSongCover());
         getLyric(songInfo.getSongId());
         map.clear();
         map.put("type", "currSong");
@@ -173,13 +155,13 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
                 for (SongBean song_bean : songs) {
                     SongInfo songa = new SongInfo();
                     songa.setSongName(song_bean.getName() == null ? "" : song_bean.getName());
-                    songa.setAlbumCover(song_bean.getPicUrl() == null ? "" : song_bean.getPicUrl());
+                    songa.setSongCover(song_bean.getPicUrl() == null ? "" : song_bean.getPicUrl());
                     songa.setSongId(song_bean.getId() == null ? "001" : song_bean.getId());
                     songa.setArtist(song_bean.getSinger() == null ? "" : song_bean.getSinger());
                     songInfos.add(songa);
                 }
                 if (songInfos.size() > 0)
-                    StarrySky.with().addSongInfo(songInfos.get(0));
+                    StarrySky.Companion.with().addSongInfo(songInfos.get(0));
             });
         }
     }
@@ -221,8 +203,8 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
 
     @Override
     protected void onDestroy() {
-        StarrySky.with().removePlayerEventListener(this);
-        StarrySky.with().stopMusic();
+        StarrySky.Companion.with().removePlayerEventListener(this);
+        StarrySky.Companion.with().stopMusic();
         mTimerTask.removeUpdateProgressTask();
         super.onDestroy();
     }

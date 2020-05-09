@@ -18,7 +18,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
     Key key,
     this.selectedIndex = 0,
     this.showElevation = true,
-    this.iconSize = 24,
+    this.iconSize = 26,
     this.backgroundColor,
     this.itemCornerRadius = 50,
     this.animationDuration = const Duration(milliseconds: 270),
@@ -47,7 +47,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget{
       child: Container(
         width: double.infinity,
         height: Screens.setHeight(46),
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
           children: items.map((item) {
@@ -101,8 +101,8 @@ class _ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       alignment: Alignment.center,
-      width: isSelected ? Screens.setWidth(36) : Screens.setWidth(46),
-      height: Screens.setWidth(46),
+      width: isSelected ? Screens.setWidth(38) : Screens.setWidth(50),
+      height: Screens.setWidth(38),
       duration: animationDuration,
       decoration: BoxDecoration(
         color: isSelected ? item.activeColor.withOpacity(0.3) : backgroundColor,
