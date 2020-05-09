@@ -2,7 +2,7 @@ package com.sixbugs.bujuan.entity;
 
 import java.io.Serializable;
 
-public class SongBean implements Serializable  {
+public class SongBean implements Serializable{
    private String name;
     private String id;
     private String picUrl;

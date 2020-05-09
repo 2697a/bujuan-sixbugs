@@ -2,9 +2,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-//        flatDir {
-//            dirs project(':starrysky').file('libs')
-//        }
     }
 
     dependencies {
@@ -18,9 +15,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://dl.google.com/dl/android/maven2/" }
-        maven { url 'https://jitpack.io' }
-        maven { url "https://dl.bintray.com/lizixian/StarrySky/" }
 //        flatDir {
 //            dirs project(':starrysky').file('libs')
 //        }

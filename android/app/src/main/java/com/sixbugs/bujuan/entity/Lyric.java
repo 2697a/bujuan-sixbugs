@@ -1,6 +1,6 @@
 package com.sixbugs.bujuan.entity;
 
-public class Lyric  {
+public class Lyric{
 
     /**
      * code : 200

@@ -19,7 +19,7 @@ import android.preference.PreferenceManager;
  */
 
 
-public final class PrefUtils  {
+public final class PrefUtils{
     private PrefUtils() {
     }
 

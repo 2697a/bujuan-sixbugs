@@ -160,13 +160,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.3"
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.7"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -219,20 +212,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.12"
-  image_picker:
-    dependency: transitive
-    description:
-      name: image_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.3+4"
-  image_picker_gallery_camera:
-    dependency: "direct main"
-    description:
-      name: image_picker_gallery_camera
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   intl:
     dependency: transitive
     description:

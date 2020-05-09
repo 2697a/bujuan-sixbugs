@@ -1,13 +1,9 @@
 import 'dart:io';
 
-import 'package:bujuan/global_store/action.dart';
-import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/page/setting/action.dart';
-import 'package:bujuan/widget/background_setting.dart';
-import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
+//import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 
 import 'state.dart';
 
