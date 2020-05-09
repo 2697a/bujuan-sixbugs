@@ -21,11 +21,19 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
   }
   return MaterialApp(
     title: '不倦',
-    showPerformanceOverlay: true,
+//    showPerformanceOverlay: true,
     // 开启
     debugShowCheckedModeBanner: false,
     darkTheme: ThemeData.dark(),
-    theme: state.appTheme.dark ? darkTheme : lightTheme,
+    theme: state.appTheme.dark
+        ? darkTheme
+        : lightTheme.copyWith(
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: <TargetPlatform, PageTransitionsBuilder>{
+                TargetPlatform.android: ZoomPageTransitionsBuilder(),
+              },
+            ),
+          ),
     home: EntrancePage().buildPage(null),
     routes: appRoutes,
     onGenerateRoute: (RouteSettings settings) {

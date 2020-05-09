@@ -3,7 +3,6 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/utils/sp_util.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -26,6 +25,7 @@ class LeftPage extends StatefulWidget {
 class _LeftPageState extends State<LeftPage>
     with SingleTickerProviderStateMixin {
   var val = false;
+  var showSun = true;
   AnimationController _controller;
 
   @override
@@ -133,6 +133,17 @@ class _LeftPageState extends State<LeftPage>
               child: Column(
                 children: <Widget>[
                   Expanded(child: widget.child),
+                  SwitchListTile(
+                      title: Text(
+                        '开启顶部太阳',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      value: showSun,
+                      onChanged: (value) {
+                        setState(() {
+                          showSun = !showSun;
+                        });
+                      }),
                   ListTile(
                     title: Text('主题切换',style: TextStyle(fontSize: 14),),
                     trailing: DayNightSwitch(
@@ -165,10 +176,10 @@ class _LeftPageState extends State<LeftPage>
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: Transform.translate(
+      floatingActionButton: showSun?Transform.translate(
         offset: Offset(140, 40),
         child: _buildFab(),
-      ),
+      ):null,
     );
   }
 

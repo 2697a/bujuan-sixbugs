@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bujuan/constant/Screens.dart';
-import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
@@ -35,25 +34,19 @@ Widget buildView(
             children: <Widget>[
               AppBar(
                 backgroundColor: Colors.transparent,
-                leading: InkWell(
-                  child: IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: ImageHelper.getImage(
-                          SpUtil.getString('head',
-                              defValue:
-                                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
-                          height: 32,
-                          isRound: true),
-                      onPressed: () {
-                        state.panelController.isPanelOpen
-                            ? state.panelController.close()
-                            : state.panelController.open();
-                      }),
-                  onLongPress: () {
-                    BuJuanUtil.showToast('msg');
-                  },
-                ),
-                elevation: 0.0,
+                leading: IconButton(
+                    padding: EdgeInsets.all(0),
+                    icon: ImageHelper.getImage(
+                        SpUtil.getString('head',
+                            defValue:
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
+                        height: 32,
+                        isRound: true),
+                    onPressed: () {
+                      state.panelController.isPanelOpen
+                          ? state.panelController.close()
+                          : state.panelController.open();
+                    }),
                 title: _navBar(state, dispatch),
                 centerTitle: true,
                 actions: <Widget>[
