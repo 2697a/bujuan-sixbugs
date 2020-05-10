@@ -59,13 +59,13 @@ class PlayViewState implements GlobalBaseState, Cloneable<PlayViewState> {
 
 PlayViewState initState(Map<String, dynamic> args) {
   var playViewState = PlayViewState();
-  var objectList = SpUtil.getObjectList(Constants.playSongListHistory);
+  var objectList = SpUtil.getObjectList(playSongListHistory);
   List<SongBeanEntity> songs = List();
   objectList.forEach((Map map) {
     songs.add(SongBeanEntity.fromJson(map));
   });
   playViewState.songList = songs;
-  playViewState.isMinni = SpUtil.getBool(Constants.MINI_PLAY, defValue: false);
+  playViewState.isMinni = SpUtil.getBool(MINI_PLAY, defValue: false);
   playViewState.showSelect =false;
   playViewState.scaffoldKey =  GlobalKey();
   return playViewState;

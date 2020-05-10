@@ -30,7 +30,7 @@ class MineState implements Cloneable<MineState> {
 
 MineState initState(Map<String, dynamic> args) {
   var mineState = MineState();
-  var cookie = SpUtil.getInt(Constants.USER_ID, defValue: -1);
+  var cookie = SpUtil.getInt(USER_ID, defValue: -1);
   mineState.isLogin = cookie != -1;
   mineState.isShowLoad = true;
   mineState.isCreateOpen = true;

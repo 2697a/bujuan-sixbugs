@@ -13,16 +13,16 @@
 
     <application android:networkSecurityConfig="@xml/network_security_config">
 
-        <service
-            android:name=".MusicService"
-            android:enabled="true"
-            android:exported="false"
-            tools:ignore="ExportedService">
+<!--        <service-->
+<!--            android:name=".MusicService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="false"-->
+<!--            tools:ignore="ExportedService">-->
 
-            <intent-filter>
-                <action android:name="android.media.browse.MediaBrowserService" />
-            </intent-filter>
-        </service>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.media.browse.MediaBrowserService" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
 
         <service
             android:name=".playback.offline.ExoDownloadService"

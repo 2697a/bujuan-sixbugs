@@ -25,7 +25,8 @@ class LeftPage extends StatefulWidget {
 class _LeftPageState extends State<LeftPage>
     with SingleTickerProviderStateMixin {
   var val = false;
-  var showSun = true;
+  var showSun = SpUtil.getBool(IS_SHOW_SUN,defValue: true);
+  var isMiniNav = SpUtil.getBool(MINI_NAV,defValue: false);
   AnimationController _controller;
 
   @override
@@ -132,7 +133,30 @@ class _LeftPageState extends State<LeftPage>
             Container(
               child: Column(
                 children: <Widget>[
-                  Expanded(child: widget.child),
+                  Expanded(child: Container()),
+                  ListTile(
+                    title: Text(
+                      '设置',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    onTap: () async {
+                      //打开设置
+                      await Navigator.of(context)
+                          .pushNamed('setting', arguments: null);
+                    },
+                  ),
+                  SwitchListTile(
+                      title: Text(
+                        '迷你导航栏',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      value: isMiniNav,
+                      onChanged: (value) {
+                        setState(() {
+                          isMiniNav = value;
+                        });
+                        SpUtil.putBool(MINI_NAV, value);
+                      }),
                   SwitchListTile(
                       title: Text(
                         '开启顶部太阳',
@@ -141,8 +165,9 @@ class _LeftPageState extends State<LeftPage>
                       value: showSun,
                       onChanged: (value) {
                         setState(() {
-                          showSun = !showSun;
+                          showSun = value;
                         });
+                        SpUtil.putBool(IS_SHOW_SUN, showSun);
                       }),
                   ListTile(
                     title: Text('主题切换',style: TextStyle(fontSize: 14),),

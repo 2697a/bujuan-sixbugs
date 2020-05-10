@@ -15,7 +15,6 @@ import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter/services.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../bujuan_music.dart';
 import 'state.dart';
@@ -62,15 +61,15 @@ void _onPlayMode(Action action, Context<PlayView2State> ctx) {
   switch (playModeType2) {
     case PlayModeType.REPEAT:
       BujuanMusic.setMode(PlayModeType.REPEAT_ONE.index);
-      SpUtil.putInt(Constants.PLAY_MODE, PlayModeType.REPEAT_ONE.index);
+      SpUtil.putInt(PLAY_MODE, PlayModeType.REPEAT_ONE.index);
       break;
     case PlayModeType.REPEAT_ONE:
       BujuanMusic.setMode(PlayModeType.SHUFFLE.index);
-      SpUtil.putInt(Constants.PLAY_MODE, PlayModeType.SHUFFLE.index);
+      SpUtil.putInt(PLAY_MODE, PlayModeType.SHUFFLE.index);
       break;
     case PlayModeType.SHUFFLE:
       BujuanMusic.setMode(PlayModeType.REPEAT.index);
-      SpUtil.putInt(Constants.PLAY_MODE, PlayModeType.REPEAT.index);
+      SpUtil.putInt(PLAY_MODE, PlayModeType.REPEAT.index);
       break;
   }
 }
@@ -144,21 +143,21 @@ void _onGetTalk(Action action, Context<PlayView2State> ctx) {
 }
 
 void _onGetUrl(Action action, Context<PlayView2State> ctx) async {
-  var url = await _getUrl(ctx.state.currSong.id);
-  var _localPath = (await _findLocalPath()) + Platform.pathSeparator + 'Download';
-
-  final savedDir = Directory(_localPath);
-  bool hasExisted = await savedDir.exists();
-  if (!hasExisted) {
-    savedDir.create();
-  }
-  final taskId = await FlutterDownloader.enqueue(
-    url: url,
-    fileName: '${ctx.state.currSong.name}.mp3',
-    savedDir: _localPath,
-    showNotification: true, // show download progress in status bar (for Android)
-    openFileFromNotification: false, // click on notification to open downloaded file (for Android)
-  );
+//  var url = await _getUrl(ctx.state.currSong.id);
+//  var _localPath = (await _findLocalPath()) + Platform.pathSeparator + 'Download';
+//
+//  final savedDir = Directory(_localPath);
+//  bool hasExisted = await savedDir.exists();
+//  if (!hasExisted) {
+//    savedDir.create();
+//  }
+//  final taskId = await FlutterDownloader.enqueue(
+//    url: url,
+//    fileName: '${ctx.state.currSong.name}.mp3',
+//    savedDir: _localPath,
+//    showNotification: true, // show download progress in status bar (for Android)
+//    openFileFromNotification: false, // click on notification to open downloaded file (for Android)
+//  );
 }
 
 Future<String> _findLocalPath() async {
@@ -180,13 +179,13 @@ void _onLike(Action action, Context<PlayView2State> ctx) async {
 //  Response data = await HttpUtil().post('/like',
 //      data: {'id': ctx.state.currSong.id, 'like': '${action.payload}'});
   if (answer.status == 200) {
-    var stringList = SpUtil.getStringList(Constants.LIKE_SONGS, defValue: []);
+    var stringList = SpUtil.getStringList(LIKE_SONGS, defValue: []);
     if (!action.payload) {
       stringList.add(ctx.state.currSong.id);
     } else {
       stringList.remove(ctx.state.currSong.id);
     }
-    SpUtil.putStringList(Constants.LIKE_SONGS, stringList);
+    SpUtil.putStringList(LIKE_SONGS, stringList);
   }
 }
 

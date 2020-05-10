@@ -164,7 +164,7 @@ void _onDispose(Action action, Context<EntranceState> ctx) {
 
 //获取播放地址
 Future<String> _getUrl(id) async {
-  var isHigh = SpUtil.getBool(Constants.HIGH, defValue: false);
+  var isHigh = SpUtil.getBool(HIGH, defValue: false);
   var answer = await song_url({'id': id, 'br': isHigh ? '320000' : '128000'},
       await BuJuanUtil.getCookie());
   if (answer.status == 200 && answer.body != null) {

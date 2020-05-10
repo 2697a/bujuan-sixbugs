@@ -45,9 +45,9 @@ Widget buildView(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                _topItem(Constants.bs_top, state.bsList, '19723756',
+                _topItem( bs_top, state.bsList, '19723756',
                     dispatch, width),
-                _topItem(Constants.new_top, state.newList, '3779629',
+                _topItem( new_top, state.newList, '3779629',
                     dispatch, width),
               ],
             ),
@@ -55,9 +55,9 @@ Widget buildView(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                _topItem(Constants.yc_top, state.ycList, '2884035',
+                _topItem( yc_top, state.ycList, '2884035',
                     dispatch, width),
-                _topItem(Constants.hot_top, state.hotList, '3778678',
+                _topItem( hot_top, state.hotList, '3778678',
                     dispatch, width),
               ],
             ),

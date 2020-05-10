@@ -15,10 +15,10 @@ class GlobalStore {
   static Store<GlobalState> get store {
     var appTheme = AppTheme.getInstance(Constants.dark);
     var playStateType = PlayStateType.Stop;
-    var string = SpUtil.getString(Constants.playSongHistory, defValue: null);
+    var string = SpUtil.getString(playSongHistory, defValue: null);
     var mode =
-    SpUtil.getInt(Constants.PLAY_MODE, defValue: PlayModeType.REPEAT.index);
-    var backPath = SpUtil.getString(Constants.USER_BACKGROUND,defValue: null);
+    SpUtil.getInt(PLAY_MODE, defValue: PlayModeType.REPEAT.index);
+    var backPath = SpUtil.getString(USER_BACKGROUND,defValue: null);
     SongBeanEntity songBeanEntity = SongBeanEntity(
         name: '暂无播放歌曲',
         singer: '暂无歌手信息',
@@ -35,7 +35,7 @@ class GlobalStore {
           ..currSong = currSong
           ..currSongPos = 0
           ..lyric = null
-          ..blur =SpUtil.getDouble(Constants.BLUR,defValue: 2)
+          ..blur =SpUtil.getDouble(BLUR,defValue: 2)
           ..backPath = backPath
           ..playModeType = PlayModeType.values[mode]
           ..currSongAllPos = 100,

@@ -14,8 +14,8 @@ class SettingState implements Cloneable<SettingState> {
 
 SettingState initState(Map<String, dynamic> args) {
   var settingState = SettingState();
-  settingState.miniPlay = SpUtil.getBool(Constants.MINI_PLAY, defValue: false);
+  settingState.miniPlay = SpUtil.getBool(MINI_PLAY, defValue: false);
   settingState.blur = 2;
-  settingState.isHigh = SpUtil.getBool(Constants.HIGH, defValue: false);
+  settingState.isHigh = SpUtil.getBool(HIGH, defValue: false);
   return settingState;
 }

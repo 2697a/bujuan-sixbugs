@@ -39,14 +39,14 @@ void _onLogin(Action action, Context<MineState> ctx) {
 }
 
 void _exit(Action action, Context<MineState> ctx) async{
-  SpUtil.putInt(Constants.USER_ID, null);
+  SpUtil.putInt(USER_ID, null);
   Navigator.pop(ctx.context);
   ctx.dispatch(MineActionCreator.changeLoginState());
 }
 
 Future _onRefresh(Action action, Context<MineState> ctx) async {
   var login = ctx.state.isLogin;
-  var userId = SpUtil.getInt(Constants.USER_ID);
+  var userId = SpUtil.getInt(USER_ID);
   if (login) {
     var list2 = await Future.wait([_getProfile(userId), _getPlayList(userId)]);
     await _getLoveSong(userId);
@@ -105,5 +105,5 @@ Future<void> _getLoveSong(id) async {
   likeSongListEntity.ids.forEach((id) {
     likes.add('$id');
   });
-  SpUtil.putStringList(Constants.LIKE_SONGS, likes);
+  SpUtil.putStringList(LIKE_SONGS, likes);
 }

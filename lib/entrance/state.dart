@@ -21,6 +21,7 @@ class EntranceState implements Cloneable<EntranceState> {
   bool miniNav;
   PanelController panelController;
   List<Widget> pages;
+  bool isDra;
 
   @override
   EntranceState clone() {
@@ -29,6 +30,7 @@ class EntranceState implements Cloneable<EntranceState> {
       ..selectIndex = selectIndex
       ..pageController = pageController
       ..panelController = panelController
+      ..isDra = isDra
       ..miniNav = miniNav;
   }
 }
@@ -38,8 +40,9 @@ EntranceState initState(Map<String, dynamic> args) {
   state.selectIndex = 1;
   state.pageController =
       PageController(initialPage: state.selectIndex, viewportFraction: 1);
-  state.miniNav = SpUtil.getBool(Constants.MINI_NAV, defValue: false);
+  state.miniNav = SpUtil.getBool(MINI_NAV, defValue: false);
   state.panelController = PanelController();
+  state.isDra = false;
   state.val = false;
   state.pages = [
     MinePage().buildPage(null),

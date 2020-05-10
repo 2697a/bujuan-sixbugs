@@ -34,11 +34,11 @@ void _onInit(Action action, Context<SingerDetailsState> ctx) async{
   }
 }
 void _onPlaySong(Action action, Context<SingerDetailsState> ctx) async{
-  SpUtil.putBool(Constants.ISFM, false);
+  SpUtil.putBool( ISFM, false);
   var index2 = action.payload;
   GlobalStore.store
       .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.songs[index2]));
-  SpUtil.putObjectList(Constants.playSongListHistory, ctx.state.songs);
+  SpUtil.putObjectList( playSongListHistory, ctx.state.songs);
 
   var jsonEncode2 = jsonEncode( ctx.state.songs);
   await BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);

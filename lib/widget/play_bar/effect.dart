@@ -29,8 +29,8 @@ void _onAction(Action action, Context<PlayBarState> ctx) {}
 
 void _onOpenPlay(Action action, Context<PlayBarState> ctx) {
   if (ctx.state.playStateType != PlayStateType.Stop) {
-    var miniPlay = SpUtil.getBool(Constants.MINI_PLAY, defValue: false);
-    var isFm = SpUtil.getBool(Constants.ISFM, defValue: false);
+    var miniPlay = SpUtil.getBool(MINI_PLAY, defValue: false);
+    var isFm = SpUtil.getBool(ISFM, defValue: false);
     showBujuanBottomSheet(
       context: ctx.context,
       builder: (BuildContext context) {
@@ -71,7 +71,7 @@ void _onNext(Action action, Context<PlayBarState> ctx) {
 }
 
 void openPlayViewAndSendHistory(Context<PlayBarState> ctx, Action action) {
-  var objectList = SpUtil.getObjectList(Constants.playSongListHistory);
+  var objectList = SpUtil.getObjectList(playSongListHistory);
   List<SongBeanEntity> songs = List();
   objectList.forEach((Map map) {
     songs.add(SongBeanEntity.fromJson(map));

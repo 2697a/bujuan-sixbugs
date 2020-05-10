@@ -57,8 +57,8 @@ GlobalState _onchangePlayState(GlobalState state, Action action) {
 GlobalState _onchangeCurrSong(GlobalState state, Action action) {
   var clone = state.clone();
   SongBeanEntity payload = action.payload;
-  SpUtil.putString(Constants.playSongHistory, jsonEncode(payload));
-  var stringList = SpUtil.getStringList(Constants.LIKE_SONGS, defValue: []);
+  SpUtil.putString(playSongHistory, jsonEncode(payload));
+  var stringList = SpUtil.getStringList(LIKE_SONGS, defValue: []);
   payload.like = stringList.contains(payload.id);
   return clone..currSong = payload;
 }
@@ -69,13 +69,13 @@ GlobalState _onchangeSongPos(GlobalState state, Action action) {
 
 GlobalState _changeBack(GlobalState state, Action action) {
   var clone = state.clone();
-  SpUtil.putString(Constants.USER_BACKGROUND, action.payload);
+  SpUtil.putString(USER_BACKGROUND, action.payload);
   return clone..backPath = action.payload;
 }
 
 GlobalState _changeBlur(GlobalState state, Action action) {
   var clone = state.clone();
-  SpUtil.putDouble(Constants.BLUR, action.payload);
+  SpUtil.putDouble(BLUR, action.payload);
   return clone..blur = action.payload;
 }
 

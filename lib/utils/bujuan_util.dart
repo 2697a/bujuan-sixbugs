@@ -142,7 +142,7 @@ class BuJuanUtil {
   }
 
   static bool isLogin() {
-    return SpUtil.getInt(Constants.USER_ID, defValue: -1) != -1;
+    return SpUtil.getInt( USER_ID, defValue: -1) != -1;
   }
 
   static showToast(msg) {

@@ -51,7 +51,7 @@ Widget buildView(LocalListState state, Dispatch dispatch, ViewService viewServic
 }
 
 void addSongToSheet(viewService, SongBeanEntity songBeanEntity) {
-  var string = SpUtil.getString(Constants.LOCAL_SHEET, defValue: '');
+  var string = SpUtil.getString(LOCAL_SHEET, defValue: '');
   List responseJson = json.decode(string);
   List<LocalSheetEntity> sheets = responseJson.map((m) => new LocalSheetEntity.fromJson(m)).toList();
   showBujuanBottomSheet(

@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bujuan/constant/Screens.dart';
-import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/left_page.dart';
@@ -18,8 +17,6 @@ import 'state.dart';
 
 Widget buildView(
     EntranceState state, Dispatch dispatch, ViewService viewService) {
-//  ScreenUtil.init(viewService.context,
-//      width: 375, height: 812, allowFontScaling: false);
   return WillPopScope(
       child: Scaffold(
         body: SlidingUpPanel(
@@ -27,19 +24,31 @@ Widget buildView(
           controller: state.panelController,
           minHeight: Screens.setHeight(56),
           maxHeight: MediaQuery.of(viewService.context).size.height,
-          boxShadow: null,
-          panel: _leftChild(state, dispatch, viewService),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(.6),
+                offset: Offset(0, 1),
+                blurRadius: 6)
+          ],
+          isDraggable: state.isDra,
+          onPanelOpened: () {
+            dispatch(EntranceActionCreator.onChangeDar(true));
+          },
+          onPanelClosed: () {
+            dispatch(EntranceActionCreator.onChangeDar(false));
+            dispatch(EntranceActionCreator.onMiniNavBarSwitch());
+          },
+          panel: LeftPage(),
           collapsed: PlayBarPage().buildPage(null),
           body: Column(
             children: <Widget>[
               AppBar(
-                backgroundColor: Colors.transparent,
                 leading: IconButton(
                     padding: EdgeInsets.all(0),
                     icon: ImageHelper.getImage(
                         SpUtil.getString('head',
                             defValue:
-                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
+                                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
                         height: 32,
                         isRound: true),
                     onPressed: () {
@@ -54,6 +63,7 @@ Widget buildView(
                     padding: EdgeInsets.all(0),
                     icon: Icon(
                       Icons.search,
+                      size: 26,
                     ),
                     onPressed: () {
                       Navigator.of(viewService.context)
@@ -92,151 +102,17 @@ Widget buildView(
       });
 }
 
-///body
-Widget _body(EntranceState state, dispatch, ViewService viewService) {
-  return SlidingUpPanel(
-    color: Colors.transparent,
-    controller: state.panelController,
-    minHeight: Screens.setHeight(56),
-    maxHeight: MediaQuery.of(viewService.context).size.height,
-    boxShadow: null,
-    panel: _leftChild(state, dispatch, viewService),
-    collapsed: PlayBarPage().buildPage(null),
-    body: Column(
-      children: <Widget>[
-        AppBar(
-          backgroundColor: Colors.transparent,
-          leading: InkWell(
-            child: IconButton(
-                padding: EdgeInsets.all(0),
-                icon: ImageHelper.getImage(
-                    SpUtil.getString('head',
-                        defValue:
-                            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg'),
-                    height: 30,
-                    isRound: true),
-                onPressed: () {
-                  state.panelController.isPanelOpen
-                      ? state.panelController.close()
-                      : state.panelController.open();
-                }),
-            onLongPress: () {
-              BuJuanUtil.showToast('msg');
-            },
-          ),
-          elevation: 0.0,
-          title: _navBar(state, dispatch),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              padding: EdgeInsets.all(0),
-              icon: Icon(
-                IconData(0xe606, fontFamily: 'iconfont'),
-              ),
-              onPressed: () {
-                Navigator.of(viewService.context)
-                    .pushNamed('search', arguments: null);
-              },
-            )
-          ],
-        ),
-        Expanded(
-          child: PageView.builder(
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return state.pages[index];
-            },
-            itemCount: state.pages.length,
-            controller: state.pageController,
-            onPageChanged: (index) {
-              dispatch(EntranceActionCreator.onPageChange(index));
-            },
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(bottom: Screens.setHeight(56)),
-        )
-      ],
-    ),
-  );
-}
-
-///leftChild
-Widget _leftChild(EntranceState state, dispatch, ViewService viewService) {
-  return LeftPage(
-      child: Column(
-    children: <Widget>[
-      Expanded(child: Container()),
-      ListTile(
-        title: Text(
-          '设置',
-          style: TextStyle(fontSize: 14),
-        ),
-        onTap: () async {
-//          dispatch(EntranceActionCreator.openPage(OpenType.SETTING));
-          //打开设置也
-          await Navigator.of(viewService.context)
-              .pushNamed('setting', arguments: null);
-          //关闭滑出页面
-          state.panelController?.close();
-        },
-      ),
-      ListTile(
-        title: Text(
-          '关于',
-          style: TextStyle(fontSize: 14),
-        ),
-        onTap: () async {
-          await Navigator.of(viewService.context)
-              .pushNamed('about', arguments: null);
-          state.panelController?.close();
-        },
-      ),
-      ListTile(
-        title: Text(
-          '检测更新',
-          style: TextStyle(fontSize: 14),
-        ),
-        onTap: () async {
-          dispatch(EntranceActionCreator.onUpdate());
-        },
-      ),
-      SwitchListTile(
-          title: Text(
-            '迷你导航栏',
-            style: TextStyle(fontSize: 14),
-          ),
-          value: state.miniNav,
-          onChanged: (value) {
-            dispatch(EntranceActionCreator.onMiniNavBarSwitch());
-          }),
-    ],
-  ));
-}
-
 ///导航栏
 Widget _navBar(EntranceState state, dispatch) {
   return state.miniNav
       ? MinNiNavBar(
           items: [
               BottomMiniNavyBarItem(
-                icon: Icon(
-                  IconData(0xe67a, fontFamily: 'iconfont'),
-                ),
-                title: Text('Me'),
                 activeColor: const Color.fromRGBO(213, 15, 37, 1),
               ),
               BottomMiniNavyBarItem(
-                  icon: Icon(
-                    IconData(0xe65d, fontFamily: 'iconfont'),
-                  ),
-                  title: Text('Find'),
                   activeColor: const Color.fromRGBO(238, 178, 17, 1)),
               BottomMiniNavyBarItem(
-                icon: Icon(
-                  Icons.whatshot,
-                ),
-                title: Text('Top'),
                 activeColor: const Color.fromRGBO(0, 153, 37, 1),
               ),
             ],
@@ -280,11 +156,6 @@ Widget _navBar(EntranceState state, dispatch) {
               ),
               activeColor: const Color.fromRGBO(0, 153, 37, 1),
             ),
-//            BottomNavyBarItem(
-//              icon: Icon(Icons.photo_filter),
-//              title: Text('Local'),
-//              activeColor: const Color.fromRGBO(51, 105, 232, 1),
-//            ),
           ],
           selectedIndex: state.selectIndex,
           onItemSelected: (index) {

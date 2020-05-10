@@ -16,13 +16,13 @@ Widget buildView(
     body: state.showLoading
         ? LoadingPage()
         : Container(
-            padding: EdgeInsets.only(left: 5, right: 5),
+//            padding: EdgeInsets.only(left: 5, right: 5),
             child: Column(
               children: <Widget>[
                 Expanded(child: ListView.builder(
                   itemBuilder: (context, index) {
                     return ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: Screens.width5),
+                      contentPadding: EdgeInsets.symmetric(horizontal: Screens.width10),
                       dense: true,
                       title: Row(
                         children: <Widget>[

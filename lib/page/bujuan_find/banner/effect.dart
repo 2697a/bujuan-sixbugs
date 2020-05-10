@@ -70,10 +70,10 @@ void _onTap(Action action, Context<NewBannerState> ctx) {
             newList.add(songBeanEntity);
           });
 
-          SpUtil.putBool(Constants.ISFM, false);
+          SpUtil.putBool(ISFM, false);
           var index2 = 0;
 //          GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(newList[index2]));
-          SpUtil.putObjectList(Constants.playSongListHistory, newList);
+          SpUtil.putObjectList(playSongListHistory, newList);
           var jsonEncode2 = jsonEncode(newList);
           BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
         }
@@ -94,7 +94,7 @@ void _onTap(Action action, Context<NewBannerState> ctx) {
 
 void _onFm() async {
   var fm = await _getFm();
-  SpUtil.putBool(Constants.ISFM, true);
+  SpUtil.putBool(ISFM, true);
   List<SongBeanEntity> songs = List();
   fm.data.forEach((data) {
     SongBeanEntity songBeanEntity = SongBeanEntity();
@@ -107,7 +107,7 @@ void _onFm() async {
   });
 
   GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
-  SpUtil.putObjectList(Constants.playSongListHistory, songs);
+  SpUtil.putObjectList(playSongListHistory, songs);
   var jsonEncode2 = jsonEncode(songs);
   await BujuanMusic.fm(jsonEncode2);
 }

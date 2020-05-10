@@ -5,7 +5,6 @@ import 'package:bujuan/widget/cache_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'state.dart';
@@ -25,7 +24,6 @@ Widget buildView(
                   autoplayDelay: 4000,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-//                    margin: EdgeInsets.only(bottom:Screens.height5),
                       child: ImageHelper.getImage(
                           state.banners[index].imageUrl + "?param=300y800"),
                     );

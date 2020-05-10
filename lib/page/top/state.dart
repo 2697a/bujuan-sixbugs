@@ -54,7 +54,7 @@ class TopPageState implements Cloneable<TopPageState> {
 TopPageState initState(Map<String, dynamic> args) {
   var topPageState = TopPageState();
   topPageState.showLoading = true;
-  topPageState.topInfos = List()..add(TopInfo('10520166', '电音榜', Constants.dy_top))..add(TopInfo('180106', 'UK榜', Constants.uk_top))..add(TopInfo('60131', '日本榜', Constants.rb_top))..add(TopInfo('60198', 'Billl榜', Constants.billl_top))..add(TopInfo('21845217', 'KTV榜', Constants.krv_top))..add(TopInfo('11641012', 'Itunes榜', Constants.itunes_top));
+  topPageState.topInfos = List()..add(TopInfo('10520166', '电音榜', dy_top))..add(TopInfo('180106', 'UK榜',  uk_top))..add(TopInfo('60131', '日本榜',  rb_top))..add(TopInfo('60198', 'Billl榜',  billl_top))..add(TopInfo('21845217', 'KTV榜',  krv_top))..add(TopInfo('11641012', 'Itunes榜',  itunes_top));
 //  var bs = SpUtil.getString('bs', defValue: null);
 //  var newListStr = SpUtil.getString('new', defValue: null);
 //  var yc = SpUtil.getString('yc', defValue: null);

@@ -23,10 +23,7 @@ import androidx.core.app.NotificationCompat
 import com.lzx.starrysky.MusicService
 import com.lzx.starrysky.R
 import com.lzx.starrysky.StarrySky
-import com.lzx.starrysky.ext.albumArt
-import com.lzx.starrysky.ext.albumArtUrl
-import com.lzx.starrysky.ext.artist
-import com.lzx.starrysky.ext.id
+import com.lzx.starrysky.ext.*
 import com.lzx.starrysky.imageloader.ImageLoaderCallBack
 import com.lzx.starrysky.notification.utils.NotificationUtils
 import com.lzx.starrysky.playback.player.Playback
@@ -161,6 +158,8 @@ class SystemNotification constructor(
                 filter.addAction(INotification.ACTION_PAUSE)
                 filter.addAction(INotification.ACTION_PLAY)
                 filter.addAction(INotification.ACTION_PREV)
+                filter.addAction(INotification.ACTION_LYRICS)
+                filter.addAction(INotification.ACTION_FAVORITE)
 
                 context.registerReceiver(this, filter)
 
@@ -214,9 +213,10 @@ class SystemNotification constructor(
             R.drawable.ic_notification
 
         notificationBuilder
+                .setProgress(100,2,false)
             .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                 // show only play/pause in compact view
-                .setShowActionsInCompactView(playPauseButtonPosition)
+                .setShowActionsInCompactView(playPauseButtonPosition,2)
                 .setShowCancelButton(true)
                 .setCancelButtonIntent(mStopIntent)
                 .setMediaSession(mSessionToken))

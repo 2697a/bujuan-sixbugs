@@ -28,7 +28,7 @@ void _onLogin(Action action, Context<LoginState> ctx) {
     _loginByPhone(phone, pass).then((login) {
       Navigator.pop(ctx.context);
       if (login != null) {
-        SpUtil.putInt(Constants.USER_ID, login.account.id);
+        SpUtil.putInt(USER_ID, login.account.id);
         SpUtil.putString('head', login.profile.avatarUrl);
         Navigator.pop(ctx.context, login);
       } else {

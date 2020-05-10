@@ -183,7 +183,6 @@ open class ExoPlayback internal constructor(
             trackSelector.parameters = trackSelectorParameters
 
             val drmSessionManager: DefaultDrmSessionManager<FrameworkMediaCrypto>? = null
-
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(context, renderersFactory,
                 trackSelector, drmSessionManager)
             mExoPlayer?.addListener(mEventListener)

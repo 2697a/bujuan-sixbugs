@@ -22,11 +22,11 @@ Effect<CloundPageState> buildEffect() {
   });
 }
 void _onPlaySong(Action action, Context<CloundPageState> ctx) async {
-  SpUtil.putBool(Constants.ISFM, false);
+  SpUtil.putBool(ISFM, false);
   var index2 = action.payload;
   var list2 = ctx.state.list;
   GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(list2[index2]));
-  SpUtil.putObjectList(Constants.playSongListHistory, list2);
+  SpUtil.putObjectList(playSongListHistory, list2);
   var jsonEncode2 = jsonEncode(list2);
   await BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }

@@ -98,51 +98,6 @@ class _ItemWidget extends StatelessWidget {
         assert(iconSize != null),
         super(key: key);
 
-//  @override
-//  Widget build(BuildContext context) {
-//    return AnimatedContainer(
-//      width: isSelected ? 110 : 50,
-//      height: double.maxFinite,
-//      duration: animationDuration,
-//      padding: EdgeInsets.only(left: 12),
-//      decoration: BoxDecoration(
-//        color: isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
-//        borderRadius: BorderRadius.circular(itemCornerRadius),
-//      ),
-//      child: ListView(
-//        shrinkWrap: true,
-//        physics: NeverScrollableScrollPhysics(),
-//        scrollDirection: Axis.horizontal,
-//        children: <Widget>[
-//          Row(
-//            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//            crossAxisAlignment: CrossAxisAlignment.center,
-//            children: <Widget>[
-//              Padding(
-//                padding: const EdgeInsets.only(right: 8),
-//                child: IconTheme(
-//                  data: IconThemeData(
-//                      size: iconSize,
-//                      color: isSelected
-//                          ? item.activeColor.withOpacity(1)
-//                          : item.inactiveColor == null ? item.activeColor : item.inactiveColor),
-//                  child: item.icon,
-//                ),
-//              ),
-//              isSelected
-//                  ? DefaultTextStyle.merge(
-//                style: TextStyle(
-//                  color: item.activeColor,
-//                  fontWeight: FontWeight.bold,
-//                ),
-//                child: item.title,
-//              ) : SizedBox.shrink()
-//            ],
-//          )
-//        ],
-//      ),
-//    );
-//  }
 
 
   @override
@@ -161,18 +116,11 @@ class _ItemWidget extends StatelessWidget {
 }
 
 class BottomMiniNavyBarItem {
-  final Icon icon;
-  final Text title;
   final Color activeColor;
   final Color inactiveColor;
 
   BottomMiniNavyBarItem({
-    @required this.icon,
-    @required this.title,
     this.activeColor = Colors.blue,
     this.inactiveColor,
-  }) {
-    assert(icon != null);
-    assert(title != null);
-  }
+  });
 }

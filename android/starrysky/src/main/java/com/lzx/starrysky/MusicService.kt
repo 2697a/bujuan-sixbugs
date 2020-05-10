@@ -1,5 +1,6 @@
 package com.lzx.starrysky
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.Service
 import android.content.BroadcastReceiver
@@ -34,18 +35,17 @@ class MusicService : MediaBrowserServiceCompat(), MetadataUpdateListener, Playba
     private var mediaSession: MediaSessionCompat? = null
     private var mediaController: MediaControllerCompat? = null
     private var transportControls: MediaControllerCompat.TransportControls? = null
-    private var wakeLock: PowerManager.WakeLock?=null;
+    private var mWakeLock: PowerManager.WakeLock?=null;
     var mPlaybackManager: IPlaybackManager? = null
     private var notification: INotification? = null
     private var mBecomingNoisyReceiver: BecomingNoisyReceiver? = null
 
     private val mDelayedStopHandler = DelayedStopHandler(this)
 
+    @SuppressLint("InvalidWakeLockTag")
     override fun onCreate() {
         super.onCreate()
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag")
-        wakeLock?.acquire()
+        initWakeLock()
         mPlaybackManager = get().playbackManager()
         mPlaybackManager?.setServiceCallback(this)
         mPlaybackManager?.setMetadataUpdateListener(this)
@@ -97,12 +97,35 @@ class MusicService : MediaBrowserServiceCompat(), MetadataUpdateListener, Playba
 
     override fun onDestroy() {
         super.onDestroy()
-        wakeLock?.release()
+        releaseWakeLock()
         mPlaybackManager?.handleStopRequest(null)
         notification?.stopNotification()
         mDelayedStopHandler.removeCallbacksAndMessages(null)
         mBecomingNoisyReceiver?.unregister()
         mediaSession?.release()
+    }
+
+
+    //开启唤醒锁
+    @SuppressLint("InvalidWakeLockTag")
+    private fun initWakeLock() {
+        if (null == mWakeLock) {
+            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK or
+                    PowerManager.ON_AFTER_RELEASE,
+                    "mainLockService")
+            if (null != mWakeLock) {
+                mWakeLock!!.acquire()
+            }
+        }
+    }
+
+    //关闭唤醒锁
+    private fun releaseWakeLock() {
+        if (null != mWakeLock) {
+            mWakeLock!!.release()
+            mWakeLock = null
+        }
     }
 
     override fun onLoadChildren(
