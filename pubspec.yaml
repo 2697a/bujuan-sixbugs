@@ -19,6 +19,7 @@ environment:
 dependencies:
   fish_redux: ^0.3.3
   dio: ^3.0.9
+  dio_cookie_manager: 1.0.0
   cookie_jar: ^1.0.1
   flutter_swiper: ^1.1.6
   shared_preferences: ^0.5.6+3

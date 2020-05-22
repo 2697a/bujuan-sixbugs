@@ -6,8 +6,10 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
+import 'package:bujuan/net/http_util.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:dio/dio.dart';
 import 'package:fish_redux/fish_redux.dart';
 import '../../bujuan_music.dart';
 import 'action.dart';
@@ -41,11 +43,10 @@ void _onAction(Action action, Context<TodayState> ctx) async{
 }
 
 Future<TodaySongEntity> _getToday() async {
-  var answer = await recommend_songs({}, await BuJuanUtil.getCookie());
-//  Response sheet = await HttpUtil().post('/recommend/songs');
-//  var data = sheet.data;
-//  var jsonDecode2 = jsonDecode(data);
-  return TodaySongEntity.fromJson(answer.body);
+  Response sheet = await HttpUtil().get('/recommend/songs');
+  var data = sheet.data;
+  var jsonDecode2 = jsonDecode(data);
+  return TodaySongEntity.fromJson(jsonDecode2);
 }
 
 void _onPlay(Action action, Context<TodayState> ctx) {

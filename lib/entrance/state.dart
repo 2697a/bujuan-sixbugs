@@ -48,7 +48,6 @@ EntranceState initState(Map<String, dynamic> args) {
     MinePage().buildPage(null),
     NewFindPage().buildPage(null),
     TopPagePage().buildPage(null),
-//    LocalMusicPage().buildPage(null),
   ];
   return state;
 }

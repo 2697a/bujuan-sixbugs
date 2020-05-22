@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'api/answer.dart';
 import 'api/netease_cloud_music.dart';
 import 'constant/constants.dart';
+import 'net/http_util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,8 +17,9 @@ void main() async {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-//  var httpServer = await _startServer();
+  await _startServer();
   await SpUtil.getInstance();
+  await HttpUtil.getInstance();
   Constants.dark = SpUtil.getBool('dark',defValue: false);
   runApp(routes.buildPage("main", null));
 }
