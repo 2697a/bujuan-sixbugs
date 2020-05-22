@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bujuan/api/module.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/like_song_list_entity.dart';
 import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/entity/user_profile_entity.dart';
+import 'package:bujuan/net/http_util.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:dio/dio.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'action.dart';
@@ -82,25 +85,28 @@ void _init(Action action, Context<MineState> ctx) async {
 }
 
 Future<UserProfileEntity> _getProfile(userId) async {
-  var profile =
-      await user_detail({'uid': userId}, await BuJuanUtil.getCookie());
-  return profile.status == 200
-      ? UserProfileEntity.fromJson(profile.body)
+  Response profile = await HttpUtil().post('/user/detail',data: {'uid': userId});
+//  var profile =
+//      await user_detail({'uid': userId}, await BuJuanUtil.getCookie());
+  return profile.statusCode == 200
+      ? UserProfileEntity.fromJson(Map<String, dynamic>.from(jsonDecode(profile.data)))
       : null;
 }
 
 Future<UserOrderEntity> _getPlayList(userId) async {
-  var playlist =
-      await user_playlist({'uid': userId}, await BuJuanUtil.getCookie());
-  return playlist.status == 200
-      ? UserOrderEntity.fromJson(playlist.body)
+  Response playlist = await HttpUtil().post('/user/playlist',data: {'uid': userId});
+//  var playlist =
+//      await user_playlist({'uid': userId}, await BuJuanUtil.getCookie());
+  return playlist.statusCode == 200
+      ? UserOrderEntity.fromJson(Map<String, dynamic>.from(jsonDecode(playlist.data)))
       : null;
 }
 
 ///likelist
 Future<void> _getLoveSong(id) async {
-  var likeList = await likelist({'uid': id}, await BuJuanUtil.getCookie());
-  var likeSongListEntity = LikeSongListEntity.fromJson(likeList.body);
+  Response likeList = await HttpUtil().post('/likelist',data: {'uid': id});
+//  var likeList = await likelist({'uid': id}, await BuJuanUtil.getCookie());
+  var likeSongListEntity = LikeSongListEntity.fromJson(Map<String, dynamic>.from(jsonDecode(likeList.data)));
   List<String> likes = List();
   likeSongListEntity.ids.forEach((id) {
     likes.add('$id');
