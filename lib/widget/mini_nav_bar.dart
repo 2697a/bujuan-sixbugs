@@ -33,7 +33,6 @@ class MinNiNavBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = (backgroundColor == null) ? Theme.of(context).scaffoldBackgroundColor : backgroundColor;
     return Container(
       decoration: BoxDecoration(
         color: Colors.transparent,
@@ -103,10 +102,9 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: isSelected ? 35 : 15,
+      width: isSelected ? 40 : 15,
       height: double.maxFinite,
       duration: animationDuration,
-//      padding: EdgeInsets.only(left: 12),
       decoration: BoxDecoration(
         color: item.activeColor.withOpacity(0.6),
         borderRadius: BorderRadius.circular(itemCornerRadius),

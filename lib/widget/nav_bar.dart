@@ -105,7 +105,7 @@ class _ItemWidget extends StatelessWidget {
       height: Screens.setWidth(38),
       duration: animationDuration,
       decoration: BoxDecoration(
-        color: isSelected ? item.activeColor.withOpacity(0.4) : backgroundColor,
+        color: isSelected ? item.activeColor.withOpacity(0.5) : backgroundColor,
         borderRadius: BorderRadius.circular(itemCornerRadius),
         border: isSelected ? Border.all(color: Colors.grey.withOpacity(.1),width: 1):null,
       ),

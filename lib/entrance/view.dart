@@ -63,7 +63,7 @@ Widget buildView(
                     padding: EdgeInsets.all(0),
                     icon: Icon(
                       Icons.search,
-                      size: 26,
+                      size: 28,
                     ),
                     onPressed: () {
                       Navigator.of(viewService.context)

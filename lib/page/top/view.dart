@@ -65,7 +65,6 @@ Widget buildView(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: state.topInfos.length,
-                padding: EdgeInsets.all(5.0),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: 20.0,
@@ -82,7 +81,7 @@ Widget buildView(
                             height: width / 3,
                             child: ImageHelper.getImage(
                                 state.topInfos[index].picUrl,
-                                height: 120),
+                                height: width / 3),
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -124,7 +123,7 @@ Widget _topItem(
           Container(
             width: width / 2 - Screens.setWidth(10),
             height: width/4,
-            child: ImageHelper.getImage(image, height: Screens.setHeight(110)),
+            child: ImageHelper.getImage(image, height: width / 2 - Screens.setWidth(10)),
           ),
           ListView.builder(
             padding: EdgeInsets.all(0),

@@ -14,7 +14,7 @@ Widget buildView(
   return state.banners != null
       ? Container(
           margin: EdgeInsets.only(top: 3),
-          child: Wrap(
+          child: Column(
             children: <Widget>[
               Container(
                 height: Screens.setHeight(136),

@@ -6,7 +6,7 @@ import 'state.dart';
 
 Widget buildView(SheetViewState state, Dispatch dispatch, ViewService viewService) {
   var adapter = viewService.buildAdapter();
-  return Container(
+  return SliverToBoxAdapter(
     child: Column(
       children: <Widget>[
         Offstage(

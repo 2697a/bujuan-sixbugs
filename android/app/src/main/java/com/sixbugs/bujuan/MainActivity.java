@@ -1,24 +1,15 @@
 package com.sixbugs.bujuan;
 
-import android.Manifest;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.lzx.starrysky.StarrySky;
 import com.lzx.starrysky.control.OnPlayerEventListener;
 import com.lzx.starrysky.provider.SongInfo;
 import com.lzx.starrysky.utils.TimerTaskManager;
-import com.qw.soul.permission.SoulPermission;
-import com.qw.soul.permission.bean.Permission;
-import com.qw.soul.permission.bean.Permissions;
-import com.qw.soul.permission.callbcak.CheckRequestPermissionsListener;
 import com.sixbugs.bujuan.entity.Lyric;
 import com.sixbugs.bujuan.entity.SongBean;
 import com.sixbugs.bujuan.utils.GsonUtil;
 import com.sixbugs.bujuan.utils.PrefUtils;
-
-import io.flutter.plugin.common.BasicMessageChannel;
-import io.flutter.plugin.common.MethodChannel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 import io.flutter.app.FlutterActivity;
+import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.EventChannel;
+import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.StandardMessageCodec;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 

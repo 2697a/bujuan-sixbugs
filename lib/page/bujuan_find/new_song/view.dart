@@ -9,7 +9,7 @@ import 'state.dart';
 
 Widget buildView(
     NewSongState state, Dispatch dispatch, ViewService viewService) {
-  return Container(
+  return SliverToBoxAdapter(
     child: state.result != null
         ? Wrap(
             children: <Widget>[

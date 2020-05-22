@@ -34,6 +34,6 @@ MineState initState(Map<String, dynamic> args) {
   mineState.isLogin = cookie != -1;
   mineState.isShowLoad = true;
   mineState.isCreateOpen = true;
-  mineState.isOpen = false;
+  mineState.isOpen = true;
   return mineState;
 }
