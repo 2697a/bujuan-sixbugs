@@ -1,6 +1,7 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
+import 'package:bujuan/widget/back_widget.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -11,7 +12,7 @@ import 'state.dart';
 
 Widget buildView(CloundPageState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
-    body: Column(
+    body: Widgets.blackWidget(null, Column(
       children: <Widget>[
         Expanded(
             child: state.isShowLoading
@@ -19,6 +20,7 @@ Widget buildView(CloundPageState state, Dispatch dispatch, ViewService viewServi
                 : CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
+                  backgroundColor: Colors.transparent,
                   expandedHeight: 230.0,
                   flexibleSpace: FlexibleSpaceBar(
                       title: Text(
@@ -58,7 +60,7 @@ Widget buildView(CloundPageState state, Dispatch dispatch, ViewService viewServi
             )),
         PlayBarPage().buildPage(null)
       ],
-    ),
+    )),
   );
 }
 Widget _item(SongBeanEntity track, Dispatch dispatch, index, viewService) {

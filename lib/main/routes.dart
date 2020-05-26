@@ -13,7 +13,8 @@ import 'package:bujuan/page/play/page.dart';
 import 'package:bujuan/page/radio/page.dart';
 import 'package:bujuan/page/search/page.dart';
 import 'package:bujuan/page/search/search_details/page.dart';
-import 'package:bujuan/page/setting/page.dart';
+import 'package:bujuan/page/setting/setting.dart';
+//import 'package:bujuan/page/setting/page.dart';
 import 'package:bujuan/page/sheet_details/page.dart';
 import 'package:bujuan/page/sheet_info/page.dart';
 import 'package:bujuan/page/sheet_square/page.dart';
@@ -46,7 +47,7 @@ var routes = new PageRoutes(
     'talk': TalkPage(),
     'mv_play': MvPlayViewPage(),
     'history': HistoryPage(),
-    'setting': SettingPage(),
+//    'setting': SettingPage(),
     'donation': DonationPage(),
     'about': AboutPage(),
     'search': SearchPage(),

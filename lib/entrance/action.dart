@@ -8,7 +8,8 @@ enum EntranceAction {
   miniNavBarSwitch,
   openPage,
   changeDar,
-  changeUpdate
+  changeUpdate,
+  changeBack
 }
 
 class EntranceActionCreator {
@@ -24,6 +25,10 @@ class EntranceActionCreator {
   //迷你导航栏
   static Action onMiniNavBarSwitch() {
     return Action(EntranceAction.miniNavBarSwitch);
+  }
+  //迷你导航栏
+  static Action onBlack() {
+    return Action(EntranceAction.changeBack);
   }
   //底栏是否可滑动
   static Action onChangeDar(bool isDar) {

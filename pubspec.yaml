@@ -19,7 +19,7 @@ environment:
 dependencies:
   fish_redux: ^0.3.3
   dio: ^3.0.9
-  dio_cookie_manager: 1.0.0
+#  dio_cookie_manager: 1.0.0
   cookie_jar: ^1.0.1
   flutter_swiper: ^1.1.6
   shared_preferences: ^0.5.6+3
@@ -33,6 +33,8 @@ dependencies:
   sleek_circular_slider: ^1.1.0
   url_launcher: ^5.4.2
   package_info: ^0.4.0+4
+  image_picker: ^0.6.6+4
+  sticky_and_expandable_list: ^0.2.1
   #api相关
   encrypt: ^3.0.0
   dartin: ^0.0.1

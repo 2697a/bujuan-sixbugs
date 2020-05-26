@@ -154,22 +154,28 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              '我创建的歌单 (${state.createOrderList.length})',
-                              style: TextStyle(
-                                  fontSize: Screens.text14,
-                                  fontWeight: FontWeight.bold),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(state.isCreateOpen
+                                    ? Icons.keyboard_arrow_down
+                                    : Icons.keyboard_arrow_right),
+                                Padding(padding: EdgeInsets.only(right: 5)),
+                                Text(
+                                  '我创建的歌单 (${state.createOrderList.length})',
+                                  style: TextStyle(
+                                      fontSize: Screens.text14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                            Icon(state.isCreateOpen
-                                ? Icons.keyboard_arrow_down
-                                : Icons.keyboard_arrow_right)
+                            IconButton(icon: Icon(Icons.add), onPressed: () {}),
                           ],
                         ),
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(
-                            left: Screens.width5,
-                            top: Screens.setHeight(20),
-                            bottom: Screens.setHeight(10))),
+                          left: Screens.width5,
+                        )),
                     onTap: () {
                       dispatch(MineActionCreator.setCreateOpen());
                     },

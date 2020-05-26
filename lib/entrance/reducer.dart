@@ -10,7 +10,8 @@ Reducer<EntranceState> buildReducer() {
     <Object, Reducer<EntranceState>>{
       EntranceAction.pageChange: _onPageChange,
       EntranceAction.miniNavBarSwitch: _onMiniNavBarSwitch,
-      EntranceAction.changeDar: _onChangeDar
+      EntranceAction.changeDar: _onChangeDar,
+      EntranceAction.changeBack:_onBlack
     },
   );
 }
@@ -31,6 +32,9 @@ EntranceState _onMiniNavBarSwitch(EntranceState state, Action action) {
     return state.clone()..miniNav = bool;
   }
   return state;
+}
+EntranceState _onBlack(EntranceState state, Action action) {
+    return state.clone()..isBlack = SpUtil.getString(USER_BACKGROUND,defValue: null)!=null;
 }
 EntranceState _onChangeDar(EntranceState state, Action action) {
   final bool isDar = action.payload;

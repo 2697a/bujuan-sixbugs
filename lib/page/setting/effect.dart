@@ -24,6 +24,6 @@ void _onIsHigh(Action action, Context<SettingState> ctx) {
 }
 
 void _onChangeBlur(Action action, Context<SettingState> ctx) {
-  BuJuanUtil.showToast('msg');
-  ctx.dispatch(SettingActionCreator.onChangeBlur(action.payload));
+  ctx.state.isBack = true;
+  ctx.dispatch(SettingActionCreator.onChangeBlur(true));
 }

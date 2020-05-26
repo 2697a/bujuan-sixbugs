@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:bujuan/constant/Screens.dart';
+import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:bujuan/widget/back_widget.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/left_page.dart';
 import 'package:bujuan/widget/mini_nav_bar.dart';
@@ -19,17 +22,14 @@ Widget buildView(
     EntranceState state, Dispatch dispatch, ViewService viewService) {
   return WillPopScope(
       child: Scaffold(
-        body: SlidingUpPanel(
+        body: Widgets.blackWidget(state.isBlack, SlidingUpPanel(
           color: Colors.transparent,
           controller: state.panelController,
           minHeight: Screens.setHeight(56),
           maxHeight: MediaQuery.of(viewService.context).size.height,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.withOpacity(.6),
-                offset: Offset(0, 1),
-                blurRadius: 6)
-          ],
+          boxShadow: null,
+          backdropColor: Colors.transparent,
+          backdropOpacity: 1,
           isDraggable: state.isDra,
           onPanelOpened: () {
             dispatch(EntranceActionCreator.onChangeDar(true));
@@ -37,18 +37,20 @@ Widget buildView(
           onPanelClosed: () {
             dispatch(EntranceActionCreator.onChangeDar(false));
             dispatch(EntranceActionCreator.onMiniNavBarSwitch());
+            dispatch(EntranceActionCreator.onBlack());
           },
           panel: LeftPage(),
           collapsed: PlayBarPage().buildPage(null),
           body: Column(
             children: <Widget>[
               AppBar(
+                backgroundColor: Colors.transparent,
                 leading: IconButton(
                     padding: EdgeInsets.all(0),
                     icon: ImageHelper.getImage(
                         SpUtil.getString('head',
                             defValue:
-                                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
                         height: 32,
                         isRound: true),
                     onPressed: () {
@@ -90,7 +92,7 @@ Widget buildView(
               )
             ],
           ),
-        ),
+        )),
       ),
       onWillPop: () async {
         if (state.panelController.isPanelOpen) {

@@ -1,5 +1,6 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/page/sheet_square/sheet_square_details/page.dart';
+import 'package:bujuan/widget/back_widget.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +9,15 @@ import 'state.dart';
 
 Widget buildView(SheetSquareState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
-    appBar: AppBar(
-      title: Text('歌单广场'),
-    ),
-    body: Container(
+    body: Widgets.blackWidget(null, Container(
       child: DefaultTabController(
           length: 8,
           child: Column(
             children: <Widget>[
+              AppBar(
+                title: Text('歌单广场'),
+                backgroundColor: Colors.transparent,
+              ),
               TabBar(
                 indicatorSize: TabBarIndicatorSize.label,
                 isScrollable: true,
@@ -46,6 +48,6 @@ Widget buildView(SheetSquareState state, Dispatch dispatch, ViewService viewServ
               PlayBarPage().buildPage(null)
             ],
           )),
-    ),
+    )),
   );
 }

@@ -1,11 +1,5 @@
 import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/constant/play_state.dart';
-import 'package:bujuan/constant/theme.dart';
-import 'package:bujuan/entity/lyric_entity.dart';
-import 'package:bujuan/entity/song_bean_entity.dart';
-import 'package:bujuan/global_store/state.dart';
 import 'package:bujuan/page/bujuan_find/page.dart';
-import 'package:bujuan/page/local_music/page.dart';
 import 'package:bujuan/page/mine/page.dart';
 import 'package:bujuan/page/top/page.dart';
 import 'package:bujuan/utils/sp_util.dart';
@@ -22,6 +16,7 @@ class EntranceState implements Cloneable<EntranceState> {
   PanelController panelController;
   List<Widget> pages;
   bool isDra;
+  bool isBlack;
 
   @override
   EntranceState clone() {
@@ -30,6 +25,7 @@ class EntranceState implements Cloneable<EntranceState> {
       ..selectIndex = selectIndex
       ..pageController = pageController
       ..panelController = panelController
+      ..isBlack =isBlack
       ..isDra = isDra
       ..miniNav = miniNav;
   }
@@ -44,6 +40,7 @@ EntranceState initState(Map<String, dynamic> args) {
   state.panelController = PanelController();
   state.isDra = false;
   state.val = false;
+  state.isBlack = SpUtil.getString(USER_BACKGROUND,defValue: null)!=null;
   state.pages = [
     MinePage().buildPage(null),
     NewFindPage().buildPage(null),

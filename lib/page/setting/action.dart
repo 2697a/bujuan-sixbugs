@@ -18,7 +18,7 @@ class SettingActionCreator {
     return Action(SettingAction.miniPlayState,payload: mini);
   }
 
-  static Action onChangeBlur(double value) {
-    return Action(SettingAction.changeBlur,payload: value);
+  static Action onChangeBlur(isBlack) {
+    return Action(SettingAction.changeBlur,payload: isBlack);
   }
 }

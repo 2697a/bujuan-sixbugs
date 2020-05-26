@@ -2,6 +2,7 @@ import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/widget/app_bar.dart';
+import 'package:bujuan/widget/back_widget.dart';
 import 'package:bujuan/widget/bujuan_background.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/loading_page.dart';
@@ -46,59 +47,64 @@ Widget buildView(
 //  );
   var height = MediaQuery.of(viewService.context).size.height;
   return Scaffold(
-    body: Column(
+    body: Widgets.blackWidget(null, Column(
       children: <Widget>[
         Expanded(
             child: state.isShowLoading
                 ? LoadingPage()
                 : CustomScrollView(
-                    slivers: <Widget>[
-                      SliverAppBar(
-                        expandedHeight: height * 0.35,
-                        elevation: 0,
-                        flexibleSpace: FlexibleSpaceBar(
-                          collapseMode: CollapseMode.pin,
-                          centerTitle: true,
-                          title: Text(
-                            state.playlist.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          background: Stack(
-                            children: <Widget>[
-                              Container(
-                                width: double.infinity,
-                                child: ImageHelper.getImageNoRound(
-                                    state.playlist.coverImgUrl +
-                                        "?param=500y500",
-                                    height: height * 0.35),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Constants.dark
-                                        ? Colors.grey[850].withOpacity(.3)
-                                        : Colors.white.withOpacity(.3)),
-                                child: _sheetTop(state, dispatch),
-                              ),
-                            ],
-                          ),
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  expandedHeight: 230,
+                  elevation: 0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.pin,
+                    centerTitle: true,
+                    title: Text(
+                      state.playlist.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    background: Stack(
+                      children: <Widget>[
+                        Container(
+                          width: double.infinity,
+                          child: ImageHelper.getImageNoRound(
+                              state.playlist.coverImgUrl +
+                                  "?param=500y500",
+                              height: height * 0.35),
                         ),
-                        floating: false,
-                        pinned: true,
-                        snap: false,
-                      ),
-                      SliverList(
-                        delegate: new SliverChildBuilderDelegate(
-                          (context, index) => _sheetItem(
-                              state.list[index], dispatch, index, viewService),
-                          childCount: state.list.length,
+                        Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Constants.dark
+                                  ? Colors.grey[850].withOpacity(.1)
+                                  : Colors.white.withOpacity(.1)),
+                          child: _sheetTop(state, dispatch),
                         ),
-                      ),
-                    ],
-                  )),
+                      ],
+                    ),
+                  ),
+                  floating: false,
+                  pinned: false,
+                  snap: false,
+                ),
+                SliverList(
+                  delegate: new SliverChildBuilderDelegate(
+                        (context, index) => _sheetItem(
+                        state.list[index], dispatch, index, viewService),
+                    childCount: state.list.length,
+                  ),
+                ),
+              ],
+            )),
         PlayBarPage().buildPage(null)
       ],
+    )),
+    floatingActionButton: Container(
+      padding: EdgeInsets.only(bottom: 56),
+      child: FloatingActionButton(onPressed: (){},child: Icon(Icons.search),),
     ),
   );
 }

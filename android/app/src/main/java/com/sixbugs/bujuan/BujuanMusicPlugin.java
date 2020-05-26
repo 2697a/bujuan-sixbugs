@@ -3,6 +3,7 @@ package com.sixbugs.bujuan;
 
 import android.content.Intent;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 
 import io.flutter.plugin.common.MethodCall;
@@ -12,6 +13,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 
 import com.lzx.starrysky.StarrySky;
+import com.lzx.starrysky.control.RepeatMode;
 import com.lzx.starrysky.provider.SongInfo;
 import com.sixbugs.bujuan.entity.SongBean;
 import com.sixbugs.bujuan.utils.GsonUtil;
@@ -31,7 +33,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
      */
     public static String CHANNEL = "music_plugin";
 
-    private static MethodChannel channel;
+    public static MethodChannel channel;
 
     private static MainActivity activity;
 
@@ -45,7 +47,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
     @Override
     public void onMethodCall(MethodCall methodCall, Result result) {
         if (methodCall.method.equals("songInfo")) {
-            PrefUtils.putBoolean(activity,"isFm",false);
+            PrefUtils.putBoolean(activity, "isFm", false);
             String readList = methodCall.argument("readList");
             int playIndex = methodCall.argument("playIndex");
             List<SongBean> songs = GsonUtil.jsonToList(readList, SongBean.class);
@@ -56,7 +58,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
                 songInfo.setSongCover(song.getPicUrl() == null ? "" : song.getPicUrl());
                 songInfo.setSongId(song.getId() == null ? "001" : song.getId());
                 songInfo.setArtist(song.getSinger() == null ? "" : song.getSinger());
-                songInfo.setSongUrl(song.getUrl()==null?"":song.getUrl());
+                songInfo.setSongUrl(song.getUrl() == null ? "" : song.getUrl());
                 songInfos.add(songInfo);
             }
             StarrySky.Companion.with().playMusic(songInfos, playIndex);
@@ -74,7 +76,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
                     StarrySky.Companion.with().skipToPrevious();
         } else if (methodCall.method.equals("fm")) {
             String readList = methodCall.argument("fmList");
-            PrefUtils.putBoolean(activity,"isFm",true);
+            PrefUtils.putBoolean(activity, "isFm", true);
             List<SongBean> songs = GsonUtil.jsonToList(readList, SongBean.class);
             List<SongInfo> songInfos = new ArrayList<>();
             for (SongBean song : songs) {
@@ -83,7 +85,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
                 songInfo.setSongCover(song.getPicUrl() == null ? "" : song.getPicUrl());
                 songInfo.setSongId(song.getId() == null ? "001" : song.getId());
                 songInfo.setArtist(song.getSinger() == null ? "" : song.getSinger());
-                songInfo.setSongUrl(song.getUrl()==null?"":song.getUrl());
+                songInfo.setSongUrl(song.getUrl() == null ? "" : song.getUrl());
                 songInfos.add(songInfo);
             }
             StarrySky.Companion.with().playMusic(songInfos, 0);
@@ -94,7 +96,7 @@ public class BujuanMusicPlugin implements MethodCallHandler {
             intent.putExtra("dark", dark);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(intent);
-        }else if (methodCall.method.equals("playIndex")) {
+        } else if (methodCall.method.equals("playIndex")) {
             int index = methodCall.argument("index");
             StarrySky.Companion.with().playMusicByIndex(index);
         } else if (methodCall.method.equals("seekTo")) {
@@ -104,13 +106,37 @@ public class BujuanMusicPlugin implements MethodCallHandler {
             }
         } else if ((methodCall.method.equals("playMode"))) {
             int mod = methodCall.argument("mode");
+            Log.d("TAG", "onMethodCall: ====" + mod);
+            RepeatMode repeatMode = StarrySky.Companion.with().getRepeatMode();
+            switch (repeatMode.getRepeatMode()) {
+                case RepeatMode.REPEAT_MODE_NONE:
+                    if (repeatMode.isLoop()) {
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_ONE, true);
+                    } else {
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_NONE, true);
+                    }
+                    break;
+                case RepeatMode.REPEAT_MODE_ONE:
+                    if (repeatMode.isLoop()) {
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_SHUFFLE, true);
+                    } else {
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_ONE, true);
+                    }
+                case RepeatMode.REPEAT_MODE_SHUFFLE:
+                    if (repeatMode.isLoop()) {
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_NONE, true);
+                    } else {
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_SHUFFLE, true);
+                    }
+                    break;
+                default:
+            }
 //            if (mod == 0) {
-//                StarrySky.Companion.with().setShuffleMode(PlaybackStateCompat.SHUFFLE_MODE_NONE);
-//                StarrySky.with().setRepeatMode(PlaybackStateCompat.REPEAT_MODE_ALL);
+//                StarrySky.Companion.with().setRepeatMode(PlaybackStateCompat.REPEAT_MODE_ALL, true);
 //            } else if (mod == 1) {
-//                StarrySky.with().setRepeatMode(PlaybackStateCompat.REPEAT_MODE_ONE);
+//                StarrySky.Companion.with().setRepeatMode(PlaybackStateCompat.REPEAT_MODE_ONE, true);
 //            } else {
-//                StarrySky.with().setShuffleMode(PlaybackStateCompat.SHUFFLE_MODE_ALL);
+//                StarrySky.Companion.with().setRepeatMode(PlaybackStateCompat.SHUFFLE_MODE_ALL, true);
 //            }
         } else {
             result.notImplemented();

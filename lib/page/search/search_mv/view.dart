@@ -7,6 +7,7 @@ import 'state.dart';
 Widget buildView(SearchMvState state, Dispatch dispatch, ViewService viewService) {
   return Container(
     child: ListView.builder(
+      padding: EdgeInsets.all(0),
       itemBuilder: (context, index) {
         return ListTile(
           leading: ImageHelper.getImage('${state.mvs[index].cover}?param=100y100', height: 35, isRound: true),

@@ -1,5 +1,5 @@
 import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 
 import 'action.dart';
@@ -28,6 +28,6 @@ SettingState _onHigh(SettingState state, Action action) {
 }
 SettingState _omChangeBlur(SettingState state, Action action) {
   final SettingState newState = state.clone();
-  newState.blur = action.payload;
+  newState.isBack = action.payload;
   return newState;
 }

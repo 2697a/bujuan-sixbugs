@@ -137,7 +137,7 @@ Future<Answer> request(
   Map data, {
   List<Cookie> cookies = const [],
   String ua,
-  Crypto crypto = Crypto.weapi,
+  Crypto crypto = Crypto.linuxapi,
 }) async {
   final headers = _buildHeader(url, ua, method, cookies);
   if (crypto == Crypto.weapi) {

@@ -13,6 +13,7 @@ Widget buildView(
     PlayBarState state, Dispatch dispatch, ViewService viewService) {
   return InkWell(
     child: Container(
+      color: Colors.transparent,
       height: Screens.setHeight(56),
       padding: EdgeInsets.symmetric(horizontal: Screens.width5),
       child: Column(

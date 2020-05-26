@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bujuan/api/module.dart';
+import 'package:bujuan/bujuan_music.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/fm_entity.dart';

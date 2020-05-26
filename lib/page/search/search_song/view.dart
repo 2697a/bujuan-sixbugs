@@ -9,6 +9,7 @@ import 'state.dart';
 Widget buildView(SearchSongState state, Dispatch dispatch, ViewService viewService) {
   return Container(
     child: ListView.builder(
+      padding: EdgeInsets.all(0),
       itemBuilder: (context, index) {
         return ListTile(
           leading: ImageHelper.getImage('${state.songs[index].picUrl}?param=100y100', height: 35, isRound: true),

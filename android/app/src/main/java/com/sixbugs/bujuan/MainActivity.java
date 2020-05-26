@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.lzx.starrysky.StarrySky;
 import com.lzx.starrysky.control.OnPlayerEventListener;
+import com.lzx.starrysky.control.RepeatMode;
 import com.lzx.starrysky.provider.SongInfo;
 import com.lzx.starrysky.utils.TimerTaskManager;
 import com.sixbugs.bujuan.entity.Lyric;
@@ -43,7 +44,10 @@ public class MainActivity extends FlutterActivity implements OnPlayerEventListen
         BujuanMusicPlugin.registerWith(this.registrarFor(BujuanMusicPlugin.CHANNEL));
         buJuanMusicPlayListenPlugin = BuJuanMusicPlayListenPlugin.registerWith(this.registrarFor(BuJuanMusicPlayListenPlugin.CHANNEL));
         basicMessageChannelPlugin = new BasicMessageChannel<>(getFlutterView(), Config.URL_FM_CHANNEL, StandardMessageCodec.INSTANCE);
+        FlutterStarrySkyPlugin.registerWith(this.registrarFor("flutter_starry_sky"));
         listenerPos();
+        RepeatMode repeatMode = StarrySky.Companion.with().getRepeatMode();
+        StarrySky.Companion.with().setRepeatMode(repeatMode.getRepeatMode()==1?RepeatMode.REPEAT_MODE_NONE:repeatMode.getRepeatMode(), true);
         //通讯名称,回到手机桌面
         String CHANNEL = "android/back/desktop";
         new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
