@@ -7,6 +7,7 @@ import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/net/http_util.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:dio/dio.dart';
@@ -43,10 +44,11 @@ void _onAction(Action action, Context<TodayState> ctx) async{
 }
 
 Future<TodaySongEntity> _getToday() async {
-  Response sheet = await HttpUtil().get('/recommend/songs');
-  var data = sheet.data;
-  var jsonDecode2 = jsonDecode(data);
-  return TodaySongEntity.fromJson(jsonDecode2);
+//  Response sheet = await HttpUtil().get('/recommend/songs');
+//  var data = sheet.data;
+//  var jsonDecode2 = jsonDecode(data);
+//  return TodaySongEntity.fromJson(jsonDecode2);
+return await NetUtils().getTodaySongs();
 }
 
 void _onPlay(Action action, Context<TodayState> ctx) {

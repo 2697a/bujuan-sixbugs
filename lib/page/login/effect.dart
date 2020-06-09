@@ -4,6 +4,7 @@ import 'package:bujuan/api/answer.dart';
 import 'package:bujuan/api/module.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/login_entity.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:cookie_jar/cookie_jar.dart';
@@ -47,19 +48,20 @@ void _onDispose(Action action, Context<LoginState> ctx) {
 }
 
 Future<LoginEntity> _loginByPhone(phone, pass) async {
-  Answer loginData;
-  if (BuJuanUtil.isEmail(phone)) {
-    loginData = await login({'email': phone, 'password': pass}, new List());
-  } else {
-    loginData =
-        await login_cellphone({'phone': phone, 'password': pass}, new List());
-  }
-  if (loginData.status == 200) {
-    Directory tempDir = await getTemporaryDirectory();
-    String tempPath = tempDir.path;
-    CookieJar cookie=new PersistCookieJar(dir:tempPath,ignoreExpires: true);
-    cookie.saveFromResponse(Uri.parse("https://music.163.com/weapi/"), loginData.cookie);
-    return LoginEntity.fromJson(loginData.body);
-  }
-  return null;
+//  Answer loginData;
+//  if (BuJuanUtil.isEmail(phone)) {
+//    loginData = await login({'email': phone, 'password': pass}, new List());
+//  } else {
+//    loginData =
+//        await login_cellphone({'phone': phone, 'password': pass}, new List());
+//  }
+//  if (loginData.status == 200) {
+//    Directory tempDir = await getTemporaryDirectory();
+//    String tempPath = tempDir.path;
+//    CookieJar cookie=new PersistCookieJar(dir:tempPath,ignoreExpires: true);
+//    cookie.saveFromResponse(Uri.parse("https://music.163.com/weapi/"), loginData.cookie);
+//    return LoginEntity.fromJson(loginData.body);
+//  }
+  var loginEntity = await NetUtils().loginByPhone(phone, pass);
+  return loginEntity;
 }

@@ -6,6 +6,7 @@ import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/page/sheet_info/page.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
@@ -47,10 +48,16 @@ void _onLike(Action action, Context<SheetDetailsState> ctx) async {
 }
 
 Future _onInit(Action action, Context<SheetDetailsState> ctx) async {
-  var answer =
-      await playlist_detail({'id': ctx.state.sheetId},await BuJuanUtil.getCookie());
-  SheetDetailsEntity sheetDetailsEntity =
-      SheetDetailsEntity.fromJson(Map<String, dynamic>.from(answer.body));
+//  var answer =
+//      await playlist_detail({'id': ctx.state.sheetId},await BuJuanUtil.getCookie());
+//  SheetDetailsEntity sheetDetailsEntity =
+//      SheetDetailsEntity.fromJson(Map<String, dynamic>.from(answer.body));
+  SheetDetailsEntity sheetDetailsEntity = await NetUtils().getPlayListDetails(ctx.state.sheetId);
+//  var trackIds2 = sheetDetailsEntity.playlist.trackIds;
+//  List<int> ids = [];
+//  await Future.forEach(trackIds2, (SheetDetailsPlaylistTrackid element) {
+//    ids.add(element.id);
+//  });
   var playlist = sheetDetailsEntity.playlist;
   List<SongBeanEntity> newList = List();
   Future.forEach(playlist.tracks, (details)async{
