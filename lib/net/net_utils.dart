@@ -1,9 +1,14 @@
 import 'dart:io';
 
 import 'package:bujuan/api/netease_cloud_music.dart';
+import 'package:bujuan/entity/banner_entity.dart';
 import 'package:bujuan/entity/login_entity.dart';
+import 'package:bujuan/entity/new_song_entity.dart';
+import 'package:bujuan/entity/personal_entity.dart';
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
+import 'package:bujuan/entity/user_order_entity.dart';
+import 'package:bujuan/entity/user_profile_entity.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -75,5 +80,45 @@ class NetUtils {
     var map = await _doHandler('/recommend/songs');
     if(map!=null) return TodaySongEntity.fromJson(map);
     return todaySongs;
+  }
+
+  //获取个人信息
+  Future<UserProfileEntity> getUserProfile(userId) async{
+    var profile;
+    var map = await _doHandler("/user/detail",{'uid':userId});
+    if(map!=null) profile = UserProfileEntity.fromJson(Map<String, dynamic>.from(map));
+    return profile;
+  }
+
+  //获取用户歌单
+  Future<UserOrderEntity> getUserPlayList(userId)async{
+    var playlist;
+    var map = await _doHandler('/user/playlist',{'uid':userId});
+    if(map!=null) playlist = UserOrderEntity.fromJson(map);
+    return playlist;
+  }
+
+  //推荐歌单
+  Future<PersonalEntity> getRecommendResource()async{
+    var playlist;
+    var map = await _doHandler('/personalized');
+    if(map!=null) playlist = PersonalEntity.fromJson(map);
+    return playlist;
+  }
+
+  //banner
+  Future<BannerEntity> getBanner() async{
+    var banner;
+    var map = await _doHandler('/banner');
+    if(map!=null) banner = BannerEntity.fromJson(map);
+    return banner;
+  }
+
+  //新歌推荐
+  Future<NewSongEntity> getNewSongs() async{
+    var newSongs;
+    var map = await _doHandler('/personalized/newsong');
+    if(map!=null) newSongs = NewSongEntity.fromJson(map);
+    return newSongs;
   }
 }

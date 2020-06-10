@@ -13,8 +13,6 @@ import 'package:bujuan/page/play/page.dart';
 import 'package:bujuan/page/radio/page.dart';
 import 'package:bujuan/page/search/page.dart';
 import 'package:bujuan/page/search/search_details/page.dart';
-import 'package:bujuan/page/setting/setting.dart';
-//import 'package:bujuan/page/setting/page.dart';
 import 'package:bujuan/page/sheet_details/page.dart';
 import 'package:bujuan/page/sheet_info/page.dart';
 import 'package:bujuan/page/sheet_square/page.dart';
@@ -30,8 +28,8 @@ import '../global_store/state.dart';
 import '../global_store/store.dart';
 
 Map<String, WidgetBuilder> appRoutes = {
-  '/entrance': (BuildContext context) => routes.buildPage("entrance_page", null),
-  '/main': (BuildContext context) => routes.buildPage("main", null),
+//  '/entrance': (BuildContext context) => routes.buildPage("entrance_page", null),
+//  '/main': (BuildContext context) => routes.buildPage("main", null),
 };
 var routes = new PageRoutes(
   pages: <String, Page<Object, dynamic>>{

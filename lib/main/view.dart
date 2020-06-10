@@ -20,7 +20,7 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
         systemNavigationBarIconBrightness: Brightness.dark));
   }
   return MaterialApp(
-    title: '不倦',
+    title: '',
 //    showPerformanceOverlay: true,
     // 开启
     debugShowCheckedModeBanner: false,
@@ -35,7 +35,8 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
             ),
           ),
     home: EntrancePage().buildPage(null),
-    routes: appRoutes,
+//    home: routes.buildPage('entrance_page', null),
+//    routes: appRoutes,
     onGenerateRoute: (RouteSettings settings) {
       return MaterialPageRoute<Object>(builder: (BuildContext context) {
         return routes.buildPage(settings.name, settings.arguments);

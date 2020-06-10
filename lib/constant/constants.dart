@@ -2,7 +2,7 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 
 class Constants {
   static bool dark = false;
-
+  static List<int> loveSongIds = [];
 //  static String playSongHistory = "PLAY_SONG_HISTORY";
 //  static String playSongListHistory = "PLAY_SONG_LIST_HISTORY";
 //

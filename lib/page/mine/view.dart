@@ -3,7 +3,6 @@ import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/page/mine/action.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
-import 'package:bujuan/widget/header/src/widgets/sliver_sticky_header.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +14,7 @@ import 'state.dart';
 
 Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   return Container(
+    padding: EdgeInsets.symmetric(horizontal: 5.0),
     child: state.isLogin ? _loginView(state, dispatch, viewService) : _unLoginView(dispatch, viewService),
   );
 }
@@ -325,77 +325,65 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
           ],
         ),
       ),
-      SliverStickyHeader(
-        header: InkWell(
-          child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(state.isCreateOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right),
-                      Padding(padding: EdgeInsets.only(right: 5)),
-                      Text(
-                        '我创建的歌单 (${state.createOrderList.length})',
-                        style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  IconButton(icon: Icon(Icons.add), onPressed: () {}),
-                ],
-              ),
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(
-                left: Screens.width5,
-              )),
-          onTap: () {
-            dispatch(MineActionCreator.setCreateOpen());
-          },
+      SliverToBoxAdapter(child: InkWell(
+        child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(state.isCreateOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right),
+                    Padding(padding: EdgeInsets.only(right: 5)),
+                    Text(
+                      '我创建的歌单 (${state.createOrderList.length})',
+                      style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                IconButton(icon: Icon(Icons.add), onPressed: () {}),
+              ],
+            ),
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(
+              left: Screens.width5,
+            )),
+        onTap: () {
+          dispatch(MineActionCreator.setCreateOpen());
+        },
+      )),
+      state.isCreateOpen?SliverList(
+        delegate: SliverChildBuilderDelegate((context, int index){
+          return _orderItem(state.createOrderList[index], viewService);
+        },
+          childCount: state.createOrderList.length,
         ),
-        sliver: SliverToBoxAdapter(
-          child: state.isCreateOpen
-              ? ListView.builder(
-            padding: EdgeInsets.all(0),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => _orderItem(state.createOrderList[index], viewService),
-            itemCount: state.createOrderList.length,
-          )
-              : Container(),
+      ):SliverToBoxAdapter(),
+      SliverToBoxAdapter(child: InkWell(
+        child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  '我收藏的歌单 (${state.orderList.length})',
+                  style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
+                ),
+                Icon(state.isOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right)
+              ],
+            ),
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: Screens.width5, top: Screens.setHeight(10), bottom: Screens.setHeight(10))),
+        onTap: () {
+          dispatch(MineActionCreator.setOPen());
+        },
+      )),
+      state.isOpen?SliverList(
+        delegate: SliverChildBuilderDelegate((context, int index){
+          return _orderItem(state.orderList[index], viewService);
+        },
+          childCount: state.orderList.length,
         ),
-      ),
-      SliverStickyHeader(
-        header: InkWell(
-          child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    '我收藏的歌单 (${state.orderList.length})',
-                    style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
-                  ),
-                  Icon(state.isOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right)
-                ],
-              ),
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(left: Screens.width5, top: Screens.setHeight(10), bottom: Screens.setHeight(10))),
-          onTap: () {
-            dispatch(MineActionCreator.setOPen());
-          },
-        ),
-        sliver: SliverToBoxAdapter(
-          child: state.isOpen
-              ? ListView.builder(
-            padding: EdgeInsets.all(0),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => _orderItem(state.orderList[index], viewService),
-            itemCount: state.orderList.length,
-          )
-              : Container(),
-        ),
-      ),
+      ):SliverToBoxAdapter(),
     ],
   ),
       onRefresh: () => dispatch(MineActionCreator.getRefresh()),

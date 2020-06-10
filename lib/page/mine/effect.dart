@@ -6,6 +6,7 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/like_song_list_entity.dart';
 import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/entity/user_profile_entity.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -84,20 +85,23 @@ void _init(Action action, Context<MineState> ctx) async {
 
 Future<UserProfileEntity> _getProfile(userId) async {
 //  Response profile = await HttpUtil().post('/user/detail',data: {'uid': userId});
-  var profile =
-      await user_detail({'uid': userId}, await BuJuanUtil.getCookie());
-  return profile.status == 200
-      ? UserProfileEntity.fromJson(Map<String, dynamic>.from(profile.body))
-      : null;
+//  var profile =
+//      await user_detail({'uid': userId}, await BuJuanUtil.getCookie());
+//  return profile.status == 200
+//      ? UserProfileEntity.fromJson(Map<String, dynamic>.from(profile.body))
+//      : null;
+return NetUtils().getUserProfile(userId);
 }
 
 Future<UserOrderEntity> _getPlayList(userId) async {
 //  Response playlist = await HttpUtil().post('/user/playlist',data: {'uid': userId});
-  var playlist =
-      await user_playlist({'uid': userId}, await BuJuanUtil.getCookie());
-  return playlist.status == 200
-      ? UserOrderEntity.fromJson(Map<String, dynamic>.from(playlist.body))
-      : null;
+//  var playlist =
+//      await user_playlist({'uid': userId}, await BuJuanUtil.getCookie());
+//  return playlist.status == 200
+//      ? UserOrderEntity.fromJson(Map<String, dynamic>.from(playlist.body))
+//      : null;
+
+return NetUtils().getUserPlayList(userId);
 }
 
 ///likelist

@@ -6,6 +6,7 @@ import 'package:bujuan/entity/banner_entity.dart';
 import 'package:bujuan/entity/new_song_entity.dart';
 import 'package:bujuan/entity/personal_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/page/bujuan_find/action.dart';
 import 'package:bujuan/page/bujuan_find/banner/state.dart';
 import 'package:bujuan/page/bujuan_find/new_song/state.dart';
@@ -28,7 +29,8 @@ Future _onInit(Action action, Context<NewFindState> ctx) async {
 }
 
 Future _onRefresh(Action action, Context<NewFindState> ctx) async {
-  var wait = await Future.wait([_getBanner(), _getSheet(), _getNewSong()]);
+  var netUtils = NetUtils();
+  var wait = await Future.wait([netUtils.getBanner(), netUtils.getRecommendResource(), netUtils.getNewSongs()]);
   wait.forEach((data) {
     if (data is BannerEntity) if (data != null) {
       ctx.dispatch(NewFindActionCreator.onGetBanner(
@@ -58,28 +60,32 @@ Future _onRefresh(Action action, Context<NewFindState> ctx) async {
 }
 
 Future<PersonalEntity> _getSheet() async {
-  var answer = await personalized({},await BuJuanUtil.getCookie());
-//  Response sheet = await HttpUtil().get('/personalized');
-//  var data = sheet.data;
-//  SpUtil.putString('sheet', data);
-//  var jsonDecode2 = jsonDecode(data);
-  return answer.status == 200 ? PersonalEntity.fromJson(answer.body) : null;
+//  var answer = await personalized({},await BuJuanUtil.getCookie());
+////  Response sheet = await HttpUtil().get('/personalized');
+////  var data = sheet.data;
+////  SpUtil.putString('sheet', data);
+////  var jsonDecode2 = jsonDecode(data);
+//  return answer.status == 200 ? PersonalEntity.fromJson(answer.body) : null;
+  return  NetUtils().getRecommendResource();
 }
 
 Future<BannerEntity> _getBanner() async {
-  var answer = await banner({},await BuJuanUtil.getCookie());
+//  var answer = await banner({},await BuJuanUtil.getCookie());
 //  Response banner = await HttpUtil().get('/banner', data: {'type': 1});
 //  var data2 = banner.data;
 //  SpUtil.putString('banner', data2);
 //  var jsonDecode2 = jsonDecode(data2);
-  return answer.status == 200 ? BannerEntity.fromJson(answer.body) : null;
+//  return answer.status == 200 ? BannerEntity.fromJson(answer.body) : null;
+  return NetUtils().getBanner();
 }
 
 Future<NewSongEntity> _getNewSong() async {
-  var answer = await personalized_newsong({},await BuJuanUtil.getCookie());
+//  var answer = await personalized_newsong({},await BuJuanUtil.getCookie());
 //  Response newSong = await HttpUtil().get('/personalized/newsong');
 //  var data2 = newSong.data;
 //  SpUtil.putString('newSong', data2);
 //  var jsonDecode2 = jsonDecode(data2);
-  return answer.status == 200 ? NewSongEntity.fromJson(answer.body) : null;
+//  return answer.status == 200 ? NewSongEntity.fromJson(answer.body) : null;
+
+  return NetUtils().getNewSongs();
 }

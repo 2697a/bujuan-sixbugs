@@ -74,6 +74,7 @@ Future _onInit(Action action, Context<SheetDetailsState> ctx) async {
         mv: details.mv);
     newList.add(songBeanEntity);
   });
+  var songToSongInfo = BuJuanUtil.songToSongInfo(playlist.tracks);
   await ctx.dispatch(SheetDetailsActionCreator.sheetInfo(playlist));
   await ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(newList));
   ctx.state.isShowLoading = false;

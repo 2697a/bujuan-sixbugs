@@ -10,7 +10,7 @@ import 'reducer.dart';
 import 'state.dart';
 
 class GlobalStore {
-  static Store<GlobalState> _globalStore;
+  static Store<GlobalState> globalStore;
 
   static Store<GlobalState> get store {
     var appTheme = AppTheme.getInstance(Constants.dark);
@@ -28,7 +28,7 @@ class GlobalStore {
       songBeanEntity = SongBeanEntity.fromJson(jsonDecode(string));
     }
     var currSong = songBeanEntity;
-    return _globalStore ??= createStore<GlobalState>(
+    return globalStore ??= createStore<GlobalState>(
         GlobalState()
           ..appTheme = appTheme
           ..playStateType = playStateType
