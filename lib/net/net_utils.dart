@@ -21,18 +21,29 @@ class NetUtils {
   NetUtils._internal();
 
   Future<Map> _doHandler(String url, [Map param = const {}]) async {
-    var answer = await cloudMusicApi(url, parameter: param, cookie: await BuJuanUtil.getCookie());
+    var answer = await cloudMusicApi(url, parameter: param, cookie: await _getCookie());
     var map;
     if (answer.status == 200) {
       if (answer.cookie != null && answer.cookie.length > 0) {
-        Directory tempDir = await getTemporaryDirectory();
-        String tempPath = tempDir.path;
-        CookieJar cookie = new PersistCookieJar(dir: tempPath, ignoreExpires: true);
-        cookie.saveFromResponse(Uri.parse("https://music.163.com/weapi/"), answer.cookie);
+        await _saveCookie(answer.cookie);
       }
       map = answer.body;
     }
     return map;
+  }
+
+  Future<void> _saveCookie(List<Cookie> cookies) async{
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    CookieJar cookie = new PersistCookieJar(dir: tempPath, ignoreExpires: true);
+    cookie.saveFromResponse(Uri.parse("https://music.163.com/weapi/"), cookies);
+  }
+
+  Future<List<Cookie>> _getCookie() async{
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    CookieJar cookie = new PersistCookieJar(dir: tempPath, ignoreExpires: true);
+    return cookie.loadForRequest(Uri.parse('https://music.163.com/weapi/'));
   }
 
   //手机号登录
