@@ -163,7 +163,7 @@ class NetUtils {
   //播放音乐
   Future setPlayListAndPlayById(List<SongInfo> list,SongInfo songInfo,String id) async{
     var playList = await FlutterStarrySky().getPlayList();
-    if(playList==null)GlobalStore.store
+    if(playList==null) await GlobalStore.store
         .dispatch(GlobalActionCreator.changeCurrSong(songInfo));
     await FlutterStarrySky().setPlayListAndPlayById(list, songInfo, '$id');
   }
