@@ -4,11 +4,12 @@ import 'package:bujuan/constant/theme.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/state.dart';
+import 'package:bujuan/plugin/song_info.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 class PlayViewState implements GlobalBaseState, Cloneable<PlayViewState> {
   List<SongBeanEntity> songList;
@@ -33,7 +34,7 @@ class PlayViewState implements GlobalBaseState, Cloneable<PlayViewState> {
   AppTheme appTheme;
 
   @override
-  SongBeanEntity currSong;
+  SongInfo currSong;
 
   @override
   PlayStateType playStateType;

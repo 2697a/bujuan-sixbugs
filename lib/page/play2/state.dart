@@ -4,6 +4,7 @@ import 'package:bujuan/constant/theme.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/state.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,7 +33,7 @@ class PlayView2State implements GlobalBaseState, Cloneable<PlayView2State> {
   AppTheme appTheme;
 
   @override
-  SongBeanEntity currSong;
+  SongInfo currSong;
 
   @override
   PlayStateType playStateType;

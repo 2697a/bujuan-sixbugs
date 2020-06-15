@@ -15,8 +15,8 @@ Reducer<FmPlayViewState> buildReducer() {
 
 FmPlayViewState _geLikeOrUnLike(FmPlayViewState state, Action action) {
   final FmPlayViewState newState = state.clone();
-  var _like = !state.currSong.like;
-  newState.currSong.like = _like;
+  var _like = !state.currSong.isLike;
+  newState.currSong.isLike = _like;
   return newState;
 }
 

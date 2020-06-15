@@ -2,11 +2,12 @@ import 'dart:io';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
-import 'package:bujuan/plugin/song_info.dart';
+import 'package:bujuan/entity/today_song_entity.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
 class BuJuanUtil {
@@ -64,14 +65,21 @@ class BuJuanUtil {
   }
 
   static Future<List<SongInfo>> songToSongInfo(List<SheetDetailsPlaylistTrack> songs) async {
-    List<SongInfo> info;
+    List<SongInfo> info = [];
     await Future.forEach(songs, (SheetDetailsPlaylistTrack element){
       SongInfo songInfo = SongInfo(songId: '${element.id}',songCover: '${element.al.picUrl}',songUrl: '',songName: '${element.name}',artist: '${element.ar[0].name}');
       info.add(songInfo);
     });
     return info;
   }
-
+  static Future<List<SongInfo>> todayToSongInfo(List<TodaySongRecommand> songs) async {
+    List<SongInfo> info = [];
+    await Future.forEach(songs, (TodaySongRecommand element){
+      SongInfo songInfo = SongInfo(songId: '${element.id}',songCover: '${element.album.picUrl}',songUrl: '',songName: '${element.name}',artist: '${element.artists[0].name}');
+      info.add(songInfo);
+    });
+    return info;
+  }
   static List<Lyric> getLyric(String lyric) {
     var split = lyric.split('\n');
     split.forEach((str) {});
@@ -139,14 +147,14 @@ class BuJuanUtil {
   }
 
   static showToast(msg) {
-    Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        fontSize: 14.0);
+//    Fluttertoast.showToast(
+//        msg: msg,
+//        toastLength: Toast.LENGTH_SHORT,
+//        gravity: ToastGravity.BOTTOM,
+//        timeInSecForIos: 1,
+//        backgroundColor: Colors.white,
+//        textColor: Colors.black,
+//        fontSize: 14.0);
   }
 }
 

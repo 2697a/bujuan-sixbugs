@@ -44,13 +44,13 @@ void _init(Action action, Context<HistoryState> ctx) {
 }
 
 void _playSong(Action action, Context<HistoryState> ctx) {
-  SpUtil.putBool(ISFM, false);
-  var index2 = action.payload;
-  GlobalStore.store
-      .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.list[index2]));
-  SpUtil.putObjectList(playSongListHistory, ctx.state.list);
-  var jsonEncode2 = jsonEncode(ctx.state.list);
-  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
+//  SpUtil.putBool(ISFM, false);
+//  var index2 = action.payload;
+//  GlobalStore.store
+//      .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.list[index2]));
+//  SpUtil.putObjectList(playSongListHistory, ctx.state.list);
+//  var jsonEncode2 = jsonEncode(ctx.state.list);
+//  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }
 
 Future<PlayHistoryEntity> _getHistory(id) async {

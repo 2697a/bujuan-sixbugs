@@ -1,9 +1,8 @@
-import 'package:bujuan/entity/song_bean_entity.dart';
-import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 class TodayState implements Cloneable<TodayState> {
-  List<SongBeanEntity> list;
+  List<SongInfo> list;
   bool isShowLoading;
 
   @override

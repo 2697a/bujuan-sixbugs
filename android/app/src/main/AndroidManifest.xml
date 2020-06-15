@@ -17,15 +17,17 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".App"
         android:icon="@mipmap/ic_launcher"
         android:label="不倦"
         android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="p">
-        <activity
-            android:name=".LyricActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+<!--        <activity-->
+<!--            android:name=".LyricActivity"-->
+<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />-->
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -34,9 +36,11 @@
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">
             <meta-data
-                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
-                android:value="true" />
-
+                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/launch_background" />
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/Theme.AppCompat.DayNight.NoActionBar"/>
             <intent-filter>
                 <category android:name="android.intent.category.APP_MUSIC" />
                 <category android:name="android.intent.category.DEFAULT" />

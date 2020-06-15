@@ -175,15 +175,15 @@ Future<String> _getUrl(id) async{
 }
 void _onLike(Action action, Context<PlayView2State> ctx) async {
   ctx.dispatch(PlayViewActionCreator.getChangeLike());
-  var answer = await like_song({'id': ctx.state.currSong.id, 'like': '${action.payload}'},await BuJuanUtil.getCookie());
+  var answer = await like_song({'id': ctx.state.currSong.songId, 'like': '${action.payload}'},await BuJuanUtil.getCookie());
 //  Response data = await HttpUtil().post('/like',
 //      data: {'id': ctx.state.currSong.id, 'like': '${action.payload}'});
   if (answer.status == 200) {
     var stringList = SpUtil.getStringList(LIKE_SONGS, defValue: []);
     if (!action.payload) {
-      stringList.add(ctx.state.currSong.id);
+      stringList.add(ctx.state.currSong.songId);
     } else {
-      stringList.remove(ctx.state.currSong.id);
+      stringList.remove(ctx.state.currSong.songId);
     }
     SpUtil.putStringList(LIKE_SONGS, stringList);
   }

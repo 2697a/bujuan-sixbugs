@@ -24,23 +24,9 @@ Effect<TodayState> buildEffect() {
 }
 
 void _onAction(Action action, Context<TodayState> ctx) async{
-  var today = await _getToday();
-  List<SongBeanEntity> newList = List();
-  Future.forEach(today.recommend, (details)async{
-    var singerStr = '';
-    var ar = details.artists;
-    ar.forEach((singer) {
-      singerStr += ' ${singer.name} ';
-    });
-    SongBeanEntity songBeanEntity = SongBeanEntity(
-        name: details.name,
-        id: details.id.toString(),
-        picUrl: details.album.picUrl,
-        singer: singerStr,
-        mv: details.mvid);
-    newList.add(songBeanEntity);
-  });
-  ctx.dispatch(TodayActionCreator.getSheetDeList(newList));
+  var today = await NetUtils().getTodaySongs();
+  var list = await BuJuanUtil.todayToSongInfo(today.recommend);
+  ctx.dispatch(TodayActionCreator.getSheetDeList(list));
 }
 
 Future<TodaySongEntity> _getToday() async {
@@ -51,12 +37,7 @@ Future<TodaySongEntity> _getToday() async {
 return await NetUtils().getTodaySongs();
 }
 
-void _onPlay(Action action, Context<TodayState> ctx) {
-  SpUtil.putBool(ISFM, false);
-  var index2 = action.payload;
+void _onPlay(Action action, Context<TodayState> ctx) async{
   var list2 = ctx.state.list;
-  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(list2[index2]));
-  SpUtil.putObjectList( playSongListHistory, list2);
-  var jsonEncode2 = jsonEncode(list2);
-  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
+  await NetUtils().setPlayListAndPlayById(list2, list2[action.payload??0], 'today');
 }

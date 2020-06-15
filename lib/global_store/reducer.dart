@@ -4,12 +4,14 @@ import 'dart:ui';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/constant/theme.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
+import 'package:bujuan/plugin/song_info.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter/services.dart';
 
+import 'package:flutterstarrysky/song_info.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -56,10 +58,10 @@ GlobalState _onchangePlayState(GlobalState state, Action action) {
 
 GlobalState _onchangeCurrSong(GlobalState state, Action action) {
   var clone = state.clone();
-  SongBeanEntity payload = action.payload;
+  SongInfo payload = action.payload;
   SpUtil.putString(playSongHistory, jsonEncode(payload));
   var stringList = SpUtil.getStringList(LIKE_SONGS, defValue: []);
-  payload.like = stringList.contains(payload.id);
+  payload.isLike = stringList.contains(payload.songId);
   return clone..currSong = payload;
 }
 

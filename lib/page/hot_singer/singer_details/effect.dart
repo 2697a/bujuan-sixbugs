@@ -34,14 +34,14 @@ void _onInit(Action action, Context<SingerDetailsState> ctx) async{
   }
 }
 void _onPlaySong(Action action, Context<SingerDetailsState> ctx) async{
-  SpUtil.putBool( ISFM, false);
-  var index2 = action.payload;
-  GlobalStore.store
-      .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.songs[index2]));
-  SpUtil.putObjectList( playSongListHistory, ctx.state.songs);
-
-  var jsonEncode2 = jsonEncode( ctx.state.songs);
-  await BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
+//  SpUtil.putBool( ISFM, false);
+//  var index2 = action.payload;
+//  GlobalStore.store
+//      .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.songs[index2]));
+//  SpUtil.putObjectList( playSongListHistory, ctx.state.songs);
+//
+//  var jsonEncode2 = jsonEncode( ctx.state.songs);
+//  await BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }
 
 Future<SingerSong> _getSingerDetails(id) async{

@@ -1,9 +1,9 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/widget/app_bar.dart';
 import 'package:bujuan/widget/back_widget.dart';
-import 'package:bujuan/widget/bujuan_background.dart';
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
@@ -15,97 +15,36 @@ import 'state.dart';
 
 Widget buildView(
     SheetDetailsState state, Dispatch dispatch, ViewService viewService) {
-//  return Scaffold(
-//    appBar: BujuanAppBar.norAppBar(viewService.context,
-//        state.isShowLoading ? '' : state.playlist.name),
-//    body: state.isShowLoading
-//        ? LoadingPage()
-//        : Column(
-//      children: <Widget>[
-//        Expanded(
-//          child: SingleChildScrollView(
-//            child: Column(
-//              children: <Widget>[
-//                _sheetTop(state, dispatch),
-//                ListView.builder(
-//                  shrinkWrap: true,
-//                  physics: NeverScrollableScrollPhysics(),
-//                  itemBuilder: (context, index) => _sheetItem(
-//                      state.list[index],
-//                      dispatch,
-//                      index,
-//                      viewService),
-//                  itemCount: state.list.length,
-//                )
-//              ],
-//            ),
-//          ),
-//        ),
-//        PlayBarPage().buildPage(null)
-//      ],
-//    ),
-//  );
-  var height = MediaQuery.of(viewService.context).size.height;
   return Scaffold(
-    body: Widgets.blackWidget(null, Column(
+    appBar: BujuanAppBar.norAppBar(viewService.context,
+        state.isShowLoading ? '' : state.playlist.name),
+    body: Widgets.blackWidget(Constants.dark, state.isShowLoading
+        ? LoadingPage()
+        : Column(
       children: <Widget>[
         Expanded(
-            child: state.isShowLoading
-                ? LoadingPage()
-                : CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  expandedHeight: 230,
-                  elevation: 0,
-                  flexibleSpace: FlexibleSpaceBar(
-                    collapseMode: CollapseMode.pin,
-                    centerTitle: true,
-                    title: Text(
-                      state.playlist.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    background: Stack(
-                      children: <Widget>[
-                        Container(
-                          width: double.infinity,
-                          child: ImageHelper.getImageNoRound(
-                              state.playlist.coverImgUrl +
-                                  "?param=500y500",
-                              height: height * 0.35),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Constants.dark
-                                  ? Colors.grey[850].withOpacity(.1)
-                                  : Colors.white.withOpacity(.1)),
-                          child: _sheetTop(state, dispatch),
-                        ),
-                      ],
-                    ),
-                  ),
-                  floating: false,
-                  pinned: false,
-                  snap: false,
-                ),
-                SliverList(
-                  delegate: new SliverChildBuilderDelegate(
-                        (context, index) => _sheetItem(
-                        state.list[index], dispatch, index, viewService),
-                    childCount: state.list.length,
-                  ),
-                ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                _sheetTop(state, dispatch),
+//                _currSong(state),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => _sheetItem(
+                      state.list[index],
+                      dispatch,
+                      index,
+                      viewService),
+                  itemCount: state.list.length,
+                )
               ],
-            )),
+            ),
+          ),
+        ),
         PlayBarPage().buildPage(null)
       ],
     )),
-    floatingActionButton: Container(
-      padding: EdgeInsets.only(bottom: 56),
-      child: FloatingActionButton(onPressed: (){},child: Icon(Icons.search),),
-    ),
   );
 }
 
@@ -179,7 +118,7 @@ Widget _sheetTop(SheetDetailsState state, dispatch) {
   );
 }
 
-Widget _sheetItem(SongBeanEntity track, Dispatch dispatch, index, viewService) {
+Widget _sheetItem(SongInfo track, Dispatch dispatch, index, viewService) {
   return ListTile(
     dense: true,
     contentPadding: EdgeInsets.only(left: 10, right: 0, top: 0, bottom: 0),
@@ -196,32 +135,26 @@ Widget _sheetItem(SongBeanEntity track, Dispatch dispatch, index, viewService) {
         ),
         Expanded(
             child: Text(
-          track.name,
+          track.songName,
           style: TextStyle(fontSize: Screens.text14),
           maxLines: 1,
         ))
       ],
     ),
     subtitle: Text(
-      track.singer,
+      track.artist,
       style: TextStyle(fontSize: Screens.text12),
       maxLines: 1,
     ),
-    trailing: track.mv == 0
-        ? Container(
-            width: 0,
-          )
-        : IconButton(
-            icon: Icon(
-              Icons.videocam,
-              size: Screens.text18,
-            ),
-            onPressed: () {
-              Navigator.of(viewService.context)
-                  .pushNamed('mv_play', arguments: {'mvId': track.mv}); //注意2
-            }),
     onTap: () {
       dispatch(SheetDetailsActionCreator.play(index));
     },
+  );
+}
+
+Widget _currSong(SheetDetailsState state){
+  return Offstage(
+    offstage: FlutterStarrySky().getPlayListId()!='${state.playlist.id}',
+//    child: Container(child: Text('当前播放：${state.currSong.songName}'),),
   );
 }

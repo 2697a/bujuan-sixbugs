@@ -3,9 +3,10 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/constant/theme.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
-import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/state.dart';
 import 'package:fish_redux/fish_redux.dart';
+
+import 'package:flutterstarrysky/song_info.dart';
 
 class PlayBarState implements GlobalBaseState, Cloneable<PlayBarState> {
   @override
@@ -17,7 +18,7 @@ class PlayBarState implements GlobalBaseState, Cloneable<PlayBarState> {
   AppTheme appTheme;
 
   @override
-  SongBeanEntity currSong;
+  SongInfo currSong;
 
   @override
   PlayStateType playStateType;

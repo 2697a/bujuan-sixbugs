@@ -1,5 +1,6 @@
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -18,8 +19,8 @@ TodayState _onAction(TodayState state, Action action) {
   return newState;
 }
 TodayState _onGetDeList(TodayState state, Action action) {
-  final List<SongBeanEntity> today =
-      action.payload ?? <SongBeanEntity>[];
+  final List<SongInfo> today =
+      action.payload ?? <SongInfo>[];
   final TodayState newState = state.clone();
   newState.list = today;
   newState.isShowLoading = false;

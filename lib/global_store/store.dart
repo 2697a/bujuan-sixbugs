@@ -32,7 +32,7 @@ class GlobalStore {
         GlobalState()
           ..appTheme = appTheme
           ..playStateType = playStateType
-          ..currSong = currSong
+          ..currSong = null
           ..currSongPos = 0
           ..lyric = null
           ..blur =SpUtil.getDouble(BLUR,defValue: 2)

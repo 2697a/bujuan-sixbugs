@@ -7,6 +7,7 @@ import 'package:bujuan/widget/loading_page.dart';
 import 'package:bujuan/widget/play_bar/page.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 import 'state.dart';
 
@@ -64,7 +65,7 @@ Widget buildView(TodayState state, Dispatch dispatch, ViewService viewService) {
   );
 }
 
-Widget _sheetItem(SongBeanEntity track, Dispatch dispatch, index, viewService) {
+Widget _sheetItem(SongInfo track, Dispatch dispatch, index, viewService) {
   return ListTile(
     dense: true,
     contentPadding: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
@@ -81,25 +82,25 @@ Widget _sheetItem(SongBeanEntity track, Dispatch dispatch, index, viewService) {
         ),
         Expanded(
             child: Text(
-          track.name,
+          track.songName,
           style: TextStyle(fontSize: Screens.text14),
         ))
       ],
     ),
-    subtitle: Text(track.singer, style: TextStyle(fontSize: Screens.text12)),
-    trailing: track.mv == 0
-        ? Container(
-            width: 0,
-          )
-        : IconButton(
-            icon: Icon(
-              Icons.videocam,
-              size: 18,
-            ),
-            onPressed: () {
-              Navigator.of(viewService.context)
-                  .pushNamed('mv_play', arguments: {'mvId': track.mv}); //注意2
-            }),
+    subtitle: Text(track.artist, style: TextStyle(fontSize: Screens.text12)),
+//    trailing: track.mv == 0
+//        ? Container(
+//            width: 0,
+//          )
+//        : IconButton(
+//            icon: Icon(
+//              Icons.videocam,
+//              size: 18,
+//            ),
+//            onPressed: () {
+//              Navigator.of(viewService.context)
+//                  .pushNamed('mv_play', arguments: {'mvId': track.mv}); //注意2
+//            }),
     onTap: () {
       dispatch(TodayActionCreator.play(index));
     },

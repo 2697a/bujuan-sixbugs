@@ -28,8 +28,7 @@ Widget buildView(
           minHeight: Screens.setHeight(56),
           maxHeight: MediaQuery.of(viewService.context).size.height,
           boxShadow: null,
-          backdropColor: Colors.transparent,
-          backdropOpacity: 1,
+          backdropOpacity: .1,
           isDraggable: state.isDra,
           onPanelOpened: () {
             dispatch(EntranceActionCreator.onChangeDar(true));
@@ -44,6 +43,7 @@ Widget buildView(
           body: Column(
             children: <Widget>[
               AppBar(
+                elevation: 0,
                 backgroundColor: Colors.transparent,
                 leading: IconButton(
                     padding: EdgeInsets.all(0),

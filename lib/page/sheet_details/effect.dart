@@ -8,11 +8,13 @@ import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/page/sheet_info/page.dart';
+import 'package:bujuan/plugin/flutter_starry_sky.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart' hide Action;
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import '../../bujuan_music.dart';
 import 'action.dart';
 import 'state.dart';
@@ -27,15 +29,10 @@ Effect<SheetDetailsState> buildEffect() {
   });
 }
 
+//播放歌曲
 void _onPlay(Action action, Context<SheetDetailsState> ctx) async{
-  SpUtil.putBool(ISFM, false);
-  var index2 = action.payload;
-  GlobalStore.store
-      .dispatch(GlobalActionCreator.changeCurrSong(ctx.state.list[index2]));
-  SpUtil.putObjectList(playSongListHistory, ctx.state.list);
-
-  var jsonEncode2 = jsonEncode( ctx.state.list);
-  await BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
+  var list = ctx.state.list;
+  await NetUtils().setPlayListAndPlayById(list, list[action.payload??0], '${ctx.state.playlist.id}');
 }
 
 ///playlist/subscribe"
@@ -48,35 +45,11 @@ void _onLike(Action action, Context<SheetDetailsState> ctx) async {
 }
 
 Future _onInit(Action action, Context<SheetDetailsState> ctx) async {
-//  var answer =
-//      await playlist_detail({'id': ctx.state.sheetId},await BuJuanUtil.getCookie());
-//  SheetDetailsEntity sheetDetailsEntity =
-//      SheetDetailsEntity.fromJson(Map<String, dynamic>.from(answer.body));
   SheetDetailsEntity sheetDetailsEntity = await NetUtils().getPlayListDetails(ctx.state.sheetId);
-//  var trackIds2 = sheetDetailsEntity.playlist.trackIds;
-//  List<int> ids = [];
-//  await Future.forEach(trackIds2, (SheetDetailsPlaylistTrackid element) {
-//    ids.add(element.id);
-//  });
   var playlist = sheetDetailsEntity.playlist;
-  List<SongBeanEntity> newList = List();
-  Future.forEach(playlist.tracks, (details)async{
-    var singerStr = '';
-    var ar = details.ar;
-    ar.forEach((singer) {
-      singerStr += ' ${singer.name} ';
-    });
-    SongBeanEntity songBeanEntity = SongBeanEntity(
-        name: details.name,
-        id: details.id.toString(),
-        picUrl: details.al.picUrl,
-        singer: singerStr,
-        mv: details.mv);
-    newList.add(songBeanEntity);
-  });
-  var songToSongInfo = BuJuanUtil.songToSongInfo(playlist.tracks);
+  var songToSongInfo = await BuJuanUtil.songToSongInfo(playlist.tracks);
   await ctx.dispatch(SheetDetailsActionCreator.sheetInfo(playlist));
-  await ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(newList));
+  await ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(songToSongInfo));
   ctx.state.isShowLoading = false;
 }
 void _onDispose(Action action, Context<SheetDetailsState> ctx){

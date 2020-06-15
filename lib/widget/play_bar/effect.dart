@@ -13,6 +13,7 @@ import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/widgets.dart' hide Action;
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -51,20 +52,21 @@ void _onOpenPlay(Action action, Context<PlayBarState> ctx) {
   }
 }
 
-void _onTask(Action action, Context<PlayBarState> ctx) {
-  if (ctx.state.playStateType != PlayStateType.Stop)
-    BujuanMusic.control(
-        task: ctx.state.playStateType == PlayStateType.Playing
-            ? 'pause'
-            : 'play');
+void _onTask(Action action, Context<PlayBarState> ctx) async{
+  var playStateType = ctx.state.playStateType;
+  if (playStateType != PlayStateType.Stop)
+    if(playStateType == PlayStateType.Playing)
+    await FlutterStarrySky().pause();
+    else
+      await FlutterStarrySky().restore();
   else {
     openPlayViewAndSendHistory(ctx, action);
   }
 }
 
-void _onNext(Action action, Context<PlayBarState> ctx) {
+void _onNext(Action action, Context<PlayBarState> ctx) async{
   if (ctx.state.playStateType != PlayStateType.Stop)
-    BujuanMusic.control(task: 'next');
+   await FlutterStarrySky().next();
   else {
     openPlayViewAndSendHistory(ctx, action);
   }
@@ -78,7 +80,7 @@ void openPlayViewAndSendHistory(Context<PlayBarState> ctx, Action action) {
   });
 //  SpUtil.putObjectList(Constants.playSongListHistory, songs);
   var element = ctx.state.currSong;
-  var indexWhere = songs.indexWhere((item) => item.id == element.id);
+  var indexWhere = songs.indexWhere((item) => item.id == element.songId);
   GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(element));
   BujuanMusic.sendSongInfo(songInfo: jsonEncode(songs), index: indexWhere);
 }

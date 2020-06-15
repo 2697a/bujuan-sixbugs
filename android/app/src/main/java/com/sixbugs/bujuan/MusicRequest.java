@@ -1,42 +1,46 @@
-package com.sixbugs.bujuan;
-
-import com.lzx.starrysky.provider.SongInfo;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import io.flutter.plugin.common.BasicMessageChannel;
-
-public class MusicRequest {
-
-    BasicMessageChannel<Object> basicMessageChannelPlugin;
-    Map<String, String> map;
-
-    public MusicRequest() {
-    }
-
-
-    public void getSongUrl(String songId, RequestInfoCallback callback) {
-        if (basicMessageChannelPlugin == null) {
-            basicMessageChannelPlugin = MainActivity.basicMessageChannelPlugin;
-        }
-        if (map == null) {
-            map = new HashMap<>();
-        }
-        map.put("type", "getUrl");
-        map.put("id", songId);
-        MainActivity.activity.runOnUiThread(() -> basicMessageChannelPlugin.send(map, reply -> {
-            Map<String,String> map = (Map<String, String>) reply;
-            callback.onSuccess(map.get("url"));
-        }));
-    }
-
-    interface RequestCallback {
-        void onSuccess(List<SongInfo> list);
-    }
-
-    public interface RequestInfoCallback {
-        void onSuccess(String songUrl);
-    }
-}
+//package com.sixbugs.bujuan;
+//
+//
+//import androidx.annotation.Nullable;
+//
+//import com.sixbugs.flutterstarrysky.FlutterStarrySkyPlugin;
+//
+//import io.flutter.plugin.common.MethodChannel;
+//
+//public class MusicRequest {
+//
+//    MethodChannel channel;
+//    public MusicRequest() {
+//    }
+//
+//
+//    public void getSongUrl(String songId, RequestInfoCallback callback) {
+//        if(channel==null)channel = FlutterStarrySkyPlugin.channel;
+//        MainActivity.activity.runOnUiThread(() -> channel.invokeMethod("getUrl", songId, new MethodChannel.Result() {
+//            @Override
+//            public void success(@Nullable Object result) {
+//                if(result!=null){
+//                    callback.onSuccess((String) result);
+//                }
+//            }
+//
+//            @Override
+//            public void error(String errorCode, @Nullable String errorMessage, @Nullable Object errorDetails) {
+//
+//            }
+//
+//            @Override
+//            public void notImplemented() {
+//
+//            }
+//        }));
+//    }
+//
+//    interface RequestCallback {
+//        void onSuccess(List<SongInfo> list);
+//    }
+//
+//    public interface RequestInfoCallback {
+//        void onSuccess(String songUrl);
+//    }
+//}

@@ -93,23 +93,23 @@ void _onTap(Action action, Context<NewBannerState> ctx) {
 }
 
 void _onFm() async {
-  var fm = await _getFm();
-  SpUtil.putBool(ISFM, true);
-  List<SongBeanEntity> songs = List();
-  fm.data.forEach((data) {
-    SongBeanEntity songBeanEntity = SongBeanEntity();
-    songBeanEntity.id = data.id.toString();
-    songBeanEntity.name = data.name;
-    songBeanEntity.singer = data.artists[0].name;
-    songBeanEntity.picUrl = data.album.picUrl;
-    songBeanEntity.mv = data.mvid;
-    songs.add(songBeanEntity);
-  });
-
-  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
-  SpUtil.putObjectList(playSongListHistory, songs);
-  var jsonEncode2 = jsonEncode(songs);
-  await BujuanMusic.fm(jsonEncode2);
+//  var fm = await _getFm();
+//  SpUtil.putBool(ISFM, true);
+//  List<SongBeanEntity> songs = List();
+//  fm.data.forEach((data) {
+//    SongBeanEntity songBeanEntity = SongBeanEntity();
+//    songBeanEntity.id = data.id.toString();
+//    songBeanEntity.name = data.name;
+//    songBeanEntity.singer = data.artists[0].name;
+//    songBeanEntity.picUrl = data.album.picUrl;
+//    songBeanEntity.mv = data.mvid;
+//    songs.add(songBeanEntity);
+//  });
+//
+//  GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(songs[0]));
+//  SpUtil.putObjectList(playSongListHistory, songs);
+//  var jsonEncode2 = jsonEncode(songs);
+//  await BujuanMusic.fm(jsonEncode2);
 }
 
 Future<SongDeEntity> _getSongDetails(ids) async {

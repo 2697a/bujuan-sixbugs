@@ -1,5 +1,6 @@
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import 'package:fish_redux/fish_redux.dart';
 
 //TODO replace with your own action
@@ -10,7 +11,7 @@ class SheetDetailsActionCreator {
     return const Action(SheetDetailsAction.action);
   }
 
-  static Action getSheetDeList( List<SongBeanEntity>  sheets) {
+  static Action getSheetDeList(List<SongInfo>  sheets) {
     return Action(SheetDetailsAction.getSheetDeList,payload: sheets);
   }
 

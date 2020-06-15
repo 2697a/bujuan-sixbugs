@@ -14,7 +14,7 @@ final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Colors.grey[850],
   appBarTheme: AppBarTheme(elevation: 0),
-  scaffoldBackgroundColor: Colors.grey[900],
+  scaffoldBackgroundColor: Colors.grey[850],
   cardTheme: CardTheme(color: Color.fromRGBO(28, 28, 28, 1)),
 );
 

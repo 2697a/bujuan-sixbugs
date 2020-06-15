@@ -15,8 +15,8 @@ Reducer<PlayViewState> buildReducer() {
 
 PlayViewState _geLikeOrUnLike(PlayViewState state, Action action) {
   final PlayViewState newState = state.clone();
-  var _like = !state.currSong.like;
-  newState.currSong.like = _like;
+  var _like = !state.currSong.isLike;
+  newState.currSong.isLike = _like;
   return newState;
 }
 

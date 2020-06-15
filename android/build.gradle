@@ -19,6 +19,11 @@ allprojects {
 //            dirs project(':starrysky').file('libs')
 //        }
     }
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
 }
 
 rootProject.buildDir = '../build'

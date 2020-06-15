@@ -1,5 +1,6 @@
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import 'package:fish_redux/fish_redux.dart';
 
 import 'action.dart';
@@ -23,7 +24,7 @@ SheetDetailsState _onAction(SheetDetailsState state, Action action) {
 }
 
 SheetDetailsState _onGetDeList(SheetDetailsState state, Action action) {
-  final List<SongBeanEntity> sheet =
+  final List<SongInfo> sheet =
       action.payload ?? <SongBeanEntity>[];
   final SheetDetailsState newState = state.clone();
   newState.list = sheet;

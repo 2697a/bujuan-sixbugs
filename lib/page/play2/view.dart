@@ -47,7 +47,7 @@ Widget buildView(
                 return Center(
                   child: InkWell(
                     child: ImageHelper.getImage(
-                        state.currSong.picUrl + "?param=500y500",
+                        state.currSong.songCover + "?param=500y500",
                         height:
                         MediaQuery.of(viewService.context).size.width /
                             1.26,
@@ -66,7 +66,7 @@ Widget buildView(
               Container(
                 padding: EdgeInsets.all(5),
                 child: Text(
-                  state.currSong.singer,
+                  state.currSong.artist,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 14, color: Colors.grey),
@@ -75,7 +75,7 @@ Widget buildView(
               Container(
                 padding: EdgeInsets.all(5),
                 child: Text(
-                  state.currSong.name,
+                  state.currSong.songName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -97,9 +97,9 @@ Widget buildView(
                   onPressed: () {
                     dispatch(PlayViewActionCreator.getChangePlayMode());
                   }),
-              state.currSong.like != null
+              state.currSong.isLike != null
                   ? IconButton(
-                  icon: state.currSong.like
+                  icon: state.currSong.isLike
                       ? Icon(
                     Icons.favorite,
                     color: Colors.red,
@@ -109,18 +109,18 @@ Widget buildView(
                   ),
                   onPressed: () {
                     dispatch(PlayViewActionCreator.getLikeOrUnLike(
-                        !state.currSong.like));
+                        !state.currSong.isLike));
                   })
                   : IconButton(
                   icon: Icon(Icons.favorite_border),
                   onPressed: () {
-                    dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.like));
+                    dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.isLike));
                   }),
               IconButton(
                   icon: Icon(Icons.message),
                   onPressed: () {
                     dispatch(PlayViewActionCreator.getSongTalk(
-                        state.currSong.id.toString()));
+                        state.currSong.songId.toString()));
                   }),
             ],
           ),
@@ -181,12 +181,12 @@ Widget buildView(
               ListTile(
                 dense: true,
                 title: Text(
-                  '${state.currSong.name}',
+                  '${state.currSong.songName}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: Screens.text14, color: Colors.red),
                 ),
-                subtitle: Text('${state.currSong.singer}',
+                subtitle: Text('${state.currSong.artist}',
                     style:
                     TextStyle(fontSize: Screens.text14, color: Colors.red)),
                 trailing: IconButton(

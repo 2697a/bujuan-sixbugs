@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bujuan/main/routes.dart';
-import 'package:bujuan/net/net_utils.dart';
+import 'package:bujuan/plugin/flutter_starry_sky.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'api/answer.dart';
 import 'api/netease_cloud_music.dart';
 import 'constant/constants.dart';
@@ -20,7 +21,7 @@ void main() async {
   }
   await _startServer();
   await SpUtil.getInstance();
-  await HttpUtil.getInstance();
+  await FlutterStarrySky().init();
   Constants.dark = SpUtil.getBool('dark',defValue: false);
   runApp(routes.buildPage("main", null));
 }

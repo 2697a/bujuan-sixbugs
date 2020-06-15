@@ -30,7 +30,7 @@ Widget buildView(
                 Padding(padding: EdgeInsets.symmetric(vertical: MediaQueryData.fromWindow(window).padding.top)),
                 IconButton(
                   icon:ImageHelper.getImage(
-                      state.currSong.picUrl + "?param=500y500"),
+                      state.currSong.songCover + "?param=500y500"),
                   iconSize: MediaQuery.of(viewService.context).size.width / 1.4,
                   onPressed: () async =>
                   await BujuanMusic.lyric(Constants.dark ? '1' : '0'),
@@ -47,9 +47,9 @@ Widget buildView(
                         onPressed: () {
                           dispatch(PlayViewActionCreator.getChangePlayMode());
                         }),
-                    state.currSong.like != null
+                    state.currSong.isLike != null
                         ? IconButton(
-                            icon: state.currSong.like
+                            icon: state.currSong.isLike
                                 ? Icon(
                                     Icons.favorite,
                                     color: Colors.red,
@@ -59,18 +59,18 @@ Widget buildView(
                                   ),
                             onPressed: () {
                               dispatch(PlayViewActionCreator.getLikeOrUnLike(
-                                  !state.currSong.like));
+                                  !state.currSong.isLike));
                             })
                         : IconButton(
                             icon: Icon(Icons.favorite_border),
                             onPressed: () {
-                              dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.like));
+                              dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.isLike));
                             }),
                     IconButton(
                         icon: Icon(Icons.message),
                         onPressed: () {
                           dispatch(PlayViewActionCreator.getSongTalk(
-                              state.currSong.id.toString()));
+                              state.currSong.songId.toString()));
                         }),
                   ],
                 ),
@@ -80,7 +80,7 @@ Widget buildView(
                     Container(
                       padding: EdgeInsets.all(5),
                       child: Text(
-                        state.currSong.singer,
+                        state.currSong.artist,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 14, color: Colors.grey),
@@ -89,7 +89,7 @@ Widget buildView(
                     Container(
                       padding: EdgeInsets.all(5),
                       child: Text(
-                        state.currSong.name,
+                        state.currSong.songName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -218,12 +218,12 @@ Widget buildView(
               ListTile(
                 dense: true,
                 title: Text(
-                  '${state.currSong.name}',
+                  '${state.currSong.songName}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: Screens.text14, color: Colors.red),
                 ),
-                subtitle: Text('${state.currSong.singer}',
+                subtitle: Text('${state.currSong.artist}',
                     style:
                     TextStyle(fontSize: Screens.text14, color: Colors.red)),
                 trailing: IconButton(
@@ -319,7 +319,7 @@ Widget _body(PlayViewState state, viewService, dispatch) {
                       ),
                       onPressed: () {
                         dispatch(PlayViewActionCreator.getSongTalk(
-                            state.currSong.id.toString()));
+                            state.currSong.songId.toString()));
                       })
                 ],
               ),
@@ -345,13 +345,13 @@ Widget _body(PlayViewState state, viewService, dispatch) {
                   ),
                   onPressed: () => Navigator.pop(viewService.context)),
               title: Text(
-                '${state.currSong.name}',
+                '${state.currSong.songName}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: Screens.text18),
               ),
               subtitle: Text(
-                '${state.currSong.singer}',
+                '${state.currSong.artist}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: Screens.text14),
@@ -360,7 +360,7 @@ Widget _body(PlayViewState state, viewService, dispatch) {
             Padding(padding: EdgeInsets.symmetric(vertical: 5)),
             InkWell(
               child: ImageHelper.getImage(
-                  state.currSong.picUrl + "?param=500y500",
+                  state.currSong.songCover + "?param=500y500",
                   height: width2 * 0.85,
                   isRound: true),
               onTap: () async =>
@@ -401,9 +401,9 @@ Widget _body(PlayViewState state, viewService, dispatch) {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  state.currSong.like != null
+                  state.currSong.isLike != null
                       ? IconButton(
-                          icon: state.currSong.like
+                          icon: state.currSong.isLike
                               ? Icon(
                                   Icons.favorite,
                                   color: Colors.red,
@@ -413,11 +413,11 @@ Widget _body(PlayViewState state, viewService, dispatch) {
                                 ),
                           onPressed: () {
                             dispatch(PlayViewActionCreator.getLikeOrUnLike(
-                                !state.currSong.like));
+                                !state.currSong.isLike));
                           })
                       : IconButton(
                           icon: Icon(Icons.favorite_border), onPressed: () {
-                            dispatch(PlayViewActionCreator.getLikeOrUnLike(state.currSong.like));
+                            dispatch(PlayViewActionCreator.getLikeOrUnLike(state.currSong.isLike));
                   }),
                   IconButton(
                       icon: Icon(Icons.skip_previous),
@@ -493,7 +493,7 @@ Widget _rightChild(PlayViewState state, dispatch, viewService) {
                       contentPadding: EdgeInsets.only(
                           left: 15, top: 0, bottom: 0, right: 5),
                       trailing:
-                          state.songList[index].name == state.currSong.name
+                          state.songList[index].name == state.currSong.songName
                               ? ColorLoader3(
                                   radius: 10.0,
                                   dotRadius: 2.0,

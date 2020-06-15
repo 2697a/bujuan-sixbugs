@@ -43,7 +43,7 @@ void _onInit(Action action, Context<FmPlayViewState> ctx)  {
   var lyricController = LyricController(vsync: t);
    ctx.dispatch(PlayViewActionCreator.changeTickerProvider(lyricController));
   if (ctx.state.lyric == null)
-    _getLyric(ctx.state.currSong.id).then((lyric) {
+    _getLyric(ctx.state.currSong.songId).then((lyric) {
       GlobalStore.store.dispatch(GlobalActionCreator.changeLyric(lyric));
     });
   Stream stream = playPlugin.receiveBroadcastStream();
@@ -176,15 +176,15 @@ Future<String> _getUrl(id) async{
 }
 void _onLike(Action action, Context<FmPlayViewState> ctx) async {
   ctx.dispatch(PlayViewActionCreator.getChangeLike());
-  var answer = await like_song({'id': ctx.state.currSong.id, 'like': '${action.payload}'},await BuJuanUtil.getCookie());
+  var answer = await like_song({'id': ctx.state.currSong.songId, 'like': '${action.payload}'},await BuJuanUtil.getCookie());
 //  Response data = await HttpUtil().post('/like',
 //      data: {'id': ctx.state.currSong.id, 'like': '${action.payload}'});
   if (answer.status == 200) {
     var stringList = SpUtil.getStringList(LIKE_SONGS, defValue: []);
     if (!action.payload) {
-      stringList.add(ctx.state.currSong.id);
+      stringList.add(ctx.state.currSong.songId);
     } else {
-      stringList.remove(ctx.state.currSong.id);
+      stringList.remove(ctx.state.currSong.songId);
     }
     SpUtil.putStringList(LIKE_SONGS, stringList);
   }

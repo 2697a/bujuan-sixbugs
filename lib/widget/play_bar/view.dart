@@ -1,17 +1,15 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/play_state.dart';
-import 'package:bujuan/page/play2/page.dart';
 import 'package:bujuan/widget/play_bar/action.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../cache_image.dart';
 import 'state.dart';
 
 Widget buildView(
     PlayBarState state, Dispatch dispatch, ViewService viewService) {
-  return InkWell(
+  return state.currSong!=null?InkWell(
     child: Container(
       color: Colors.transparent,
       height: Screens.setHeight(56),
@@ -23,7 +21,7 @@ Widget buildView(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ImageHelper.getImage(
-                  '${state.currSong.picUrl ?? ''}?param=150y150',
+                  '${state.currSong.songCover ?? ''}?param=150y150',
                   isRound: true,
                   height: Screens.setHeight(40)),
               Padding(padding: EdgeInsets.only(left: Screens.width10)),
@@ -33,14 +31,14 @@ Widget buildView(
                       Container(
                         alignment: Alignment.centerLeft,
                         height: Screens.setHeight(24),
-                        child: Text(state.currSong.name,
+                        child: Text(state.currSong.songName,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: Screens.text14)),
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
                         height: Screens.setHeight(24),
-                        child: Text(state.currSong.singer,
+                        child: Text(state.currSong.artist,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: Screens.text12)),
                       )
@@ -80,6 +78,11 @@ Widget buildView(
     onTap: () {
       dispatch(PlayBarActionCreator.openPlayPage());
     },
+  ):Container(
+    height: Screens.setHeight(56),
+    padding: EdgeInsets.symmetric(horizontal: 10.0),
+    alignment: Alignment.centerLeft,
+    child: Text('暂无播放歌曲'),
   );
 //  return SlidingUpPanel(
 //    color: Colors.transparent,

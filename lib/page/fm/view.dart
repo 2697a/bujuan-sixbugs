@@ -50,7 +50,7 @@ Widget buildView(
                 return Center(
                   child: InkWell(
                     child: ImageHelper.getImage(
-                        state.currSong.picUrl + "?param=500y500",
+                        state.currSong.songCover + "?param=500y500",
                         height: MediaQuery.of(viewService.context).size.width /
                             1.26,
                         isRound: true),
@@ -68,7 +68,7 @@ Widget buildView(
               Container(
                 padding: EdgeInsets.all(5),
                 child: Text(
-                  state.currSong.singer,
+                  state.currSong.artist,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 14, color: Colors.grey),
@@ -77,7 +77,7 @@ Widget buildView(
               Container(
                 padding: EdgeInsets.all(5),
                 child: Text(
-                  state.currSong.name,
+                  state.currSong.songName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -89,9 +89,9 @@ Widget buildView(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              state.currSong.like != null
+              state.currSong.isLike != null
                   ? IconButton(
-                  icon: state.currSong.like
+                  icon: state.currSong.isLike
                       ? Icon(
                     Icons.favorite,
                     color: Colors.red,
@@ -101,17 +101,17 @@ Widget buildView(
                   ),
                   onPressed: () {
                     dispatch(PlayViewActionCreator.getLikeOrUnLike(
-                        !state.currSong.like));
+                        !state.currSong.isLike));
                   })
                   : IconButton(
                   icon: Icon(Icons.favorite_border), onPressed: () {
-                dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.like));
+                dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.isLike));
               }),
               IconButton(
                   icon: Icon(Icons.message),
                   onPressed: () {
                     dispatch(PlayViewActionCreator.getSongTalk(
-                        state.currSong.id.toString()));
+                        state.currSong.songId.toString()));
                   }),
             ],
           ),
@@ -224,7 +224,7 @@ Widget _body(FmPlayViewState state, viewService, dispatch) {
                       ),
                       onPressed: () {
                         dispatch(PlayViewActionCreator.getSongTalk(
-                            state.currSong.id.toString()));
+                            state.currSong.songId.toString()));
                       })
                 ],
               ),
@@ -250,13 +250,13 @@ Widget _body(FmPlayViewState state, viewService, dispatch) {
                   ),
                   onPressed: () => Navigator.pop(viewService.context)),
               title: Text(
-                '${state.currSong.name}',
+                '${state.currSong.songName}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: Screens.text18),
               ),
               subtitle: Text(
-                '${state.currSong.singer}',
+                '${state.currSong.artist}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: Screens.text14),
@@ -265,7 +265,7 @@ Widget _body(FmPlayViewState state, viewService, dispatch) {
             Padding(padding: EdgeInsets.symmetric(vertical: 5)),
             InkWell(
               child: ImageHelper.getImage(
-                  state.currSong.picUrl + "?param=500y500",
+                  state.currSong.songCover + "?param=500y500",
                   height: width2 * 0.85,
                   isRound: true),
               onTap: () async =>
@@ -306,9 +306,9 @@ Widget _body(FmPlayViewState state, viewService, dispatch) {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  state.currSong.like != null
+                  state.currSong.isLike != null
                       ? IconButton(
-                      icon: state.currSong.like
+                      icon: state.currSong.isLike
                           ? Icon(
                         Icons.favorite,
                         color: Colors.red,
@@ -318,7 +318,7 @@ Widget _body(FmPlayViewState state, viewService, dispatch) {
                       ),
                       onPressed: () {
                         dispatch(PlayViewActionCreator.getLikeOrUnLike(
-                            !state.currSong.like));
+                            !state.currSong.isLike));
                       })
                       : IconButton(
                       icon: Icon(Icons.favorite_border), onPressed: () {}),

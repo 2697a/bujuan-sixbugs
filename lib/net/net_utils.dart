@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bujuan/api/netease_cloud_music.dart';
+import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/banner_entity.dart';
 import 'package:bujuan/entity/login_entity.dart';
 import 'package:bujuan/entity/new_song_entity.dart';
@@ -9,8 +11,12 @@ import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/entity/user_profile_entity.dart';
-import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/global_store/action.dart';
+import 'package:bujuan/global_store/store.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:flutter/services.dart';
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import 'package:path_provider/path_provider.dart';
 
 class NetUtils {
@@ -20,6 +26,7 @@ class NetUtils {
   }
   NetUtils._internal();
 
+  //统一请求
   Future<Map> _doHandler(String url, [Map param = const {}]) async {
     var answer = await cloudMusicApi(url, parameter: param, cookie: await _getCookie());
     var map;
@@ -32,6 +39,7 @@ class NetUtils {
     return map;
   }
 
+  //保存cookie
   Future<void> _saveCookie(List<Cookie> cookies) async{
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
@@ -39,6 +47,8 @@ class NetUtils {
     cookie.saveFromResponse(Uri.parse("https://music.163.com/weapi/"), cookies);
   }
 
+
+  //获取cookie
   Future<List<Cookie>> _getCookie() async{
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
@@ -53,6 +63,14 @@ class NetUtils {
     if(map!=null){
       login = LoginEntity.fromJson(map);
     }
+    return login;
+  }
+
+  //邮箱登录
+  Future<LoginEntity> loginByEmail(String email,String password) async{
+    var login;
+    var map = await _doHandler('/login',{'email':email,'password':password});
+    if(map!=null) login = LoginEntity.fromJson(map);
     return login;
   }
 
@@ -131,5 +149,52 @@ class NetUtils {
     var map = await _doHandler('/personalized/newsong');
     if(map!=null) newSongs = NewSongEntity.fromJson(map);
     return newSongs;
+  }
+
+  Future<String> getSongUrl(songId) async{
+    var songUrl = '';
+    var map = await _doHandler('/song/url',{'id': songId, 'br':'320000'});
+    if(map!=null){
+      songUrl = map['data'][0]['url'];
+    }
+    return songUrl;
+  }
+
+  //播放音乐
+  Future setPlayListAndPlayById(List<SongInfo> list,SongInfo songInfo,String id) async{
+    var playList = await FlutterStarrySky().getPlayList();
+    if(playList==null)GlobalStore.store
+        .dispatch(GlobalActionCreator.changeCurrSong(songInfo));
+    await FlutterStarrySky().setPlayListAndPlayById(list, songInfo, '$id');
+  }
+  //监听原生返回
+  Future listenerBujuanMusic() async{
+     FlutterStarrySky().getChannel().setMethodCallHandler((call) =>  _platformCallHandler(call));
+  }
+
+  Future<dynamic> _platformCallHandler(MethodCall call) async {
+    var method = call.method;
+    print('object==========${method}======${call.arguments.toString()}');
+    var arguments = call.arguments;
+    if(method=='currSong'){
+      //更新当前播放的歌曲
+      if(arguments!=null)
+        await GlobalStore.store
+            .dispatch(GlobalActionCreator.changeCurrSong(SongInfo.fromJson(jsonDecode(arguments))));
+    }else if(method=='getUrl'){
+      //获取歌曲url
+      return await NetUtils().getSongUrl(arguments);
+    }else if(method=='state'){
+      if(arguments=='start'){
+        await GlobalStore.store
+            .dispatch(GlobalActionCreator.changePlayState(PlayStateType.Playing));
+      }else if(arguments=='stop'){
+        await GlobalStore.store
+            .dispatch(GlobalActionCreator.changePlayState(PlayStateType.Stop));
+      }else if(arguments=='pause'||arguments=='completion'){
+        await GlobalStore.store
+            .dispatch(GlobalActionCreator.changePlayState(PlayStateType.Pause));
+      }
+    }
   }
 }
