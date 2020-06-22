@@ -345,10 +345,35 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                             ),
                             Wrap(
                               children: <Widget>[
-                                IconButton(icon: Icon(Icons.add), onPressed: () {}),
+                                IconButton(icon: Icon(Icons.add), onPressed: () {
+                                  showDialog(context: viewService.context,builder: (context){
+                                    return AlertDialog(
+                                      title: Text('新增歌单'),
+                                      content:TextField(
+                                        controller: state.textEditingController,
+                                        decoration: InputDecoration(
+                                            hintText: '输入歌单名称'
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        InkWell(
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                            child: Text('确认'),
+                                          ),
+                                          onTap: () {
+                                            dispatch(MineActionCreator.createPlayList(state.textEditingController.text));
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
+                                }),
                                 IconButton(icon: Icon(Icons.more_vert), onPressed: () {
                                   Navigator.of(viewService.context)
-                                      .pushNamed('sheet_manager', arguments: {'create_list': state.createOrderList,'list':state.orderList});
+                                      .pushNamed('sheet_manager', arguments: {'create_list': state.createOrderList,'list':state.orderList}).then((value) async{
+                                    await dispatch(MineActionCreator.getRefresh());
+                                  });
                                 }),
                               ],
                             )
@@ -403,7 +428,7 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                   : SliverToBoxAdapter(),
             ],
           ),
-          onRefresh: () => dispatch(MineActionCreator.getRefresh()),
+          onRefresh: ()async =>await dispatch(MineActionCreator.getRefresh()),
           header: MaterialHeader(valueColor: AlwaysStoppedAnimation(Color.fromRGBO(213, 15, 37, .6))),
         )
       : LoadingPage();

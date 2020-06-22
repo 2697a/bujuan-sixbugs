@@ -6,6 +6,7 @@ import 'package:bujuan/entity/user_profile_entity.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/slide_item.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutter/material.dart';
 
 class MineState implements Cloneable<MineState> {
   bool isLogin;
@@ -16,6 +17,7 @@ class MineState implements Cloneable<MineState> {
   bool isOpen;
   bool isCreateOpen;
   SlideConfig slideConfig;
+  TextEditingController  textEditingController;
 
   @override
   MineState clone() {
@@ -27,6 +29,7 @@ class MineState implements Cloneable<MineState> {
       ..isOpen = isOpen
       ..isCreateOpen = isCreateOpen
       ..slideConfig = slideConfig
+      ..textEditingController = textEditingController
       ..orderList = orderList;
   }
 }
@@ -47,5 +50,6 @@ MineState initState(Map<String, dynamic> args) {
     closeOpenedItemOnTouch: false,
     slideProportion: 0.2,
   );
+  mineState.textEditingController = TextEditingController();
   return mineState;
 }

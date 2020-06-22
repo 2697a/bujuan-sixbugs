@@ -10,8 +10,12 @@ Effect<SheetManagerState> buildEffect() {
   });
 }
 
-void _onDel(Action action, Context<SheetManagerState> ctx) {
-
+void _onDel(Action action, Context<SheetManagerState> ctx) async{
+  if(action.payload!=null){
+    var index = action.payload;
+    var bool = await NetUtils().delPlayList(ctx.state.createOrderList[index].id);
+    if(bool) ctx.dispatch(SheetManagerActionCreator.onDelState(index));
+  }
 }
 
 void _onSub(Action action, Context<SheetManagerState> ctx) async{

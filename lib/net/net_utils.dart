@@ -185,6 +185,12 @@ class NetUtils {
     return sub;
   }
 
+  Future<bool> createPlayList(name) async{
+    bool create = false;
+    var map = await _doHandler('/playlist/create',{'name':name});
+    create = map!=null;
+    return create;
+  }
   Future<PlayHistoryEntity> getHistory(uid) async{
     var history;
     var map = await _doHandler('/user/record',{'uid':uid});

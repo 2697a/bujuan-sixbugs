@@ -20,14 +20,13 @@ Effect<MineState> buildEffect() {
     MineAction.login: _onLogin,
     Lifecycle.initState: _init,
     MineAction.getRefresh: _getRefresh,
-    MineAction.exit: _exit
+    MineAction.exit: _exit,
+    MineAction.createPlaylist:_createPlayList
   });
 }
 
 Future<void> _getRefresh(Action action, Context<MineState> ctx) async {
-  Future.delayed(Duration(milliseconds: 500), () async {
-    await _onRefresh(action, ctx);
-  });
+     _onRefresh(action, ctx);
 }
 
 //点击登录
@@ -77,10 +76,8 @@ Future _onRefresh(Action action, Context<MineState> ctx) async {
   }
 }
 
-void _init(Action action, Context<MineState> ctx) async {
-  Future.delayed(Duration(milliseconds: 300), () async {
-    await _onRefresh(action, ctx);
-  });
+void _init(Action action, Context<MineState> ctx)  {
+     _onRefresh(action, ctx);
 }
 
 Future<UserProfileEntity> _getProfile(userId) async {
@@ -102,6 +99,12 @@ Future<UserOrderEntity> _getPlayList(userId) async {
 //      : null;
 
 return NetUtils().getUserPlayList(userId);
+}
+
+void _createPlayList(Action action, Context<MineState> ctx) async{
+  var bool = await NetUtils().createPlayList(action.payload);
+  if(bool) await _onRefresh(action, ctx);
+  Navigator.of(ctx.context).pop();
 }
 
 ///likelist
