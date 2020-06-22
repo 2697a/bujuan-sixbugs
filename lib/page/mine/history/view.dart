@@ -31,10 +31,10 @@ Widget buildView(
                       style: TextStyle(
                           color: Colors.blue, fontSize: Screens.text14, fontWeight: FontWeight.bold),
                     ),
-                    Expanded(child: Text('${state.list[index].name}',style: TextStyle(fontSize: Screens.text14),maxLines: 1,overflow: TextOverflow.ellipsis,))
+                    Expanded(child: Text('${state.list[index].songName}',style: TextStyle(fontSize: Screens.text14),maxLines: 1,overflow: TextOverflow.ellipsis,))
                   ],
                 ),
-                subtitle: Text('${state.list[index].singer}',style: TextStyle(fontSize: Screens.text12),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                subtitle: Text('${state.list[index].artist}',style: TextStyle(fontSize: Screens.text12),maxLines: 1,overflow: TextOverflow.ellipsis,),
                 onTap: (){dispatch(HistoryActionCreator.playSong(index));},
               );
             },

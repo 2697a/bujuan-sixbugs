@@ -1,9 +1,10 @@
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 class HistoryState implements Cloneable<HistoryState> {
 
-  List<SongBeanEntity> list;
+  List<SongInfo> list;
   bool showLoading;
   @override
   HistoryState clone() {

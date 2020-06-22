@@ -6,6 +6,7 @@ import 'package:bujuan/entity/play_history_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -20,27 +21,31 @@ Effect<HistoryState> buildEffect() {
   });
 }
 
-void _init(Action action, Context<HistoryState> ctx) {
-  _getHistory(SpUtil.getInt(USER_ID, defValue: 0)).then((history) {
-    if (history != null) {
-      List<SongBeanEntity> newList = List();
-      history.allData.forEach((details) {
-        var singerStr = '';
-        var ar = details.song.ar;
-        ar.forEach((singer) {
-          singerStr += ' ${singer.name} ';
-        });
-        SongBeanEntity songBeanEntity = SongBeanEntity(
-            name: details.song.name,
-            id: details.song.id.toString(),
-            picUrl: details.song.al.picUrl,
-            singer: singerStr,
-            mv: details.song.mv);
-        newList.add(songBeanEntity);
-      });
-      ctx.dispatch(HistoryActionCreator.getHistoryData(newList));
-    }
-  });
+void _init(Action action, Context<HistoryState> ctx) async{
+  var playHistoryEntity = await NetUtils().getHistory(SpUtil.getInt(USER_ID, defValue: 0));
+  var playlist = playHistoryEntity.allData;
+  var songToSongInfo = await BuJuanUtil.historyToSongInfo(playlist);
+  ctx.dispatch(HistoryActionCreator.getHistoryData(songToSongInfo));
+//  _getHistory(SpUtil.getInt(USER_ID, defValue: 0)).then((history) {
+//    if (history != null) {
+//      List<SongBeanEntity> newList = List();
+//      history.allData.forEach((details) {
+//        var singerStr = '';
+//        var ar = details.song.ar;
+//        ar.forEach((singer) {
+//          singerStr += ' ${singer.name} ';
+//        });
+//        SongBeanEntity songBeanEntity = SongBeanEntity(
+//            name: details.song.name,
+//            id: details.song.id.toString(),
+//            picUrl: details.song.al.picUrl,
+//            singer: singerStr,
+//            mv: details.song.mv);
+//        newList.add(songBeanEntity);
+//      });
+//      ctx.dispatch(HistoryActionCreator.getHistoryData(newList));
+//    }
+//  });
 }
 
 void _playSong(Action action, Context<HistoryState> ctx) {
@@ -51,6 +56,10 @@ void _playSong(Action action, Context<HistoryState> ctx) {
 //  SpUtil.putObjectList(playSongListHistory, ctx.state.list);
 //  var jsonEncode2 = jsonEncode(ctx.state.list);
 //  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
+
+  var list = ctx.state.list;
+  var index = action.payload??0;
+  NetUtils().setPlayListAndPlayById(list, index, 'history');
 }
 
 Future<PlayHistoryEntity> _getHistory(id) async {

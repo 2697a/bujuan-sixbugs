@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bujuan/constant/constants.dart';
+import 'package:bujuan/entity/play_history_entity.dart';
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:flutterstarrysky/song_info.dart';
@@ -67,6 +68,14 @@ class BuJuanUtil {
     List<SongInfo> info = [];
     await Future.forEach(songs, (SheetDetailsPlaylistTrack element){
       SongInfo songInfo = SongInfo(songId: '${element.id}',songCover: '${element.al.picUrl}',songUrl: '',songName: '${element.name}',artist: '${element.ar[0].name}');
+      info.add(songInfo);
+    });
+    return info;
+  }
+  static Future<List<SongInfo>> historyToSongInfo(List<PlayHistoryAlldata> songs) async {
+    List<SongInfo> info = [];
+    await Future.forEach(songs, (PlayHistoryAlldata element){
+      SongInfo songInfo = SongInfo(songId: '${element.song.id}',songCover: '${element.song.al.picUrl}',songUrl: '',songName: '${element.song.name}',artist: '${element.song.ar[0].name}');
       info.add(songInfo);
     });
     return info;

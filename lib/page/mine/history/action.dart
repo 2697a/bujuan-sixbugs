@@ -1,11 +1,11 @@
-import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 //TODO replace with your own action
 enum HistoryAction { getHistoryData,playSong}
 
 class HistoryActionCreator {
-  static Action getHistoryData(List<SongBeanEntity> list) {
+  static Action getHistoryData(List<SongInfo> list) {
     return  Action(HistoryAction.getHistoryData,payload: list);
   }
 

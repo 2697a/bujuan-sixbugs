@@ -19,7 +19,7 @@ Effect<TopDetailsState> buildEffect() {
   return combineEffects(<Object, Effect<TopDetailsState>>{TopDetailsAction.playSong: _onPlaySong, Lifecycle.initState: _init});
 }
 
-void _onPlaySong(Action action, Context<TopDetailsState> ctx) {
+void _onPlaySong(Action action, Context<TopDetailsState> ctx) async {
 //  SpUtil.putBool(ISFM, false);
 //  var index2 = action.payload;
 //  var list2 = ctx.state.list;
@@ -28,6 +28,9 @@ void _onPlaySong(Action action, Context<TopDetailsState> ctx) {
 //  SpUtil.putObjectList(playSongListHistory, ctx.state.list);
 //  var jsonEncode2 = jsonEncode(list2);
 //  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
+  var list = ctx.state.list;
+  var index = action.payload??0;
+  NetUtils().setPlayListAndPlayById(list, index, '${ctx.state.id}');
 }
 
 void _init(Action action, Context<TopDetailsState> ctx) async{
