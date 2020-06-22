@@ -1,6 +1,7 @@
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -30,7 +31,7 @@ TopPageState _onTopMvs(TopPageState state, Action action) {
 TopPageState _onTop(TopPageState state, Action action) {
   var payload = action.payload;
   TopType type = payload['type'];
-  List<SongBeanEntity> data = payload['data'];
+  List<SongInfo> data = payload['data'];
   final TopPageState newState = state.clone();
   switch (type) {
     case TopType.BS:

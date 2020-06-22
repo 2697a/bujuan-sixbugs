@@ -1,3 +1,5 @@
+import 'package:bujuan/entity/sheet_details_entity.dart';
+
 class TopEntity {
 	List<TopSongPrivilege> privileges;
 	num code;
@@ -106,7 +108,7 @@ class TopSongPlaylist {
 	num updateTime;
 	num trackUpdateTime;
 	num userId;
-	List<TopSongPlaylistTrack> tracks;
+	List<SheetDetailsPlaylistTrack> tracks;
 	List<Null> tags;
 	num commentCount;
 	num cloudTrackCount;
@@ -150,7 +152,7 @@ class TopSongPlaylist {
 		trackUpdateTime = json['trackUpdateTime'];
 		userId = json['userId'];
 		if (json['tracks'] != null) {
-			tracks = new List<TopSongPlaylistTrack>();(json['tracks'] as List).forEach((v) { tracks.add(new TopSongPlaylistTrack.fromJson(v)); });
+			tracks = new List<SheetDetailsPlaylistTrack>();(json['tracks'] as List).forEach((v) { tracks.add(new SheetDetailsPlaylistTrack.fromJson(v)); });
 		}
 		if (json['tags'] != null) {
 			tags = new List<Null>();

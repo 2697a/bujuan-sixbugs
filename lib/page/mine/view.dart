@@ -4,6 +4,7 @@ import 'package:bujuan/page/mine/action.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/loading_page.dart';
+import 'package:bujuan/widget/slide_item.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -237,159 +238,174 @@ Widget _unLoginView(dispatch, ViewService viewService) {
 
 Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
   return !state.isShowLoad
-      ? EasyRefresh(child: CustomScrollView(
-    slivers: <Widget>[
-      SliverToBoxAdapter(
-        child: Row(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
-            Expanded(
-                child: Wrap(
-                  direction: Axis.vertical,
+      ? EasyRefresh(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverToBoxAdapter(
+                child: Row(
                   children: <Widget>[
-                    Container(
-                      height: Screens.height30,
-                      child: Text(
-                        state.userProfileEntity.profile.nickname,
-                        style: TextStyle(fontSize: Screens.text18),
-                      ),
-                      alignment: Alignment.centerLeft,
-                    ),
-                    Container(
-                      height: Screens.height30,
-                      child: Text(
-                        state.userProfileEntity != null ? '${state.userProfileEntity.profile.signature}' : '暂无个性签名',
-                        style: TextStyle(fontSize: Screens.text14),
-                      ),
-                      alignment: Alignment.centerLeft,
-                    ),
-                  ],
-                )),
-            IconButton(
-                icon: Icon(
-                  Icons.exit_to_app,
-                  size: Screens.text22,
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: viewService.context,
-                    builder: (context) => AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)), title: Text("退出登录"), content: Text("确定要退出登录吗？"), actions: <Widget>[
-                      InkWell(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          child: Text('确认'),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
+                    Expanded(
+                        child: Wrap(
+                          direction: Axis.vertical,
+                          children: <Widget>[
+                            Container(
+                              height: Screens.height30,
+                              child: Text(
+                                state.userProfileEntity.profile.nickname,
+                                style: TextStyle(fontSize: Screens.text18),
+                              ),
+                              alignment: Alignment.centerLeft,
+                            ),
+                            Container(
+                              height: Screens.height30,
+                              child: Text(
+                                state.userProfileEntity != null ? '${state.userProfileEntity.profile.signature}' : '暂无个性签名',
+                                style: TextStyle(fontSize: Screens.text14),
+                              ),
+                              alignment: Alignment.centerLeft,
+                            ),
+                          ],
+                        )),
+                    IconButton(
+                        icon: Icon(
+                          Icons.exit_to_app,
+                          size: Screens.text22,
                         ),
-                        onTap: () {
-                          dispatch(MineActionCreator.exit());
-                        },
-                      )
-                    ]),
-                  );
-                }),
-            Padding(padding: EdgeInsets.symmetric(horizontal: 4))
-          ],
-        ),
-      ),
-      SliverToBoxAdapter(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-                icon: Icon(
-                  Icons.history,
-                ),
-                onPressed: () {
-                  Navigator.of(viewService.context).pushNamed('history', arguments: null);
-                }),
-            IconButton(
-                icon: Icon(
-                  Icons.cloud,
-                ),
-                onPressed: () {
-                  Navigator.of(viewService.context).pushNamed('user_clound', arguments: null);
-                }),
-            IconButton(
-                icon: Icon(
-                  Icons.people,
-                ),
-                onPressed: () {
-                  BuJuanUtil.showToast('暂不可用');
-                }),
-            IconButton(
-                icon: Icon(
-                  Icons.queue_music,
-                ),
-                onPressed: () {
-                  Navigator.of(viewService.context).pushNamed('local_music', arguments: null);
-                }),
-          ],
-        ),
-      ),
-      SliverToBoxAdapter(child: InkWell(
-        child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(state.isCreateOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right),
-                    Padding(padding: EdgeInsets.only(right: 5)),
-                    Text(
-                      '我创建的歌单 (${state.createOrderList.length})',
-                      style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
-                    ),
+                        onPressed: () {
+                          showDialog(
+                            context: viewService.context,
+                            builder: (context) => AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)), title: Text("退出登录"), content: Text("确定要退出登录吗？"), actions: <Widget>[
+                              InkWell(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  child: Text('确认'),
+                                ),
+                                onTap: () {
+                                  dispatch(MineActionCreator.exit());
+                                },
+                              )
+                            ]),
+                          );
+                        }),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 4))
                   ],
                 ),
-                IconButton(icon: Icon(Icons.add), onPressed: () {}),
-              ],
-            ),
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(
-              left: Screens.width5,
-            )),
-        onTap: () {
-          dispatch(MineActionCreator.setCreateOpen());
-        },
-      )),
-      state.isCreateOpen?SliverList(
-        delegate: SliverChildBuilderDelegate((context, int index){
-          return _orderItem(state.createOrderList[index], viewService);
-        },
-          childCount: state.createOrderList.length,
-        ),
-      ):SliverToBoxAdapter(),
-      SliverToBoxAdapter(child: InkWell(
-        child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  '我收藏的歌单 (${state.orderList.length})',
-                  style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
+              ),
+              SliverToBoxAdapter(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    IconButton(
+                        icon: Icon(
+                          Icons.history,
+                        ),
+                        onPressed: () {
+                          Navigator.of(viewService.context).pushNamed('history', arguments: null);
+                        }),
+                    IconButton(
+                        icon: Icon(
+                          Icons.cloud,
+                        ),
+                        onPressed: () {
+                          Navigator.of(viewService.context).pushNamed('user_clound', arguments: null);
+                        }),
+                    IconButton(
+                        icon: Icon(
+                          Icons.people,
+                        ),
+                        onPressed: () {
+                          BuJuanUtil.showToast('暂不可用');
+                        }),
+                    IconButton(
+                        icon: Icon(
+                          Icons.queue_music,
+                        ),
+                        onPressed: () {
+                          Navigator.of(viewService.context).pushNamed('local_music', arguments: null);
+                        }),
+                  ],
                 ),
-                Icon(state.isOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right)
-              ],
-            ),
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(left: Screens.width5, top: Screens.setHeight(10), bottom: Screens.setHeight(10))),
-        onTap: () {
-          dispatch(MineActionCreator.setOPen());
-        },
-      )),
-      state.isOpen?SliverList(
-        delegate: SliverChildBuilderDelegate((context, int index){
-          return _orderItem(state.orderList[index], viewService);
-        },
-          childCount: state.orderList.length,
-        ),
-      ):SliverToBoxAdapter(),
-    ],
-  ),
-      onRefresh: () => dispatch(MineActionCreator.getRefresh()),
-            header: MaterialHeader(
-                valueColor:
-                AlwaysStoppedAnimation(Color.fromRGBO(213, 15, 37, .6))),)
+              ),
+              SliverToBoxAdapter(
+                  child: InkWell(
+                    child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Wrap(
+                              children: <Widget>[
+                                Icon(state.isCreateOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right),
+                                Padding(padding: EdgeInsets.only(right: 5)),
+                                Text(
+                                  '我创建的歌单 (${state.createOrderList.length})',
+                                  style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Wrap(
+                              children: <Widget>[
+                                IconButton(icon: Icon(Icons.add), onPressed: () {}),
+                                IconButton(icon: Icon(Icons.more_vert), onPressed: () {
+                                  Navigator.of(viewService.context)
+                                      .pushNamed('sheet_manager', arguments: {'create_list': state.createOrderList,'list':state.orderList});
+                                }),
+                              ],
+                            )
+                          ],
+                        ),
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(
+                          left: Screens.width5,
+                        )),
+                    onTap: () {
+                      dispatch(MineActionCreator.setCreateOpen());
+                    },
+                  )),
+              state.isCreateOpen
+                  ? SliverList(
+                delegate: SliverChildBuilderDelegate(
+                      (context, int index) {
+                    return _orderItem(state.createOrderList[index], viewService);
+                  },
+                  childCount: state.createOrderList.length,
+                ),
+              )
+                  : SliverToBoxAdapter(),
+              SliverToBoxAdapter(
+                  child: InkWell(
+                    child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              '我收藏的歌单 (${state.orderList.length})',
+                              style: TextStyle(fontSize: Screens.text14, fontWeight: FontWeight.bold),
+                            ),
+                            Icon(state.isOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right)
+                          ],
+                        ),
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left: Screens.width5, top: Screens.setHeight(10), bottom: Screens.setHeight(10))),
+                    onTap: () {
+                      dispatch(MineActionCreator.setOPen());
+                    },
+                  )),
+              state.isOpen
+                  ? SliverList(
+                delegate: SliverChildBuilderDelegate(
+                      (context, int index) {
+                    return _orderItem(state.orderList[index], viewService);
+                  },
+                  childCount: state.orderList.length,
+                ),
+              )
+                  : SliverToBoxAdapter(),
+            ],
+          ),
+          onRefresh: () => dispatch(MineActionCreator.getRefresh()),
+          header: MaterialHeader(valueColor: AlwaysStoppedAnimation(Color.fromRGBO(213, 15, 37, .6))),
+        )
       : LoadingPage();
 }
 

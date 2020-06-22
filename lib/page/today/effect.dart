@@ -9,8 +9,6 @@ import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/net/http_util.dart';
 import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
-import 'package:bujuan/utils/sp_util.dart';
-import 'package:dio/dio.dart';
 import 'package:fish_redux/fish_redux.dart';
 import '../../bujuan_music.dart';
 import 'action.dart';
@@ -39,5 +37,6 @@ return await NetUtils().getTodaySongs();
 
 void _onPlay(Action action, Context<TodayState> ctx) async{
   var list2 = ctx.state.list;
-  await NetUtils().setPlayListAndPlayById(list2, list2[action.payload??0], 'today');
+  var index = action.payload??0;
+  await NetUtils().setPlayListAndPlayById(list2,index, 'today');
 }

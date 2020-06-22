@@ -7,13 +7,14 @@ import 'package:bujuan/entity/top_mv_entity.dart';
 import 'package:bujuan/page/top/view.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 class TopPageState implements Cloneable<TopPageState> {
   bool showLoading;
-  List<SongBeanEntity> bsList;
-  List<SongBeanEntity> newList;
-  List<SongBeanEntity> ycList;
-  List<SongBeanEntity> hotList;
+  List<SongInfo> bsList;
+  List<SongInfo> newList;
+  List<SongInfo> ycList;
+  List<SongInfo> hotList;
   List<SingerArtist> artists;
   List<TopMvData> mvs;
   List<TopInfo> topInfos;

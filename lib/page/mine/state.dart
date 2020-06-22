@@ -4,6 +4,7 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/entity/user_profile_entity.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:bujuan/widget/slide_item.dart';
 import 'package:fish_redux/fish_redux.dart';
 
 class MineState implements Cloneable<MineState> {
@@ -14,6 +15,7 @@ class MineState implements Cloneable<MineState> {
   List<UserOrderPlaylist> orderList;
   bool isOpen;
   bool isCreateOpen;
+  SlideConfig slideConfig;
 
   @override
   MineState clone() {
@@ -24,6 +26,7 @@ class MineState implements Cloneable<MineState> {
       ..createOrderList = createOrderList
       ..isOpen = isOpen
       ..isCreateOpen = isCreateOpen
+      ..slideConfig = slideConfig
       ..orderList = orderList;
   }
 }
@@ -35,5 +38,14 @@ MineState initState(Map<String, dynamic> args) {
   mineState.isShowLoad = true;
   mineState.isCreateOpen = true;
   mineState.isOpen = true;
+  mineState.slideConfig = SlideConfig(
+    slideOpenAnimDuration: Duration(milliseconds: 200),
+    slideCloseAnimDuration: Duration(milliseconds: 100),
+    deleteStep1AnimDuration: Duration(milliseconds: 50),
+    deleteStep2AnimDuration: Duration(milliseconds: 30),
+    supportElasticity: true,
+    closeOpenedItemOnTouch: false,
+    slideProportion: 0.2,
+  );
   return mineState;
 }

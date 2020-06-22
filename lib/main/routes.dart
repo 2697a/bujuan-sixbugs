@@ -8,6 +8,7 @@ import 'package:bujuan/page/local_music/local_list/page.dart';
 import 'package:bujuan/page/local_music/page.dart';
 import 'package:bujuan/page/login/page.dart';
 import 'package:bujuan/page/mine/history/page.dart';
+import 'package:bujuan/page/mine/sheet_manager/page.dart';
 import 'package:bujuan/page/mv_play/page.dart';
 import 'package:bujuan/page/play/page.dart';
 import 'package:bujuan/page/radio/page.dart';
@@ -29,7 +30,7 @@ import '../global_store/store.dart';
 
 Map<String, WidgetBuilder> appRoutes = {
 //  '/entrance': (BuildContext context) => routes.buildPage("entrance_page", null),
-//  '/main': (BuildContext context) => routes.buildPage("main", null),
+  '/main': (BuildContext context) => routes.buildPage("main", null),
 };
 var routes = new PageRoutes(
   pages: <String, Page<Object, dynamic>>{
@@ -57,6 +58,7 @@ var routes = new PageRoutes(
     'singer_details': SingerDetailsPage(),
     'user_clound': CloundPagePage(),
     'radio': RadioPage(),
+    'sheet_manager': SheetManagerPage(),
   },
   visitor: (String path, Page<Object, dynamic> page) {
     if (page.isTypeof<GlobalBaseState>()) {

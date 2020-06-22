@@ -6,18 +6,17 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/entity/top_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import '../../../bujuan_music.dart';
 import 'action.dart';
 import 'state.dart';
 
 Effect<TopDetailsState> buildEffect() {
-  return combineEffects(<Object, Effect<TopDetailsState>>{
-    TopDetailsAction.playSong: _onPlaySong,
-    Lifecycle.initState: _init
-  });
+  return combineEffects(<Object, Effect<TopDetailsState>>{TopDetailsAction.playSong: _onPlaySong, Lifecycle.initState: _init});
 }
 
 void _onPlaySong(Action action, Context<TopDetailsState> ctx) {
@@ -31,35 +30,21 @@ void _onPlaySong(Action action, Context<TopDetailsState> ctx) {
 //  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }
 
-void _init(Action action, Context<TopDetailsState> ctx) {
-  _getTopData(ctx.state.id).then((top) {
-    ctx.dispatch(TopDetailsActionCreator.onGetTop(_changeType(top)));
-  });
+void _init(Action action, Context<TopDetailsState> ctx) async{
+  var topEntity = await _getTopData(ctx.state.id);
+  ctx.dispatch(TopDetailsActionCreator.onGetTop(await _changeType(topEntity)));
 }
 
-List<SongBeanEntity> _changeType(TopEntity topEntity) {
-  List<SongBeanEntity> list = List();
-  topEntity.playlist.tracks.forEach((song) {
-    SongBeanEntity songBeanEntity = SongBeanEntity();
-    songBeanEntity.id = song.id.toString();
-    songBeanEntity.name = song.name;
-    songBeanEntity.picUrl = song.al.picUrl;
-    var singerStr = '';
-    var ar = song.ar;
-    ar.forEach((singer) {
-      singerStr += ' ${singer.name} ';
-    });
-    songBeanEntity.singer = singerStr;
-    songBeanEntity.mv = song.mv;
-    list.add(songBeanEntity);
-  });
-  return list;
+Future<List<SongInfo>> _changeType(TopEntity topEntity) async {
+  var playlist = topEntity.playlist;
+  var songToSongInfo = await BuJuanUtil.songToSongInfo(playlist.tracks);
+  return songToSongInfo;
 }
 
 Future<TopEntity> _getTopData(id) async {
-  var answer = await top_list({'idx': id},await BuJuanUtil.getCookie());
+//  var answer = await top_list({'idx': id},await BuJuanUtil.getCookie());
 //  Response top = await HttpUtil().get('/top/list', data: {'idx': id});
 //  var data2 = top.data;
 //  var jsonDecode2 = jsonDecode(data2);
-  return TopEntity.fromJson(answer.body);
+  return NetUtils().getTopData(id);
 }

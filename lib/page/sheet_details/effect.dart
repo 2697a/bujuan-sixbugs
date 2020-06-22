@@ -32,7 +32,8 @@ Effect<SheetDetailsState> buildEffect() {
 //播放歌曲
 void _onPlay(Action action, Context<SheetDetailsState> ctx) async{
   var list = ctx.state.list;
-  await NetUtils().setPlayListAndPlayById(list, list[action.payload??0], '${ctx.state.playlist.id}');
+  var index = action.payload??0;
+  await NetUtils().setPlayListAndPlayById(list, index, '${ctx.state.playlist.id}');
 }
 
 ///playlist/subscribe"
@@ -42,6 +43,7 @@ void _onLike(Action action, Context<SheetDetailsState> ctx) async {
   var answer = await playlist_subscribe(
       {'t': subscribed2 ? 1 : 0, 'id': ctx.state.playlist.id},
       await BuJuanUtil.getCookie());
+  print("");
 }
 
 Future _onInit(Action action, Context<SheetDetailsState> ctx) async {

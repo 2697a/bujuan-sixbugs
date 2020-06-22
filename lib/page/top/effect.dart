@@ -6,9 +6,11 @@ import 'package:bujuan/entity/singer_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/entity/top_entity.dart';
 import 'package:bujuan/entity/top_mv_entity.dart';
+import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
+import 'package:flutterstarrysky/song_info.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -46,42 +48,45 @@ Future _onRefresh(Action action, Context<TopPageState> ctx) async {
   ]);
   var top1 = list[0];
 // SpUtil.putString('bs', jsonEncode(changeType(top)));
-  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top1), TopType.BS));
+  ctx.dispatch(TopPageActionCreator.onGetTop(await changeType(top1), TopType.BS));
   var top2 = list[1];
 //  SpUtil.putString('new', jsonEncode(changeType(top)));
-  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top2), TopType.NEW));
+  ctx.dispatch(TopPageActionCreator.onGetTop(await changeType(top2), TopType.NEW));
   var top3 = list[2];
 //  SpUtil.putString('yc', jsonEncode(changeType(top)));
-  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top3), TopType.YC));
+  ctx.dispatch(TopPageActionCreator.onGetTop(await changeType(top3), TopType.YC));
   var top4 = list[3];
 //  SpUtil.putString('hot', jsonEncode(changeType(top)));
-  ctx.dispatch(TopPageActionCreator.onGetTop(changeType(top4), TopType.HOT));
+  ctx.dispatch(TopPageActionCreator.onGetTop(await changeType(top4), TopType.HOT));
 }
 
-List<SongBeanEntity> changeType(TopEntity topEntity) {
-  List<SongBeanEntity> list = List();
-  topEntity.playlist.tracks.forEach((song) {
-    SongBeanEntity songBeanEntity = SongBeanEntity();
-    songBeanEntity.id = song.id.toString();
-    songBeanEntity.name = song.name;
-    songBeanEntity.picUrl = song.al.picUrl;
-    var singerStr = '';
-    var ar = song.ar;
-    ar.forEach((singer) {
-      singerStr += ' ${singer.name} ';
-    });
-    songBeanEntity.singer = singerStr;
-    list.add(songBeanEntity);
-  });
-  return list;
+Future<List<SongInfo>> changeType(TopEntity topEntity) async{
+//  List<SongBeanEntity> list = List();
+//  topEntity.playlist.tracks.forEach((song) {
+//    SongBeanEntity songBeanEntity = SongBeanEntity();
+//    songBeanEntity.id = song.id.toString();
+//    songBeanEntity.name = song.name;
+//    songBeanEntity.picUrl = song.al.picUrl;
+//    var singerStr = '';
+//    var ar = song.ar;
+//    ar.forEach((singer) {
+//      singerStr += ' ${singer.name} ';
+//    });
+//    songBeanEntity.singer = singerStr;
+//    list.add(songBeanEntity);
+//  });
+//  return list;
+  var playlist = topEntity.playlist;
+  var songToSongInfo = await BuJuanUtil.songToSongInfo(playlist.tracks);
+  return songToSongInfo;
 }
 
 Future<TopEntity> _getTopData(id) async {
-  var answer = await top_list({'idx': id}, await BuJuanUtil.getCookie());
+//  var answer = await top_list({'idx': id}, await BuJuanUtil.getCookie());
 //  Response top = await HttpUtil().get('/top/list', data: {'idx': id});
 //  var data2 = top.data;
 //  var jsonDecode2 = jsonDecode(data2);
-  return TopEntity.fromJson(answer.body);
+  return NetUtils().getTopData(id);
 }
 
 ///top/artists

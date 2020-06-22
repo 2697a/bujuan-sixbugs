@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 import 'state.dart';
 
@@ -113,7 +114,7 @@ Widget buildView(
 }
 
 Widget _topItem(
-    image, List<SongBeanEntity> songs, id, Dispatch dispatch, width) {
+    image, List<SongInfo> songs, id, Dispatch dispatch, width) {
   return InkWell(
     child: Container(
       width: width / 2 - Screens.setWidth(10),
@@ -134,7 +135,7 @@ Widget _topItem(
                 padding: EdgeInsets.all(Screens.setWidth(5)),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '${songs[index].name} (${songs[index].singer})',
+                  '${songs[index].songName} (${songs[index].artist})',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 13, wordSpacing: 1.2),

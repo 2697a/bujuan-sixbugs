@@ -79,6 +79,12 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
                 StarrySky.Companion.with().playMusicById(songId);
                 result.success(1);
                 break;
+            case "playSongByIndex":
+                int index = (int) call.arguments;
+                Log.d(TAG, "onMethodCall: ======"+index);
+                StarrySky.Companion.with().playMusicByIndex(index);
+                result.success(1);
+                break;
             case "restore":
                 if (!StarrySky.Companion.with().isPlaying())
                     StarrySky.Companion.with().restoreMusic();

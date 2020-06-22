@@ -35,22 +35,22 @@ class FlutterStarrySky {
 
 
   //更新播放列表并播放
-  Future<void> setPlayListAndPlayById(List<SongInfo> playList,SongInfo songInfo,String id) async {
+  Future<void> setPlayListAndPlayById(List<SongInfo> playList,int index,String id) async {
     if(playList!=null&&playList.length>0){
         if(playListId==id) {
-          await _playSongById(songInfo);
+          await _playSongByIndex(index);
           print('object====该歌单正在播放中，直接_playSongById');
         } else{
           print('object====该歌单未播放，先_setPlayList再_playSongById');
-          await _setPlayList(playList);
-          await _playSongById(songInfo);
+          await _setPlayListAndPlayByIndex(playList);
+          await _playSongByIndex(index);
           playListId = id;
         }
     }
   }
 
   //更新播放列表
-  Future<int> _setPlayList(List<SongInfo> playList) async {
+  Future<int> _setPlayListAndPlayByIndex(List<SongInfo> playList) async {
     var songData = jsonEncode(playList);
     return await _channel.invokeMethod('setPlayList', songData);
   }
@@ -62,7 +62,13 @@ class FlutterStarrySky {
     var state = await _channel.invokeMethod('playSongById', songInfo.songId);
     return state;
   }
-
+//根据id播放歌曲
+  Future<int> _playSongByIndex(index) async {
+    //返回當前狀態
+    print('======根据id播放');
+    var state = await _channel.invokeMethod('playSongByIndex', index);
+    return state;
+  }
   //根据songInfo播放歌曲
   Future<int> playSongByData(SongInfo data) async {
     return await _channel.invokeMethod('playSongByData', data);

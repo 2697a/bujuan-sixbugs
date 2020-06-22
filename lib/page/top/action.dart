@@ -3,12 +3,13 @@ import 'package:bujuan/entity/singer_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/entity/top_mv_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 //TODO replace with your own action
 enum TopPageAction { topMvs,topSinger, topData, getRef, openDetail }
 
 class TopPageActionCreator {
-  static Action onGetTop(List<SongBeanEntity> list, TopType topType) {
+  static Action onGetTop(List<SongInfo> list, TopType topType) {
     return Action(TopPageAction.topData,
         payload: {'type': topType, 'data': list});
   }

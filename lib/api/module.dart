@@ -117,6 +117,7 @@ final handles = <String, Handler>{
   "/personalized/newsong": personalized_newsong,
   "/personalized/privatecontent": personalized_privatecontent,
   "/personalized": personalized,
+  "/playlist/del":playlist_del,
   "/playlist/catlist": playlist_catlist,
   "/playlist/create": playlist_create,
   "/playlist/detail": playlist_detail,
