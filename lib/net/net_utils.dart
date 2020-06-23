@@ -185,12 +185,20 @@ class NetUtils {
     return sub;
   }
 
-  Future<PlayHistoryEntity> getHistory(uid) async{
+  //获取听歌历史
+  Future<PlayHistoryEntity> getHistory(uid) async {
     var history;
-    var map = await _doHandler('/user/record',{'uid':uid});
-    if(map!=null) history = PlayHistoryEntity.fromJson(map);
+    var map = await _doHandler('/user/record', {'uid': uid});
+    if (map != null) history = PlayHistoryEntity.fromJson(map);
     return history;
   }
+
+  Future<bool> createPlaylist(name) async {
+    bool create = false;
+    create = await _doHandler('/playlist/create', {'name': name}) != null;
+    return create;
+  }
+
   //播放音乐
   Future setPlayListAndPlayById(List<SongInfo> list, int index, String id) async {
     var playList = await FlutterStarrySky().getPlayList();

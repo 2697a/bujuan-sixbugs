@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:bujuan/api/module.dart';
 import 'package:bujuan/constant/constants.dart';
@@ -9,6 +8,7 @@ import 'package:bujuan/entity/user_profile_entity.dart';
 import 'package:bujuan/net/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
+import 'package:bujuan/widget/add_playlist_dialog.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'action.dart';
@@ -16,17 +16,22 @@ import 'state.dart';
 import 'package:flutter/widgets.dart' hide Action; //注意1
 
 Effect<MineState> buildEffect() {
-  return combineEffects(<Object, Effect<MineState>>{
-    MineAction.login: _onLogin,
-    Lifecycle.initState: _init,
-    MineAction.getRefresh: _getRefresh,
-    MineAction.exit: _exit
-  });
+  return combineEffects(<Object, Effect<MineState>>{MineAction.login: _onLogin, Lifecycle.initState: _init, MineAction.getRefresh: _getRefresh, MineAction.exit: _exit, MineAction.createPlaylist: _onCreatePlaylist});
 }
 
-Future<void> _getRefresh(Action action, Context<MineState> ctx) async {
-  Future.delayed(Duration(milliseconds: 500), () async {
-    await _onRefresh(action, ctx);
+void _getRefresh(Action action, Context<MineState> ctx) {
+  _onRefresh(action, ctx);
+}
+
+void _onCreatePlaylist(Action action, Context<MineState> ctx) {
+  showDialog(
+      context: ctx.context,
+      builder: (ctx) {
+        return AddPlayListDialog();
+      }).then((value) {
+    if (value) {
+      _onRefresh(action, ctx);
+    }
   });
 }
 
@@ -40,7 +45,7 @@ void _onLogin(Action action, Context<MineState> ctx) {
   });
 }
 
-void _exit(Action action, Context<MineState> ctx) async{
+void _exit(Action action, Context<MineState> ctx) {
   SpUtil.putInt(USER_ID, null);
   Navigator.pop(ctx.context);
   ctx.dispatch(MineActionCreator.changeLoginState());
@@ -77,10 +82,8 @@ Future _onRefresh(Action action, Context<MineState> ctx) async {
   }
 }
 
-void _init(Action action, Context<MineState> ctx) async {
-  Future.delayed(Duration(milliseconds: 300), () async {
-    await _onRefresh(action, ctx);
-  });
+void _init(Action action, Context<MineState> ctx) {
+  _onRefresh(action, ctx);
 }
 
 Future<UserProfileEntity> _getProfile(userId) async {
@@ -90,7 +93,7 @@ Future<UserProfileEntity> _getProfile(userId) async {
 //  return profile.status == 200
 //      ? UserProfileEntity.fromJson(Map<String, dynamic>.from(profile.body))
 //      : null;
-return NetUtils().getUserProfile(userId);
+  return NetUtils().getUserProfile(userId);
 }
 
 Future<UserOrderEntity> _getPlayList(userId) async {
@@ -101,7 +104,7 @@ Future<UserOrderEntity> _getPlayList(userId) async {
 //      ? UserOrderEntity.fromJson(Map<String, dynamic>.from(playlist.body))
 //      : null;
 
-return NetUtils().getUserPlayList(userId);
+  return NetUtils().getUserPlayList(userId);
 }
 
 ///likelist

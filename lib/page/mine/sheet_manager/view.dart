@@ -2,6 +2,7 @@ import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/page/mine/sheet_manager/action.dart';
+import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
 import 'package:bujuan/widget/slide_item.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -89,7 +90,10 @@ Widget _list(List<UserOrderPlaylist> list, SheetManagerState state, ViewService 
                   color: Colors.red,
                 ),
                 tapCallback: (_) async {
-                  await dispatch(SheetManagerActionCreator.onSub(index));
+                  if (list[index].creator.userId == SpUtil.getInt(USER_ID, defValue: 0))
+                    await dispatch(SheetManagerActionCreator.onDel(index));
+                  else
+                    await dispatch(SheetManagerActionCreator.onSub(index));
                   _.close();
                 },
               )

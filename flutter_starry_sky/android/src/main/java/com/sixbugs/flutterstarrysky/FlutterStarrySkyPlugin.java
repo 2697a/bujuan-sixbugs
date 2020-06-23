@@ -155,7 +155,8 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
                 @Override
                 public void onError(int errorCode, @NonNull String errorMsg) {
                     channel.invokeMethod("state", "error");
-                    Log.d(TAG, "onError: ======");
+                    StarrySky.Companion.with().skipToNext();
+                    Log.d(TAG, "onError: ======"+errorMsg);
                 }
             };
         }
