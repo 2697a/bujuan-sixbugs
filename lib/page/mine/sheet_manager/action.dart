@@ -1,7 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 
 //TODO replace with your own action
-enum SheetManagerAction { del,delState,edit,sub,subState,select }
+enum SheetManagerAction { del,edit,sub,subState,select,delState }
 
 class SheetManagerActionCreator {
   static Action onDel(index) {

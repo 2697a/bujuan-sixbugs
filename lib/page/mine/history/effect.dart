@@ -10,7 +10,6 @@ import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
-import '../../../bujuan_music.dart';
 import 'action.dart';
 import 'state.dart';
 

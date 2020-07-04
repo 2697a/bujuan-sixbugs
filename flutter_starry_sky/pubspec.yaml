@@ -31,7 +31,7 @@ flutter:
         package: com.sixbugs.flutterstarrysky
         pluginClass: FlutterStarrySkyPlugin
       ios:
-        pluginClass: FlutterStarrySkyPlugin
+        pluginClass: FlutterstarryskyPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

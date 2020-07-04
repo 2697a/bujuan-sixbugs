@@ -49,9 +49,13 @@ void _onLike(Action action, Context<SheetDetailsState> ctx) async {
 Future _onInit(Action action, Context<SheetDetailsState> ctx) async {
   SheetDetailsEntity sheetDetailsEntity = await NetUtils().getPlayListDetails(ctx.state.sheetId);
   var playlist = sheetDetailsEntity.playlist;
-  var songToSongInfo = await BuJuanUtil.songToSongInfo(playlist.tracks);
+  if(playlist.trackIds.length>0){
+    var songToSongInfo = await BuJuanUtil.songToSongInfo(playlist.tracks);
+    await ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(songToSongInfo));
+  }else{
+    await ctx.dispatch(SheetDetailsActionCreator.getSheetDeList([]));
+  }
   await ctx.dispatch(SheetDetailsActionCreator.sheetInfo(playlist));
-  await ctx.dispatch(SheetDetailsActionCreator.getSheetDeList(songToSongInfo));
   ctx.state.isShowLoading = false;
 }
 void _onDispose(Action action, Context<SheetDetailsState> ctx){

@@ -17,7 +17,7 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  fish_redux: ^0.3.3
+  fish_redux: ^0.3.4
   dio: ^3.0.9
 #  dio_cookie_manager: 1.0.0
   cookie_jar: ^1.0.1
