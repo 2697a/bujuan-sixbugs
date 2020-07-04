@@ -3,7 +3,7 @@ import 'package:bujuan/entity/banner_entity.dart';
 import 'package:bujuan/entity/new_song_entity.dart';
 import 'package:bujuan/entity/personal_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
-import 'package:bujuan/net/net_utils.dart';
+import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'action.dart';

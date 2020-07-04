@@ -11,6 +11,7 @@ import 'api/answer.dart';
 import 'api/netease_cloud_music.dart';
 import 'constant/constants.dart';
 import 'net/http_util.dart';
+import 'utils/net_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,11 @@ void main() async {
   }
   await _startServer();
   await SpUtil.getInstance();
-  await FlutterStarrySky().init();
+  await FlutterStarrySky().init(songUrl: SongUrl(
+    getSongUrl: (id) async {
+      return await NetUtils().getSongUrl(id);
+    }
+  ));
   Constants.dark = SpUtil.getBool('dark',defValue: false);
   runApp(routes.buildPage("main", null));
 }

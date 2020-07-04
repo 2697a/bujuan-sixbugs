@@ -6,7 +6,7 @@ import 'package:bujuan/entity/play_history_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
-import 'package:bujuan/net/net_utils.dart';
+import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';

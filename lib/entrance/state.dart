@@ -33,7 +33,7 @@ class EntranceState implements Cloneable<EntranceState> {
 
 EntranceState initState(Map<String, dynamic> args) {
   final EntranceState state = EntranceState();
-  state.selectIndex = 1;
+  state.selectIndex = 0;
   state.pageController =
       PageController(initialPage: state.selectIndex, viewportFraction: .99);
   state.miniNav = SpUtil.getBool(MINI_NAV, defValue: false);

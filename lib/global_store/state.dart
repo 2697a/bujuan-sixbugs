@@ -3,6 +3,7 @@ import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/constant/theme.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
 
 import 'package:flutterstarrysky/song_info.dart';
 
@@ -11,7 +12,7 @@ abstract class GlobalBaseState {
 
   SongInfo get currSong;
 
-  PlayStateType get playStateType;
+  PlayState get playState;
 
   LyricEntity get lyric;
 
@@ -29,7 +30,7 @@ abstract class GlobalBaseState {
 
   set currSong(SongInfo currSong);
 
-  set playStateType(PlayStateType playStateType);
+  set playState(PlayState playState);
 
   set currSongPos(int currSongPos);
 
@@ -50,7 +51,7 @@ class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
     print("GlobalState clone");
     return GlobalState()
       ..appTheme = appTheme
-      ..playStateType = playStateType
+      ..playState = playState
       ..currSong = currSong
       ..currSongPos = currSongPos
       ..lyric = lyric
@@ -67,7 +68,7 @@ class GlobalState extends GlobalBaseState implements Cloneable<GlobalState> {
   SongInfo currSong;
 
   @override
-  PlayStateType playStateType;
+  PlayState playState;
 
   @override
   int currSongPos;

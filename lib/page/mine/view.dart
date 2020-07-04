@@ -3,6 +3,7 @@ import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/page/mine/action.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
+import 'package:bujuan/widget/dialog/create_playlist.dart';
 import 'package:bujuan/widget/loading_page.dart';
 import 'package:bujuan/widget/slide_item.dart';
 import 'package:fish_redux/fish_redux.dart';
@@ -347,26 +348,13 @@ Widget _loginView(MineState state, Dispatch dispatch, ViewService viewService) {
                               children: <Widget>[
                                 IconButton(icon: Icon(Icons.add), onPressed: () {
                                   showDialog(context: viewService.context,builder: (context){
-                                    return AlertDialog(
-                                      title: Text('新增歌单'),
-                                      content:TextField(
-                                        controller: state.textEditingController,
-                                        decoration: InputDecoration(
-                                            hintText: '输入歌单名称'
-                                        ),
-                                      ),
-                                      actions: <Widget>[
-                                        InkWell(
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                            child: Text('确认'),
-                                          ),
-                                          onTap: () {
-                                            dispatch(MineActionCreator.createPlayList(state.textEditingController.text));
-                                          },
-                                        )
-                                      ],
-                                    );
+                                    return CreatePlayListDialog();
+                                  }).then((value) {
+                                    if(value!=null){
+                                      if(value)
+                                        dispatch(MineActionCreator.getRefresh());
+                                    }
+                                    println('=====$value');
                                   });
                                 }),
                                 IconButton(icon: Icon(Icons.more_vert), onPressed: () {

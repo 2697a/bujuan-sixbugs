@@ -6,6 +6,7 @@ import 'package:bujuan/entity/search_song_entity.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/entity/song_de_entity.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/utils/net_utils.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'action.dart';
 import 'state.dart';
@@ -14,7 +15,20 @@ Effect<SearchDetailsState> buildEffect() {
   return combineEffects(<Object, Effect<SearchDetailsState>>{Lifecycle.initState: _init});
 }
 
-void _init(Action action, Context<SearchDetailsState> ctx) {
+void _init(Action action, Context<SearchDetailsState> ctx) async{
+  // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
+  var searchSheetEntity = await NetUtils().search(ctx.state.searchContent, 1);
+  if(searchSheetEntity!=null){
+    List<String> ids = List();
+    searchSheetEntity.result.songs.forEach((song){
+      ids.add('${song.id}');
+    });
+    var list = await NetUtils().getSongDetails(ids.join(','));
+    if(list!=null){
+      var songToSongInfo = await BuJuanUtil.songToSongInfo(list);
+      ctx.dispatch(SearchDetailsActionCreator.getSong(songToSongInfo));
+    }
+  }
   _searchSheetData(ctx.state.searchContent).then((sheet) {
     if (sheet != null) {
       ctx.dispatch(SearchDetailsActionCreator.getSheet(sheet.result.playlists));
@@ -30,32 +44,32 @@ void _init(Action action, Context<SearchDetailsState> ctx) {
       ctx.dispatch(SearchDetailsActionCreator.getMv(mv.result.mvs));
     }
   });
-  _searchSongData(ctx.state.searchContent).then((song) {
-    if (song != null) {
-      List<String> ids = List();
-      song.result.songs.forEach((song){
-        ids.add('${song.id}');
-      });
-      _getSongDetails(ids.join(',')).then((de){
-        List<SongBeanEntity> newList = List();
-        de.songs.forEach((details) {
-          var singerStr = '';
-          var ar = details.ar;
-          ar.forEach((singer) {
-            singerStr += ' ${singer.name} ';
-          });
-          SongBeanEntity songBeanEntity = SongBeanEntity(
-              name: details.name,
-              id: details.id.toString(),
-              picUrl: details.al.picUrl,
-              singer: singerStr,
-              mv: details.mv);
-          newList.add(songBeanEntity);
-        });
-        ctx.dispatch(SearchDetailsActionCreator.getSong(newList));
-      });
-    }
-  });
+//  _searchSongData(ctx.state.searchContent).then((song) {
+//    if (song != null) {
+//      List<String> ids = List();
+//      song.result.songs.forEach((song){
+//        ids.add('${song.id}');
+//      });
+//      _getSongDetails(ids.join(',')).then((de){
+//        List<SongBeanEntity> newList = List();
+//        de.songs.forEach((details) {
+//          var singerStr = '';
+//          var ar = details.ar;
+//          ar.forEach((singer) {
+//            singerStr += ' ${singer.name} ';
+//          });
+//          SongBeanEntity songBeanEntity = SongBeanEntity(
+//              name: details.name,
+//              id: details.id.toString(),
+//              picUrl: details.al.picUrl,
+//              singer: singerStr,
+//              mv: details.mv);
+//          newList.add(songBeanEntity);
+//        });
+//        ctx.dispatch(SearchDetailsActionCreator.getSong(newList));
+//      });
+//    }
+//  });
 }
 
 Future<SearchSongEntity> _searchSongData(content) async {

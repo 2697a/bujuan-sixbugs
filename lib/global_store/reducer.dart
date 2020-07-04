@@ -53,7 +53,7 @@ GlobalState _onchangeThemeColor(GlobalState state, Action action) {
 }
 
 GlobalState _onchangePlayState(GlobalState state, Action action) {
-  return state.clone()..playStateType = action.payload;
+  return state.clone()..playState = action.payload;
 }
 
 GlobalState _onchangeCurrSong(GlobalState state, Action action) {

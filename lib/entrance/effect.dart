@@ -2,18 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bujuan/api/module.dart';
-import 'package:bujuan/bujuan_music.dart';
-import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/fm_entity.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
-import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/net/http_util.dart';
-import 'package:bujuan/net/net_utils.dart';
+import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
-import 'package:bujuan/utils/sp_util.dart';
 import 'package:dio/dio.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
@@ -99,40 +95,48 @@ void _onChangeUpdate(Action action, Context<EntranceState> ctx) async {
 void _onBottomTap(Action action, Context<EntranceState> ctx) {
   ctx.state.pageController.jumpToPage(action.payload);
 }
+
 Future<dynamic> _platformCallHandler(MethodCall call) async {
-    var method = call.method;
-    print('object==========${method}======${call.arguments.toString()}');
-    var arguments = call.arguments;
-    if(method=='currSong'){
-      //更新当前播放的歌曲
-      if(arguments!=null)
-        await GlobalStore.store
-          .dispatch(GlobalActionCreator.changeCurrSong(SongInfo.fromJson(jsonDecode(arguments))));
-    }else if(method=='getUrl'){
-      //获取歌曲url
-      return await NetUtils().getSongUrl(arguments);
-    }else if(method=='state'){
-      if(arguments=='start'){
-        await GlobalStore.store
-            .dispatch(GlobalActionCreator.changePlayState(PlayStateType.Playing));
-      }else if(arguments=='stop'){
-        await GlobalStore.store
-            .dispatch(GlobalActionCreator.changePlayState(PlayStateType.Stop));
-      }else if(arguments=='pause'||arguments=='completion'){
-        await GlobalStore.store
-            .dispatch(GlobalActionCreator.changePlayState(PlayStateType.Pause));
-      }
+  var method = call.method;
+  print('object==========${method}======${call.arguments.toString()}');
+  var arguments = call.arguments;
+  if (method == 'currSong') {
+    //更新当前播放的歌曲
+    if (arguments != null)
+      await GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(
+          SongInfo.fromJson(jsonDecode(arguments))));
+  } else if (method == 'getUrl') {
+    //获取歌曲url
+    return await NetUtils().getSongUrl(arguments);
+  } else if (method == 'state') {
+    if (arguments == 'start') {
+      await GlobalStore.store
+          .dispatch(GlobalActionCreator.changePlayState(PlayState.START));
+    } else if (arguments == 'stop') {
+      await GlobalStore.store
+          .dispatch(GlobalActionCreator.changePlayState(PlayState.STOP));
+    } else if (arguments == 'pause' || arguments == 'completion') {
+      await GlobalStore.store
+          .dispatch(GlobalActionCreator.changePlayState(PlayState.PAUSE));
     }
+  }
 }
+
 void _onInit(Action action, Context<EntranceState> ctx) async {
-  FlutterStarrySky().getChannel().setMethodCallHandler((call) =>  _platformCallHandler(call));
+  FlutterStarrySky().onPlayerStateChanged.listen((PlayState playState) {
+     GlobalStore.store
+        .dispatch(GlobalActionCreator.changePlayState(PlayState.START));
+  });
+
+  FlutterStarrySky().onPlayerSongChanged.listen((event) {
+    GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(event));
+  });
 }
 
 //页面销毁时
 void _onDispose(Action action, Context<EntranceState> ctx) {
   ctx.state.pageController?.dispose();
 }
-
 
 ///personal_fm
 Future<FmEntity> _getFm() async {

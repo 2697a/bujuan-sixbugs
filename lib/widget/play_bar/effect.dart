@@ -2,17 +2,11 @@ import 'dart:convert';
 
 import 'package:bujuan/bujuan_music.dart';
 import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
-import 'package:bujuan/page/fm/page.dart';
-import 'package:bujuan/page/play/page.dart';
-import 'package:bujuan/page/play2/page.dart';
 import 'package:bujuan/utils/sp_util.dart';
-import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
 import 'package:fish_redux/fish_redux.dart';
-import 'package:flutter/widgets.dart' hide Action;
 import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'action.dart';
 import 'state.dart';
@@ -29,33 +23,32 @@ Effect<PlayBarState> buildEffect() {
 void _onAction(Action action, Context<PlayBarState> ctx) {}
 
 void _onOpenPlay(Action action, Context<PlayBarState> ctx) {
-  if (ctx.state.playStateType != PlayStateType.Stop) {
-    var miniPlay = SpUtil.getBool(MINI_PLAY, defValue: false);
-    var isFm = SpUtil.getBool(ISFM, defValue: false);
-    showBujuanBottomSheet(
-      context: ctx.context,
-      builder: (BuildContext context) {
-        var width = MediaQuery.of(context).size.height;
-//        if (miniPlay) width = width / 1.15;
-        return Container(
-          height: width,
-          child: isFm
-              ? FmPlayViewPage().buildPage(null)
-              : miniPlay
-                  ? PlayViewPage().buildPage(null)
-                  : PlayView2Page().buildPage(null),
-        );
-      },
-    );
-  } else {
-    openPlayViewAndSendHistory(ctx, action);
-  }
+//  if (ctx.state.playState != PlayState.STOP) {
+//    var miniPlay = SpUtil.getBool(MINI_PLAY, defValue: false);
+//    var isFm = SpUtil.getBool(ISFM, defValue: false);
+//    showBujuanBottomSheet(
+//      context: ctx.context,
+//      builder: (BuildContext context) {
+//        var width = MediaQuery.of(context).size.height;
+//        return Container(
+//          height: width,
+//          child: isFm
+//              ? FmPlayViewPage().buildPage(null)
+//              : miniPlay
+//                  ? PlayViewPage().buildPage(null)
+//                  : PlayView2Page().buildPage(null),
+//        );
+//      },
+//    );
+//  } else {
+//    openPlayViewAndSendHistory(ctx, action);
+//  }
 }
 
 void _onTask(Action action, Context<PlayBarState> ctx) async{
-  var playStateType = ctx.state.playStateType;
-  if (playStateType != PlayStateType.Stop)
-    if(playStateType == PlayStateType.Playing)
+  var playStateType = ctx.state.playState;
+  if (playStateType != PlayState.STOP)
+    if(playStateType == PlayState.START)
     await FlutterStarrySky().pause();
     else
       await FlutterStarrySky().restore();
@@ -65,7 +58,7 @@ void _onTask(Action action, Context<PlayBarState> ctx) async{
 }
 
 void _onNext(Action action, Context<PlayBarState> ctx) async{
-  if (ctx.state.playStateType != PlayStateType.Stop)
+  if (ctx.state.playState != PlayState.STOP)
    await FlutterStarrySky().next();
   else {
     openPlayViewAndSendHistory(ctx, action);

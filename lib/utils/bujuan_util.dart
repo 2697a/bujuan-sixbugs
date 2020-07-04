@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/play_history_entity.dart';
+import 'package:bujuan/entity/search_song_entity.dart';
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:flutterstarrysky/song_info.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
 class BuJuanUtil {
@@ -88,6 +88,7 @@ class BuJuanUtil {
     });
     return info;
   }
+
   static List<Lyric> getLyric(String lyric) {
     var split = lyric.split('\n');
     split.forEach((str) {});

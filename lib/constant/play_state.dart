@@ -1,5 +1,5 @@
-enum PlayStateType{
-  Playing,
-  Stop,
-  Pause,
-}
+//enum PlayStateType{
+//  Playing,
+//  Stop,
+//  Pause,
+//}

@@ -6,7 +6,7 @@ import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/like_song_list_entity.dart';
 import 'package:bujuan/entity/user_order_entity.dart';
 import 'package:bujuan/entity/user_profile_entity.dart';
-import 'package:bujuan/net/net_utils.dart';
+import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';

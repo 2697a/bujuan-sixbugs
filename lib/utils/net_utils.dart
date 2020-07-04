@@ -8,6 +8,8 @@ import 'package:bujuan/entity/login_entity.dart';
 import 'package:bujuan/entity/new_song_entity.dart';
 import 'package:bujuan/entity/personal_entity.dart';
 import 'package:bujuan/entity/play_history_entity.dart';
+import 'package:bujuan/entity/search_sheet_entity.dart';
+import 'package:bujuan/entity/search_song_entity.dart';
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:bujuan/entity/top_entity.dart';
@@ -185,12 +187,22 @@ class NetUtils {
     return sub;
   }
 
+  //創建歌單
   Future<bool> createPlayList(name) async{
     bool create = false;
     var map = await _doHandler('/playlist/create',{'name':name});
     create = map!=null;
     return create;
   }
+
+  //搜索// 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
+  Future<SearchSongEntity> search(content,type) async{
+    var searchData;
+    var map = await _doHandler('/search',{'keywords': content, 'type': type});
+    if (map != null) searchData = SearchSongEntity.fromJson(map);
+    return searchData;
+  }
+
   Future<PlayHistoryEntity> getHistory(uid) async{
     var history;
     var map = await _doHandler('/user/record',{'uid':uid});
@@ -204,29 +216,4 @@ class NetUtils {
     await FlutterStarrySky().setPlayListAndPlayById(list, index, '$id');
   }
 
-  //监听原生返回
-  Future listenerBujuanMusic() async {
-    FlutterStarrySky().getChannel().setMethodCallHandler((call) => _platformCallHandler(call));
-  }
-
-  Future<dynamic> _platformCallHandler(MethodCall call) async {
-    var method = call.method;
-    print('object==========${method}======${call.arguments.toString()}');
-    var arguments = call.arguments;
-    if (method == 'currSong') {
-      //更新当前播放的歌曲
-      if (arguments != null) await GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(SongInfo.fromJson(jsonDecode(arguments))));
-    } else if (method == 'getUrl') {
-      //获取歌曲url
-      return await NetUtils().getSongUrl(arguments);
-    } else if (method == 'state') {
-      if (arguments == 'start') {
-        await GlobalStore.store.dispatch(GlobalActionCreator.changePlayState(PlayStateType.Playing));
-      } else if (arguments == 'stop') {
-        await GlobalStore.store.dispatch(GlobalActionCreator.changePlayState(PlayStateType.Stop));
-      } else if (arguments == 'pause' || arguments == 'completion') {
-        await GlobalStore.store.dispatch(GlobalActionCreator.changePlayState(PlayStateType.Pause));
-      }
-    }
-  }
 }

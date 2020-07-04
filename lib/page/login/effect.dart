@@ -4,7 +4,7 @@ import 'package:bujuan/api/answer.dart';
 import 'package:bujuan/api/module.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/login_entity.dart';
-import 'package:bujuan/net/net_utils.dart';
+import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:cookie_jar/cookie_jar.dart';

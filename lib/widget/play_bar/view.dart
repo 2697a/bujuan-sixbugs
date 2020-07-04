@@ -1,8 +1,8 @@
 import 'package:bujuan/constant/Screens.dart';
-import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/widget/play_bar/action.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
 
 import '../cache_image.dart';
 import 'state.dart';
@@ -50,8 +50,8 @@ Widget buildView(
                     child: Container(
                       height: Screens.setHeight(42),
                       width: Screens.setWidth(42),
-                      child: state.playStateType == PlayStateType.Stop ||
-                          state.playStateType == PlayStateType.Pause
+                      child: state.playState == PlayState.STOP ||
+                          state.playState == PlayState.PAUSE
                           ? Icon(Icons.play_arrow)
                           : Icon(Icons.pause),
                     ),

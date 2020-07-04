@@ -10,7 +10,6 @@ import 'package:bujuan/page/login/page.dart';
 import 'package:bujuan/page/mine/history/page.dart';
 import 'package:bujuan/page/mine/sheet_manager/page.dart';
 import 'package:bujuan/page/mv_play/page.dart';
-import 'package:bujuan/page/play/page.dart';
 import 'package:bujuan/page/radio/page.dart';
 import 'package:bujuan/page/search/page.dart';
 import 'package:bujuan/page/search/search_details/page.dart';
@@ -37,7 +36,7 @@ var routes = new PageRoutes(
     'entrance_page': EntrancePage(),
     'main': MainPage(), //电台详情页
     'sheet_details': SheetDetailsPage(),
-    'play_view': PlayViewPage(),
+//    'play_view': PlayViewPage(),
     'login': LoginPage(),
     'today': TodayPage(),
     'sheet_info': SheetInfoPage(),

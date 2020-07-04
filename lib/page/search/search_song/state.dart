@@ -1,8 +1,8 @@
-import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
 class SearchSongState implements Cloneable<SearchSongState> {
-  List<SongBeanEntity> songs;
+  List<SongInfo> songs;
 
   @override
   SearchSongState clone() {

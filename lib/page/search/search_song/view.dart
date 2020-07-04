@@ -12,11 +12,11 @@ Widget buildView(SearchSongState state, Dispatch dispatch, ViewService viewServi
       padding: EdgeInsets.all(0),
       itemBuilder: (context, index) {
         return ListTile(
-          leading: ImageHelper.getImage('${state.songs[index].picUrl}?param=100y100', height: 35, isRound: true),
+          leading: ImageHelper.getImage('${state.songs[index].songCover}?param=100y100', height: 35, isRound: true),
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
           dense: true,
-          title: Text('${state.songs[index].name}'),
-          subtitle: Text('${state.songs[index].singer}'),
+          title: Text('${state.songs[index].songName}'),
+          subtitle: Text('${state.songs[index].artist}'),
           onTap: () {
             dispatch(SearchSongActionCreator.playSong(index));
           },

@@ -1,15 +1,13 @@
 import 'package:bujuan/entity/search_mv_entity.dart';
 import 'package:bujuan/entity/search_sheet_entity.dart';
 import 'package:bujuan/entity/search_singer_entity.dart';
-import 'package:bujuan/entity/search_song_entity.dart';
-import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/song_info.dart';
 
-//TODO replace with your own action
 enum SearchDetailsAction { getSong, getMv, getSinger, getSheet }
 
 class SearchDetailsActionCreator {
-  static Action getSong(List<SongBeanEntity> songs) {
+  static Action getSong(List<SongInfo> songs) {
     return Action(SearchDetailsAction.getSong, payload: songs);
   }
 

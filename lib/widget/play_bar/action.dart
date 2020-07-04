@@ -1,6 +1,5 @@
-import 'package:bujuan/constant/play_state.dart';
-import 'package:bujuan/widget/play_bar/state.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
 
 //TODO replace with your own action
 enum PlayBarAction {
@@ -17,7 +16,7 @@ class PlayBarActionCreator {
     return const Action(PlayBarAction.action);
   }
 
-  static Action changePlayState(PlayStateType state) {
+  static Action changePlayState(PlayState state) {
     return Action(PlayBarAction.changePlayState, payload: state);
   }
 

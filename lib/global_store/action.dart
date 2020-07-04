@@ -1,5 +1,6 @@
 import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
+import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'package:flutterstarrysky/song_info.dart';
 import 'package:fish_redux/fish_redux.dart';
 
@@ -12,8 +13,8 @@ class GlobalActionCreator {
   }
 
   //改变播放状态
-  static Action changePlayState(PlayStateType playStateType) {
-    return Action(GlobalAction.changePlayState, payload: playStateType);
+  static Action changePlayState(PlayState playState) {
+    return Action(GlobalAction.changePlayState, payload: playState);
   }
 
   //改变当前播放歌曲

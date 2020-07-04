@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:bujuan/constant/Screens.dart';
-import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/back_widget.dart';
 import 'package:bujuan/widget/cache_image.dart';
@@ -22,6 +20,7 @@ Widget buildView(
     EntranceState state, Dispatch dispatch, ViewService viewService) {
   return WillPopScope(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: Widgets.blackWidget(state.isBlack, SlidingUpPanel(
           color: Colors.transparent,
           controller: state.panelController,

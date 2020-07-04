@@ -22,8 +22,8 @@ class PlayBarPage extends Page<PlayBarState, Map<String, dynamic>> {
     this.connectExtraStore<GlobalState>(GlobalStore.store,
         (Object pageState, GlobalState appState) {
       final GlobalBaseState p = pageState;
-      if (p.playStateType != null &&
-          p.playStateType == appState.playStateType &&
+      if (p.playState != null &&
+          p.playState == appState.playState &&
           p.currSong != null &&
           p.currSong == appState.currSong) {
         return pageState;
@@ -31,7 +31,7 @@ class PlayBarPage extends Page<PlayBarState, Map<String, dynamic>> {
         if (pageState is Cloneable) {
           final Object copy = pageState.clone();
           final GlobalBaseState newState = copy;
-          newState.playStateType = appState.playStateType;
+          newState.playState = appState.playState;
           newState.currSong = appState.currSong;
           return newState;
         }
