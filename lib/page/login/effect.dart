@@ -1,16 +1,10 @@
-import 'dart:io';
-
-import 'package:bujuan/api/answer.dart';
-import 'package:bujuan/api/module.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/login_entity.dart';
-import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/utils/net_utils.dart';
 import 'package:bujuan/utils/sp_util.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart' hide Action;
-import 'package:path_provider/path_provider.dart';
 import 'action.dart';
 import 'state.dart';
 

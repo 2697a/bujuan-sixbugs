@@ -1,5 +1,5 @@
 
-import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
+import 'package:bujuan/utils/net_utils.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'action.dart';
 import 'state.dart';

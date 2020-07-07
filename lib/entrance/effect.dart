@@ -2,14 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bujuan/api/module.dart';
-import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/entity/fm_entity.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:bujuan/net/http_util.dart';
-import 'file:///C:/project/newPro/bujuan-sixbugs/lib/utils/net_utils.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
+import 'package:bujuan/utils/net_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
