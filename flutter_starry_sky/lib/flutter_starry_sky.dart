@@ -38,6 +38,12 @@ class FlutterStarrySky {
 
   Stream<SongInfo> get onPlayerSongChanged => _playerSongController.stream;
 
+  //当前播放進度
+  final StreamController<int> _playerSongPositionController = StreamController<
+      int>.broadcast();
+
+  Stream<int> get onPlayerSongPositionChanged => _playerSongPositionController.stream;
+
   SongUrl songUrl;
 
   MethodChannel getChannel() {
@@ -67,12 +73,15 @@ class FlutterStarrySky {
       return songUrl?.getSongUrl(arguments);
     } else if (method == 'state') {
       if (arguments == 'start') {
-        _playerStateController.add(PlayState.STOP);
+        _playerStateController.add(PlayState.START);
       } else if (arguments == 'stop') {
         _playerStateController.add(PlayState.STOP);
       } else if (arguments == 'pause' || arguments == 'completion') {
         _playerStateController.add(PlayState.PAUSE);
       }
+    }else if(method=='playPosition'){
+      _playerSongPositionController.add(arguments);
+//      print('獲取當前播放進度===========$arguments');
     }
   }
 

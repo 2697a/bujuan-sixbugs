@@ -1,4 +1,4 @@
-import 'package:bujuan/net/net_utils.dart';
+import 'package:bujuan/utils/net_utils.dart';
 import 'package:flutter/material.dart';
 
 class AddPlayListDialog extends StatefulWidget {
@@ -104,7 +104,7 @@ class AddPlayListState extends State<AddPlayListDialog> {
     var name = _editingController.text;
     if (name != null) {
       setState(() => isCreate = true);
-      var bool = await NetUtils().createPlaylist(name);
+      var bool = await NetUtils().createPlayList(name);
       if (bool)
         Navigator.of(context).pop(isCreate);
       else

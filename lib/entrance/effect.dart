@@ -125,11 +125,17 @@ Future<dynamic> _platformCallHandler(MethodCall call) async {
 void _onInit(Action action, Context<EntranceState> ctx) async {
   FlutterStarrySky().onPlayerStateChanged.listen((PlayState playState) {
      GlobalStore.store
-        .dispatch(GlobalActionCreator.changePlayState(PlayState.START));
+        .dispatch(GlobalActionCreator.changePlayState(playState));
   });
 
   FlutterStarrySky().onPlayerSongChanged.listen((event) {
+    print('獲取當前總時長===========${event.duration}');
     GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(event));
+  });
+
+  FlutterStarrySky().onPlayerSongPositionChanged.listen((event) {
+    GlobalStore.store
+        .dispatch(GlobalActionCreator.changeSongPos(event));
   });
 }
 

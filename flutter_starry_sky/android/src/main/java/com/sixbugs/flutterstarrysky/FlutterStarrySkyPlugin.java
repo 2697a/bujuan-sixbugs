@@ -13,12 +13,14 @@ import com.sixbugs.flutterstarrysky.starry.GsonUtil;
 import com.sixbugs.flutterstarrysky.starry.StarrySky;
 import com.sixbugs.flutterstarrysky.starry.StarrySkyConfig;
 import com.sixbugs.flutterstarrysky.starry.control.OnPlayerEventListener;
+import com.sixbugs.flutterstarrysky.starry.control.RepeatMode;
 import com.sixbugs.flutterstarrysky.starry.intercept.InterceptorCallback;
 import com.sixbugs.flutterstarrysky.starry.intercept.StarrySkyInterceptor;
 import com.sixbugs.flutterstarrysky.starry.notification.NotificationConfig;
 import com.sixbugs.flutterstarrysky.starry.provider.SongInfo;
 import com.sixbugs.flutterstarrysky.starry.utils.MainLooper;
 import com.sixbugs.flutterstarrysky.starry.utils.SpUtil;
+import com.sixbugs.flutterstarrysky.starry.utils.TimerTaskManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +42,7 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
     public static MethodChannel channel;
     private OnPlayerEventListener onPlayerEventListener;
     private Context context;
+    private TimerTaskManager mTimerTask;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -60,6 +63,7 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
             case "init":
                 Log.d(TAG, "onMethodCall: ========我将初始化OnPlayerEventListener");
                 addPlayerEventListener();
+                listenerPos();
                 result.success("初始化完毕");
                 break;
             case "setPlayList":
@@ -103,6 +107,23 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
                 StarrySky.Companion.with().skipToPrevious();
                 result.success(1);
                 break;
+            case "playMod":
+                int playMod = (int) call.arguments;
+                switch (playMod) {
+                    case 0:
+                        //順序播放
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_NONE,true);
+                        break;
+                    case 1:
+                        //單曲循環
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_ONE,true);
+                        break;
+                    case 2:
+                        //隨機播放
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_SHUFFLE,true);
+                        break;
+                }
+                break;
             case "dispose":
                 Log.d(TAG, "dispose: ======");
                 break;
@@ -115,6 +136,7 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
 
     //添加监听
     private void addPlayerEventListener() {
+        if (mTimerTask == null) mTimerTask = new TimerTaskManager();
         if (onPlayerEventListener == null) {
             onPlayerEventListener = new OnPlayerEventListener() {
                 @Override
@@ -125,24 +147,28 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
 
                 @Override
                 public void onPlayerStart() {
+                    mTimerTask.startToUpdateProgress();
                     channel.invokeMethod("state", "start");
                     Log.d(TAG, "onPlayerStart: ======");
                 }
 
                 @Override
                 public void onPlayerPause() {
+                    mTimerTask.stopToUpdateProgress();
                     channel.invokeMethod("state", "pause");
                     Log.d(TAG, "onPlayerPause: ======");
                 }
 
                 @Override
                 public void onPlayerStop() {
+                    mTimerTask.stopToUpdateProgress();
                     channel.invokeMethod("state", "stop");
                     Log.d(TAG, "onPlayerStop: ======");
                 }
 
                 @Override
                 public void onPlayCompletion(@NonNull SongInfo songInfo) {
+                    mTimerTask.stopToUpdateProgress();
                     channel.invokeMethod("state", "completion");
                     Log.d(TAG, "onPlayCompletion: ======" + songInfo.getSongName());
                 }
@@ -156,6 +182,7 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
                 public void onError(int errorCode, @NonNull String errorMsg) {
                     channel.invokeMethod("state", "error");
                     StarrySky.Companion.with().skipToNext();
+                    mTimerTask.stopToUpdateProgress();
                     Log.d(TAG, "onError: ======"+errorMsg);
                 }
             };
@@ -164,6 +191,15 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
 
+    private void listenerPos() {
+        //设置更新回调
+        mTimerTask.setUpdateProgressTask(() -> {
+            long position = StarrySky.Companion.with().getPlayingPosition();
+            long duration = StarrySky.Companion.with().getDuration();
+            long buffered = StarrySky.Companion.with().getBufferedPosition();
+            channel.invokeMethod("playPosition",position);
+        });
+    }
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         Log.d(TAG, "onDetachedFromEngine: ======");
@@ -204,6 +240,7 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
         StarrySkyConfig config = new StarrySkyConfig().newBuilder()
                 .addInterceptor(new PermissionInterceptor())
                 .addInterceptor(new RequestSongInfoInterceptor())
+                .setInterceptorTimeOut(10*1000)
                 .isOpenNotification(true)
                 .setNotificationConfig(notificationConfig)
                 .build();

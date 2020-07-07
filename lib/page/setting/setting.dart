@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:bujuan/constant/constants.dart';
+import 'package:bujuan/page/setting/play_style/playStatePage.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/back_widget.dart';
 import 'package:bujuan/widget/background_setting.dart';
@@ -38,13 +39,16 @@ class SettingState extends State<SettingPage> {
                 child: Text('UI设置'),
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
               ),
-              SwitchListTile(
+              ListTile(
                   title: Text(
                     '切换播放页ui(目前就两种，做的比较简陋)',
                     style: TextStyle(fontSize: 14),
                   ),
-                  value: false,
-                  onChanged: (value) {}),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return PlayStylePage();
+                    }));
+                  }),
               ListTile(
                 title: Text(
                   '全局背景(暂时关闭)',

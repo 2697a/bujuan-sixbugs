@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/page/setting/action.dart';
+import 'package:bujuan/page/setting/play_style/playStatePage.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/background_setting.dart';
 import 'package:bujuan/widget/bujuan_bottom_sheet.dart';
@@ -37,12 +38,14 @@ Widget buildView(SettingState state, Dispatch dispatch, ViewService viewService)
                 child: Text('UI设置'),
                 padding: EdgeInsets.symmetric(vertical: 8,horizontal: 20),
               ),
-              SwitchListTile(
+              ListTile(
                   title: Text('切换播放页ui(目前就两种，做的比较简陋)',style: TextStyle(fontSize: 14),),
-                  value: state.miniPlay,
-                  onChanged: (value) {
-                    dispatch(SettingActionCreator.onMiniPlay());
-                  }),
+                  onTap: (){
+                    Navigator.push(viewService.context, MaterialPageRoute(builder: (context){
+                      return PlayStylePage();
+                    }));
+                  },
+                  ),
               SwitchListTile(
                   title: Text(
                     '迷你导航栏',

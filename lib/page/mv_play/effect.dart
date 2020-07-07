@@ -17,12 +17,12 @@ Effect<MvPlayViewState> buildEffect() {
 void _onAction(Action action, Context<MvPlayViewState> ctx) {}
 
 void _init(Action action, Context<MvPlayViewState> ctx) async{
- await _getMvDetals(ctx.state.mvId).then((mv) {
-    BujuanMusic.control(task: 'pause');
-    if (mv != null) {
-      ctx.dispatch(MvPlayViewActionCreator.getMvData(mv));
-    }
-  });
+// await _getMvDetals(ctx.state.mvId).then((mv) {
+//    BujuanMusic.control(task: 'pause');
+//    if (mv != null) {
+//      ctx.dispatch(MvPlayViewActionCreator.getMvData(mv));
+//    }
+//  });
 }
 
 void _dispose(Action action, Context<MvPlayViewState> ctx) {

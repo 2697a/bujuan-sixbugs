@@ -14,9 +14,4 @@ Effect<NewSongState> buildEffect() {
 }
 
 void _onAction(Action action, Context<NewSongState> ctx) {
-  SpUtil.putBool(ISFM, false);
-  var index2 = action.payload;
-  SpUtil.putObjectList(playSongListHistory, ctx.state.result);
-  var jsonEncode2 = jsonEncode(ctx.state.result);
-  BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
 }

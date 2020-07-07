@@ -72,10 +72,8 @@ void _onTap(Action action, Context<NewBannerState> ctx) {
 
           SpUtil.putBool(ISFM, false);
           var index2 = 0;
-//          GlobalStore.store.dispatch(GlobalActionCreator.changeCurrSong(newList[index2]));
           SpUtil.putObjectList(playSongListHistory, newList);
           var jsonEncode2 = jsonEncode(newList);
-          BujuanMusic.sendSongInfo(songInfo: jsonEncode2, index: index2);
         }
       });
       break;

@@ -67,7 +67,7 @@ class BuJuanUtil {
   static Future<List<SongInfo>> songToSongInfo(List<SheetDetailsPlaylistTrack> songs) async {
     List<SongInfo> info = [];
     await Future.forEach(songs, (SheetDetailsPlaylistTrack element){
-      SongInfo songInfo = SongInfo(songId: '${element.id}',songCover: '${element.al.picUrl}',songUrl: '',songName: '${element.name}',artist: '${element.ar[0].name}');
+      SongInfo songInfo = SongInfo(songId: '${element.id}',duration:element.dt,songCover: '${element.al.picUrl}',songUrl: '',songName: '${element.name}',artist: '${element.ar[0].name}');
       info.add(songInfo);
     });
     return info;
@@ -75,7 +75,7 @@ class BuJuanUtil {
   static Future<List<SongInfo>> historyToSongInfo(List<PlayHistoryAlldata> songs) async {
     List<SongInfo> info = [];
     await Future.forEach(songs, (PlayHistoryAlldata element){
-      SongInfo songInfo = SongInfo(songId: '${element.song.id}',songCover: '${element.song.al.picUrl}',songUrl: '',songName: '${element.song.name}',artist: '${element.song.ar[0].name}');
+      SongInfo songInfo = SongInfo(songId: '${element.song.id}',duration:element.song.dt,songCover: '${element.song.al.picUrl}',songUrl: '',songName: '${element.song.name}',artist: '${element.song.ar[0].name}');
       info.add(songInfo);
     });
     return info;
@@ -83,7 +83,7 @@ class BuJuanUtil {
   static Future<List<SongInfo>> todayToSongInfo(List<TodaySongRecommand> songs) async {
     List<SongInfo> info = [];
     await Future.forEach(songs, (TodaySongRecommand element){
-      SongInfo songInfo = SongInfo(songId: '${element.id}',songCover: '${element.album.picUrl}',songUrl: '',songName: '${element.name}',artist: '${element.artists[0].name}');
+      SongInfo songInfo = SongInfo(songId: '${element.id}',duration:element.duration,songCover: '${element.album.picUrl}',songUrl: '',songName: '${element.name}',artist: '${element.artists[0].name}');
       info.add(songInfo);
     });
     return info;

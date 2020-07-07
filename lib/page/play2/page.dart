@@ -7,16 +7,17 @@ import 'reducer.dart';
 import 'state.dart';
 import 'view.dart';
 
-class PlayBarPage extends Page<PlayBarState, Map<String, dynamic>> {
-  PlayBarPage()
+class PlayView2Page extends Page<PlayView2State, Map<String, dynamic>>
+    with TickerProviderMixin<PlayView2State> {
+  PlayView2Page()
       : super(
           initState: initState,
           effect: buildEffect(),
           reducer: buildReducer(),
           view: buildView,
-          dependencies: Dependencies<PlayBarState>(
-              adapter: null, slots: <String, Dependent<PlayBarState>>{}),
-          middleware: <Middleware<PlayBarState>>[],
+          dependencies: Dependencies<PlayView2State>(
+              adapter: null, slots: <String, Dependent<PlayView2State>>{}),
+          middleware: <Middleware<PlayView2State>>[],
         )
   {
     this.connectExtraStore<GlobalState>(GlobalStore.store,
@@ -24,9 +25,11 @@ class PlayBarPage extends Page<PlayBarState, Map<String, dynamic>> {
       final GlobalBaseState p = pageState;
       if (p.playState != null &&
           p.playState == appState.playState &&
-          p.currSongPos == appState.currSongPos&&
           p.currSong != null &&
-          p.currSong == appState.currSong) {
+          p.currSong == appState.currSong &&
+          p.currSongPos == appState.currSongPos &&
+          p.playModeType != null &&
+          p.playModeType == appState.playModeType) {
         return pageState;
       } else {
         if (pageState is Cloneable) {
@@ -34,6 +37,8 @@ class PlayBarPage extends Page<PlayBarState, Map<String, dynamic>> {
           final GlobalBaseState newState = copy;
           newState.playState = appState.playState;
           newState.currSong = appState.currSong;
+          newState.currSongPos = appState.currSongPos;
+          newState.playModeType = appState.playModeType;
           return newState;
         }
         return pageState;

@@ -31,7 +31,7 @@ Widget buildView(
                       Container(
                         alignment: Alignment.centerLeft,
                         height: Screens.setHeight(24),
-                        child: Text(state.currSong.songName,
+                        child: Text('${state.currSong.songName}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: Screens.text14)),
                       ),
