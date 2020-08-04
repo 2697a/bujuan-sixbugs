@@ -49,6 +49,7 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    //集成插件
     implementation 'com.lzx:StarrySkyX:2.4.4'
     implementation 'androidx.core:core-ktx:1.5.0-alpha01'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

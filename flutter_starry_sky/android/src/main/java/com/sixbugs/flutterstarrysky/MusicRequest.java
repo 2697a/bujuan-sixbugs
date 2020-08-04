@@ -16,8 +16,6 @@ public class MusicRequest {
     public MusicRequest() {
 
     }
-
-
     public void getSongUrl(final String songId, final RequestInfoCallback callback, final MethodChannel channel, MainLooper mainLooper) {
         mainLooper.runOnUiThread(() -> channel.invokeMethod("getUrl", songId, new MethodChannel.Result() {
             @Override

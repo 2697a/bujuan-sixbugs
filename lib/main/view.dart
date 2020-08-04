@@ -5,7 +5,6 @@ import 'package:bujuan/main/routes.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../constant/theme.dart';
 import 'state.dart';
 

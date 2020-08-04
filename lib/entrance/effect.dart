@@ -77,6 +77,7 @@ void _onBottomTap(Action action, Context<EntranceState> ctx) {
   ctx.state.pageController.jumpToPage(action.payload);
 }
 
+
 void _onInit(Action action, Context<EntranceState> ctx) async {
   FlutterStarrySky().onPlayerStateChanged.listen((PlayState playState) {
     GlobalStore.store.dispatch(GlobalActionCreator.changePlayState(playState));

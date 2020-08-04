@@ -15,7 +15,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../android_back_desktop.dart';
 import 'action.dart';
 import 'state.dart';
-
 Widget buildView(
     EntranceState state, Dispatch dispatch, ViewService viewService) {
   return WillPopScope(

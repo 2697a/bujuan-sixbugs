@@ -53,6 +53,8 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
         channel.setMethodCallHandler(this);
     }
 
+
+
 //    public static void registerWith(Registrar registrar) {
 //        final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_starry_sky");
 //        channel.setMethodCallHandler(new FlutterStarrySkyPlugin());
