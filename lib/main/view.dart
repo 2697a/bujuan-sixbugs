@@ -10,6 +10,7 @@ import '../constant/theme.dart';
 import 'state.dart';
 
 Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
+
   if (state.appTheme.dark) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.grey[850],

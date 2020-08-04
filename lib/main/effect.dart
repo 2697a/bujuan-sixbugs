@@ -22,5 +22,6 @@ void _ress(Action action, Context<MainState> ctx) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark));
+//    SystemChrome.setEnabledSystemUIOverlays([]);
   }
 }

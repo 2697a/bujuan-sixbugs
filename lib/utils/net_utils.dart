@@ -8,7 +8,6 @@ import 'package:bujuan/entity/login_entity.dart';
 import 'package:bujuan/entity/new_song_entity.dart';
 import 'package:bujuan/entity/personal_entity.dart';
 import 'package:bujuan/entity/play_history_entity.dart';
-import 'package:bujuan/entity/search_sheet_entity.dart';
 import 'package:bujuan/entity/search_song_entity.dart';
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
@@ -18,7 +17,6 @@ import 'package:bujuan/entity/user_profile_entity.dart';
 import 'package:bujuan/global_store/action.dart';
 import 'package:bujuan/global_store/store.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:flutter/services.dart';
 import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'package:flutterstarrysky/song_info.dart';
 import 'package:path_provider/path_provider.dart';
@@ -203,12 +201,14 @@ class NetUtils {
     return searchData;
   }
 
+  //听歌历史
   Future<PlayHistoryEntity> getHistory(uid) async{
     var history;
     var map = await _doHandler('/user/record',{'uid':uid});
     if(map!=null) history = PlayHistoryEntity.fromJson(map);
     return history;
   }
+
   //播放音乐
   Future setPlayListAndPlayById(List<SongInfo> list, int index, String id) async {
     var playList = await FlutterStarrySky().getPlayList();

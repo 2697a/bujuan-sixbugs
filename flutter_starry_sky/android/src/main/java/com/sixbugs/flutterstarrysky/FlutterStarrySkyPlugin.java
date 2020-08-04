@@ -9,18 +9,19 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.lzx.starrysky.StarrySky;
+import com.lzx.starrysky.StarrySkyConfig;
+import com.lzx.starrysky.common.IMediaConnection;
+import com.lzx.starrysky.control.OnPlayerEventListener;
+import com.lzx.starrysky.control.RepeatMode;
+import com.lzx.starrysky.intercept.InterceptorCallback;
+import com.lzx.starrysky.intercept.StarrySkyInterceptor;
+import com.lzx.starrysky.notification.NotificationConfig;
+import com.lzx.starrysky.provider.SongInfo;
+import com.lzx.starrysky.utils.MainLooper;
+import com.lzx.starrysky.utils.SpUtil;
+import com.lzx.starrysky.utils.TimerTaskManager;
 import com.sixbugs.flutterstarrysky.starry.GsonUtil;
-import com.sixbugs.flutterstarrysky.starry.StarrySky;
-import com.sixbugs.flutterstarrysky.starry.StarrySkyConfig;
-import com.sixbugs.flutterstarrysky.starry.control.OnPlayerEventListener;
-import com.sixbugs.flutterstarrysky.starry.control.RepeatMode;
-import com.sixbugs.flutterstarrysky.starry.intercept.InterceptorCallback;
-import com.sixbugs.flutterstarrysky.starry.intercept.StarrySkyInterceptor;
-import com.sixbugs.flutterstarrysky.starry.notification.NotificationConfig;
-import com.sixbugs.flutterstarrysky.starry.provider.SongInfo;
-import com.sixbugs.flutterstarrysky.starry.utils.MainLooper;
-import com.sixbugs.flutterstarrysky.starry.utils.SpUtil;
-import com.sixbugs.flutterstarrysky.starry.utils.TimerTaskManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -74,18 +75,18 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "getPlayList":
                 List<SongInfo> playList = StarrySky.Companion.with().getPlayList();
-                if(playList.size() > 0)result.success(GsonUtil.GsonString(playList));
+                if (playList.size() > 0) result.success(GsonUtil.GsonString(playList));
                 else result.success("");
                 break;
             case "playSongById":
                 String songId = (String) call.arguments;
-                Log.d(TAG, "onMethodCall: ======"+songId);
+                Log.d(TAG, "onMethodCall: ======" + songId);
                 StarrySky.Companion.with().playMusicById(songId);
                 result.success(1);
                 break;
             case "playSongByIndex":
                 int index = (int) call.arguments;
-                Log.d(TAG, "onMethodCall: ======"+index);
+                Log.d(TAG, "onMethodCall: ======" + index);
                 StarrySky.Companion.with().playMusicByIndex(index);
                 result.success(1);
                 break;
@@ -112,15 +113,15 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
                 switch (playMod) {
                     case 0:
                         //順序播放
-                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_NONE,true);
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_NONE, true);
                         break;
                     case 1:
                         //單曲循環
-                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_ONE,true);
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_ONE, true);
                         break;
                     case 2:
                         //隨機播放
-                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_SHUFFLE,true);
+                        StarrySky.Companion.with().setRepeatMode(RepeatMode.REPEAT_MODE_SHUFFLE, true);
                         break;
                 }
                 break;
@@ -183,7 +184,7 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
                     channel.invokeMethod("state", "error");
                     StarrySky.Companion.with().skipToNext();
                     mTimerTask.stopToUpdateProgress();
-                    Log.d(TAG, "onError: ======"+errorMsg);
+                    Log.d(TAG, "onError: ======" + errorMsg);
                 }
             };
         }
@@ -197,9 +198,10 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
             long position = StarrySky.Companion.with().getPlayingPosition();
             long duration = StarrySky.Companion.with().getDuration();
             long buffered = StarrySky.Companion.with().getBufferedPosition();
-            channel.invokeMethod("playPosition",position);
+            channel.invokeMethod("playPosition", position);
         });
     }
+
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         Log.d(TAG, "onDetachedFromEngine: ======");
@@ -240,11 +242,11 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
         StarrySkyConfig config = new StarrySkyConfig().newBuilder()
                 .addInterceptor(new PermissionInterceptor())
                 .addInterceptor(new RequestSongInfoInterceptor())
-                .setInterceptorTimeOut(10*1000)
+                .setInterceptorTimeOut(10 * 1000)
                 .isOpenNotification(true)
                 .setNotificationConfig(notificationConfig)
                 .build();
-        StarrySky.Companion.init((Application) context, config);
+        StarrySky.Companion.init((Application) context, config, null);
     }
 
     private static class PermissionInterceptor implements StarrySkyInterceptor {
@@ -285,19 +287,16 @@ public class FlutterStarrySkyPlugin implements FlutterPlugin, MethodCallHandler,
         private MusicRequest mMusicRequest = new MusicRequest();
 
         @Override
-        public void process(@Nullable final SongInfo songInfo, MainLooper mainLooper, final InterceptorCallback callback) {
+        public void process(@Nullable final SongInfo songInfo, @NotNull MainLooper mainLooper, @NotNull final InterceptorCallback callback) {
             if (songInfo == null) {
                 callback.onInterrupt(new RuntimeException("SongInfo is null"));
                 return;
             }
             if (TextUtils.isEmpty(songInfo.getSongUrl())) {
-                mMusicRequest.getSongUrl(songInfo.getSongId(), new MusicRequest.RequestInfoCallback() {
-                    @Override
-                    public void onSuccess(String songUrl) {
-                        songInfo.setSongUrl(songUrl);
-                        callback.onContinue(songInfo);
-                    }
-                },channel,mainLooper);
+                mMusicRequest.getSongUrl(songInfo.getSongId(), songUrl -> {
+                    songInfo.setSongUrl(songUrl);
+                    callback.onContinue(songInfo);
+                }, channel, mainLooper);
             } else {
                 callback.onContinue(songInfo);
             }

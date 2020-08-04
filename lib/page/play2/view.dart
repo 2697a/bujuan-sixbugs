@@ -1,14 +1,9 @@
 import 'dart:ui';
 
-import 'package:bujuan/bujuan_music.dart';
 import 'package:bujuan/constant/Screens.dart';
-import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/page/play2/action.dart';
 import 'package:bujuan/utils/bujuan_util.dart';
-import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/cache_image.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -163,62 +158,17 @@ Widget buildView(
                 ],
               ),
             ],
-          ),flex: 2,),
-          Expanded(
-            child: Container(
-            ),
-            flex: 1,
-          )
+          )),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+            alignment: Alignment.centerLeft,
+            child: IconButton(icon: Icon(Icons.keyboard_arrow_down), onPressed: (){
+              Navigator.of(viewService.context).pop();
+            }),
+          ),
         ],
       ),
     ),
-      drawer:  Drawer(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: 20)),
-              ListTile(
-                dense: true,
-                title: Text(
-                  '${state.currSong.songName}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: Screens.text14, color: Colors.red),
-                ),
-                subtitle: Text('${state.currSong.artist}',
-                    style:
-                    TextStyle(fontSize: Screens.text14, color: Colors.red)),
-                trailing: IconButton(
-                    icon: Icon(
-                      Icons.play_circle_filled,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {}),
-              ),
-//              Expanded(
-//                  child: ListView.builder(
-//                    shrinkWrap: true,
-//                    itemBuilder: (context, index) {
-//                      return ListTile(
-//                        dense: true,
-//                        title: Text(
-//                          '${index + 1}. ${state.songList[index].name} -- ${state.songList[index].singer}',
-//                          maxLines: 1,
-//                          overflow: TextOverflow.ellipsis,
-//                          style: TextStyle(fontSize: Screens.text14),
-//                        ),
-//                        subtitle: Text('${state.songList[index].singer}',
-//                            style: TextStyle(fontSize: Screens.text14)),
-//                        onTap: () async {
-//                        },
-//                      );
-//                    },
-//                    itemCount: state.songList.length,
-//                  ))
-            ],
-          ),
-        ),
-      )
   );
 }
 

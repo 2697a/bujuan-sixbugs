@@ -4,9 +4,9 @@ package com.sixbugs.flutterstarrysky;
 
 import androidx.annotation.Nullable;
 
-import com.sixbugs.flutterstarrysky.starry.provider.SongInfo;
-import com.sixbugs.flutterstarrysky.starry.utils.MainLooper;
 
+import com.lzx.starrysky.provider.SongInfo;
+import com.lzx.starrysky.utils.MainLooper;
 
 import java.util.List;
 

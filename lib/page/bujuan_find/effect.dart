@@ -40,7 +40,7 @@ Future _onRefresh(Action action, Context<NewFindState> ctx) async {
     }
     if (data is NewSongEntity) if (data != null) {
       List<SongBeanEntity> songs = List();
-      Future.forEach(data.result, (song)async{
+      Future.forEach(data.result, (song){
         SongBeanEntity songBeanEntity = SongBeanEntity();
         songBeanEntity.name = song.name;
         songBeanEntity.picUrl = song.picUrl;
@@ -48,41 +48,9 @@ Future _onRefresh(Action action, Context<NewFindState> ctx) async {
         songBeanEntity.singer = song.song.artists[0].name;
         songs.add(songBeanEntity);
       });
-//      SpUtil.putString('newSong', jsonEncode(songs));
       ctx.dispatch(NewFindActionCreator.onGetNewSong(NewSongState()
         ..clone()
         ..result = songs));
     }
   });
-}
-
-Future<PersonalEntity> _getSheet() async {
-//  var answer = await personalized({},await BuJuanUtil.getCookie());
-////  Response sheet = await HttpUtil().get('/personalized');
-////  var data = sheet.data;
-////  SpUtil.putString('sheet', data);
-////  var jsonDecode2 = jsonDecode(data);
-//  return answer.status == 200 ? PersonalEntity.fromJson(answer.body) : null;
-  return  NetUtils().getRecommendResource();
-}
-
-Future<BannerEntity> _getBanner() async {
-//  var answer = await banner({},await BuJuanUtil.getCookie());
-//  Response banner = await HttpUtil().get('/banner', data: {'type': 1});
-//  var data2 = banner.data;
-//  SpUtil.putString('banner', data2);
-//  var jsonDecode2 = jsonDecode(data2);
-//  return answer.status == 200 ? BannerEntity.fromJson(answer.body) : null;
-  return NetUtils().getBanner();
-}
-
-Future<NewSongEntity> _getNewSong() async {
-//  var answer = await personalized_newsong({},await BuJuanUtil.getCookie());
-//  Response newSong = await HttpUtil().get('/personalized/newsong');
-//  var data2 = newSong.data;
-//  SpUtil.putString('newSong', data2);
-//  var jsonDecode2 = jsonDecode(data2);
-//  return answer.status == 200 ? NewSongEntity.fromJson(answer.body) : null;
-
-  return NetUtils().getNewSongs();
 }
