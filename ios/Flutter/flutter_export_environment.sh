@@ -1,5 +1,5 @@
 #!/bin/sh
-# This is a generated file; do not edit or check into version control.
+# This is a generated file; do not edit or check into version control .
 export "FLUTTER_ROOT=/Users/xxrj/dev/flutter"
 export "FLUTTER_APPLICATION_PATH=/Users/xxrj/StudioProjects/bujuan-sixbugs"
 export "FLUTTER_TARGET=/Users/xxrj/StudioProjects/bujuan-sixbugs/lib/main.dart"
