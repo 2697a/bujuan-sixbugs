@@ -11,17 +11,18 @@ import 'state.dart';
 Reducer<PlayBarState> buildReducer() {
   return asReducer(
     <Object, Reducer<PlayBarState>>{
-//      PlayBarAction.action: _onAction,
+      PlayBarAction.changeView: _onAction,
 //      PlayBarAction.changePlayState: _changePlayState,
 //      PlayBarAction.changeCurrSong:_changeCurrSong,
     },
   );
 }
 
-//PlayBarState _onAction(PlayBarState state, Action action) {
-//  final PlayBarState newState = state.clone();
-//  return newState;
-//}
+PlayBarState _onAction(PlayBarState state, Action action) {
+  final PlayBarState newState = state.clone();
+  newState.isMini = !newState.isMini;
+  return newState;
+}
 //PlayBarState _changePlayState(PlayBarState state, Action action) {
 //  PlayStateType playStateType = action.payload;
 //  return state.clone()..playStateType = playStateType;

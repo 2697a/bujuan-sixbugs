@@ -36,7 +36,7 @@ EntranceState initState(Map<String, dynamic> args) {
   state.selectIndex = 1;
   state.pageController =
       PageController(initialPage: state.selectIndex, viewportFraction: .99);
-  state.miniNav = SpUtil.getBool(MINI_NAV, defValue: false);
+  state.miniNav = SpUtil.getBool(MINI_NAV, defValue: true);
   state.panelController = PanelController();
   state.isDra = false;
   state.val = false;

@@ -8,7 +8,8 @@ enum PlayBarAction {
   changeCurrSong,
   openPlayPage,
   sendTask,
-  nextSong
+  nextSong,
+  changeView
 }
 
 class PlayBarActionCreator {
@@ -33,5 +34,9 @@ class PlayBarActionCreator {
   }
   static Action nextSong() {
     return Action(PlayBarAction.nextSong);
+  }
+
+  static Action changeView() {
+    return Action(PlayBarAction.changeView);
   }
 }

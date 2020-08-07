@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/entity/play_history_entity.dart';
-import 'package:bujuan/entity/search_song_entity.dart';
 import 'package:bujuan/entity/sheet_details_entity.dart';
 import 'package:bujuan/entity/today_song_entity.dart';
 import 'package:flutterstarrysky/song_info.dart';

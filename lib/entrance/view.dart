@@ -20,77 +20,51 @@ Widget buildView(
   return WillPopScope(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: Widgets.blackWidget(state.isBlack, SlidingUpPanel(
-          color: Colors.transparent,
-          controller: state.panelController,
-          minHeight: Screens.setHeight(56),
-          maxHeight: MediaQuery.of(viewService.context).size.height,
-          boxShadow: null,
-          backdropOpacity: .1,
-          isDraggable: state.isDra,
-          onPanelOpened: () {
-            dispatch(EntranceActionCreator.onChangeDar(true));
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+//          leading: IconButton(
+//              padding: EdgeInsets.all(0),
+//              icon: ImageHelper.getImage(
+//                  SpUtil.getString('head',
+//                      defValue:
+//                      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
+//                  height: 32,
+//                  isRound: true),
+//              onPressed: () {
+//                state.panelController.isPanelOpen
+//                    ? state.panelController.close()
+//                    : state.panelController.open();
+//              }),
+          title: Text('data'),
+          bottom: _navBar(state, dispatch),
+          centerTitle: true,
+//          actions: <Widget>[
+//            IconButton(
+//              padding: EdgeInsets.all(0),
+//              icon: Icon(
+//                Icons.search,
+//                size: 28,
+//              ),
+//              onPressed: () {
+//                Navigator.of(viewService.context)
+//                    .pushNamed('search', arguments: null);
+//              },
+//            )
+//          ],
+        ),
+        body: Widgets.blackWidget(state.isBlack, PageView.builder(
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return state.pages[index];
           },
-          onPanelClosed: () {
-            dispatch(EntranceActionCreator.onChangeDar(false));
-            dispatch(EntranceActionCreator.onMiniNavBarSwitch());
-            dispatch(EntranceActionCreator.onBlack());
+          itemCount: state.pages.length,
+          controller: state.pageController,
+          onPageChanged: (index) {
+            dispatch(EntranceActionCreator.onPageChange(index));
           },
-          panel: LeftPage(),
-          collapsed: PlayBarPage().buildPage(null),
-          body: Column(
-            children: <Widget>[
-              AppBar(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: ImageHelper.getImage(
-                        SpUtil.getString('head',
-                            defValue:
-                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
-                        height: 32,
-                        isRound: true),
-                    onPressed: () {
-                      state.panelController.isPanelOpen
-                          ? state.panelController.close()
-                          : state.panelController.open();
-                    }),
-                title: _navBar(state, dispatch),
-                centerTitle: true,
-                actions: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(
-                      Icons.search,
-                      size: 28,
-                    ),
-                    onPressed: () {
-                      Navigator.of(viewService.context)
-                          .pushNamed('search', arguments: null);
-                    },
-                  )
-                ],
-              ),
-              Expanded(
-                child: PageView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return state.pages[index];
-                  },
-                  itemCount: state.pages.length,
-                  controller: state.pageController,
-                  onPageChanged: (index) {
-                    dispatch(EntranceActionCreator.onPageChange(index));
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: Screens.setHeight(56)),
-              )
-            ],
-          ),
         )),
+        floatingActionButton: PlayBarPage().buildPage(null),
       ),
       onWillPop: () async {
         if (state.panelController.isPanelOpen) {

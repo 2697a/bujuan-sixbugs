@@ -10,9 +10,10 @@ import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'package:flutterstarrysky/song_info.dart';
 
 class PlayBarState implements GlobalBaseState, Cloneable<PlayBarState> {
+  bool isMini;
   @override
   PlayBarState clone() {
-    return PlayBarState();
+    return PlayBarState()..isMini=isMini..currSong = currSong..playState = playState;
   }
 
   @override
@@ -47,5 +48,6 @@ PlayBarState initState(Map<String, dynamic> args) {
   if(args!=null){
 
   }
+  playBarState.isMini = true;
   return playBarState;
 }
