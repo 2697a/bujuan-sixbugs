@@ -14,24 +14,19 @@ class PlayBarPage extends Page<PlayBarState, Map<String, dynamic>> {
           effect: buildEffect(),
           reducer: buildReducer(),
           view: buildView,
-          dependencies: Dependencies<PlayBarState>(
-              adapter: null, slots: <String, Dependent<PlayBarState>>{}),
+          dependencies: Dependencies<PlayBarState>(adapter: null, slots: <String, Dependent<PlayBarState>>{}),
           middleware: <Middleware<PlayBarState>>[],
-        )
-  {
-    this.connectExtraStore<GlobalState>(GlobalStore.store,
-        (Object pageState, GlobalState appState) {
+        ) {
+    this.connectExtraStore<GlobalState>(GlobalStore.store, (Object pageState, GlobalState appState) {
       final GlobalBaseState p = pageState;
-      if (p.playState != null &&
-          p.playState == appState.playState &&
-          p.currSongPos == appState.currSongPos&&
-          p.currSong != null &&
-          p.currSong == appState.currSong) {
+      if (p.currSongPos != null && p.currSongPos == appState.currSongPos && p.appTheme != null && p.appTheme == appState.appTheme && p.playState != null && p.playState == appState.playState && p.currSongPos == appState.currSongPos && p.currSong != null && p.currSong == appState.currSong) {
         return pageState;
       } else {
         if (pageState is Cloneable) {
           final Object copy = pageState.clone();
           final GlobalBaseState newState = copy;
+          newState.appTheme = appState.appTheme;
+          newState.currSongPos = appState.currSongPos;
           newState.playState = appState.playState;
           newState.currSong = appState.currSong;
           return newState;

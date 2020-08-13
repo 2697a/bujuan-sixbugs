@@ -160,6 +160,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.8"
+  flutter_point_tab_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_point_tab_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -402,9 +409,9 @@ packages:
   sliding_up_panel:
     dependency: "direct main"
     description:
-      name: sliding_up_panel
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: sliding_up_panel
+      relative: true
+    source: path
     version: "1.0.2"
   source_span:
     dependency: transitive

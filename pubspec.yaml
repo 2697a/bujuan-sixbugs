@@ -26,7 +26,8 @@ dependencies:
   cached_network_image: ^2.1.0+1
   flutter_easyrefresh: ^2.1.0
   flutter_screenutil: ^1.1.0
-  sliding_up_panel: ^1.0.2
+  sliding_up_panel:
+    path: sliding_up_panel
   path_provider: ^1.5.1
   sleek_circular_slider: ^1.1.0
   url_launcher: ^5.4.10
@@ -36,6 +37,7 @@ dependencies:
   shared_preferences: ^0.5.7+3
   flutterstarrysky:
     path: flutter_starry_sky
+  flutter_point_tab_bar: ^0.1.0
   #api相关
   encrypt: ^3.0.0
   dartin: ^0.0.1

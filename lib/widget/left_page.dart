@@ -230,10 +230,10 @@ class _LeftPageState extends State<LeftPage>
                   ),
                 ],
               ))),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: showSun
           ? Transform.translate(
-              offset: Offset(140, 40),
+              offset: Offset(-120, 40),
               child: _buildFab(),
             )
           : null,

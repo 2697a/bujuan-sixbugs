@@ -34,7 +34,7 @@ class MinNiNavBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
         color: Colors.transparent,
         boxShadow: [
@@ -47,8 +47,8 @@ class MinNiNavBar extends StatelessWidget implements PreferredSizeWidget{
       ),
       child: Container(
         width: double.infinity,
-        height: Screens.setHeight(32),
-        padding:  EdgeInsets.symmetric(vertical: Screens.setHeight(12), horizontal: Screens.setWidth(12)),
+        height: Screens.setHeight(26),
+        padding:  EdgeInsets.symmetric(vertical: Screens.setHeight(9), horizontal: Screens.setWidth(12)),
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
           children: items.map((item) {
@@ -71,7 +71,7 @@ class MinNiNavBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(Screens.setHeight(30));
+  Size get preferredSize => Size.fromHeight(Screens.setHeight(26));
 }
 
 class _ItemWidget extends StatelessWidget {
@@ -103,7 +103,7 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: isSelected ? 40 : 15,
+      width: isSelected ? 45: 15,
       height: double.maxFinite,
       duration: animationDuration,
       decoration: BoxDecoration(

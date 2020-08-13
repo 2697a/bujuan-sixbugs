@@ -10,7 +10,6 @@ import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'api/answer.dart';
 import 'api/netease_cloud_music.dart';
 import 'constant/constants.dart';
-import 'net/http_util.dart';
 import 'utils/net_utils.dart';
 
 void main() async {

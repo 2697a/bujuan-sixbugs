@@ -1,7 +1,7 @@
 import 'package:bujuan/entity/sheet_details_entity.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutterstarrysky/song_info.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SheetDetailsState implements  Cloneable<SheetDetailsState> {
   bool isShowLoading;

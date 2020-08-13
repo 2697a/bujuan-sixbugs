@@ -20,26 +20,24 @@ Widget buildView(
         state.isShowLoading ? '' : state.playlist.name),
     body: Widgets.blackWidget(Constants.dark, state.isShowLoading
         ? LoadingPage()
-        : Column(
-      children: <Widget>[
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                _sheetTop(state, dispatch),
-//                _currSong(state),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => _sheetItem(
-                      state.list[index],
-                      dispatch,
-                      index,
-                      viewService),
-                  itemCount: state.list.length,
-                )
-              ],
-            ),
+        :Stack(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              _sheetTop(state, dispatch),
+              ListView.builder(
+                padding: EdgeInsets.only(bottom: Constants.bottomHeight),
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => _sheetItem(
+                    state.list[index],
+                    dispatch,
+                    index,
+                    viewService),
+                itemCount: state.list.length,
+              )
+            ],
           ),
         ),
         PlayBarPage().buildPage(null)

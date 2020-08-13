@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'package:flutterstarrysky/song_info.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PlayViewState implements GlobalBaseState, Cloneable<PlayViewState> {
   List<SongBeanEntity> songList;

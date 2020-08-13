@@ -1,6 +1,5 @@
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/page/today/action.dart';
 import 'package:bujuan/widget/back_widget.dart';
 import 'package:bujuan/widget/loading_page.dart';
@@ -13,52 +12,51 @@ import 'state.dart';
 
 Widget buildView(TodayState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
-    body: Widgets.blackWidget(null, Column(
-      children: <Widget>[
-        Expanded(
-            child: state.isShowLoading
-                ? LoadingPage()
-                : CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  expandedHeight: 230.0,
-                  flexibleSpace: FlexibleSpaceBar(
-                      title: Text(
-                          '${DateTime.now().month} / ${DateTime.now().day}'),
-                      centerTitle: true,
-                      collapseMode: CollapseMode.pin,
-                      background: Stack(
-                        children: <Widget>[
-                          Container(
-                            width: double.infinity,
-                            child: Image.asset(
-                              'assets/images/find_back.png',
-                              height: 230,
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Constants.dark
-                                    ? Colors.grey[850].withOpacity(.1)
-                                    : Colors.white.withOpacity(.1)),
-                          ),
-                        ],
-                      )),
-                  floating: false,
-                  pinned: false,
-                  snap: false,
-                  elevation: 0,
-                ),
-                SliverList(
-                  delegate: new SliverChildBuilderDelegate(
-                        (context, index) => _sheetItem(
-                        state.list[index], dispatch, index, viewService),
-                    childCount: state.list.length,
-                  ),
-                ),
-              ],
-            )),
+    body: Widgets.blackWidget(null,  state.isShowLoading
+        ? LoadingPage()
+        : Stack(
+      children: [
+        CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              backgroundColor: Colors.transparent,
+              expandedHeight: 230.0,
+              flexibleSpace: FlexibleSpaceBar(
+                  title: Text(
+                      '${DateTime.now().month} / ${DateTime.now().day}'),
+                  centerTitle: true,
+                  collapseMode: CollapseMode.pin,
+                  background: Stack(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/images/find_back.png',
+                          height: 230,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Constants.dark
+                                ? Colors.grey[850].withOpacity(.1)
+                                : Colors.white.withOpacity(.1)),
+                      ),
+                    ],
+                  )),
+              floating: false,
+              pinned: false,
+              snap: false,
+              elevation: 0,
+            ),
+            SliverList(
+              delegate: new SliverChildBuilderDelegate(
+                    (context, index) => _sheetItem(
+                    state.list[index], dispatch, index, viewService),
+                childCount: state.list.length,
+              ),
+            ),
+          ],
+        ),
         PlayBarPage().buildPage(null)
       ],
     )),

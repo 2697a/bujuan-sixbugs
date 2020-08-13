@@ -13,8 +13,9 @@ class EntranceState implements Cloneable<EntranceState> {
   PageController pageController;
   bool val;
   bool miniNav;
-  PanelController panelController;
+  TabController tabController;
   List<Widget> pages;
+  List<Tab> tabs;
   bool isDra;
   bool isBlack;
 
@@ -24,9 +25,10 @@ class EntranceState implements Cloneable<EntranceState> {
       ..pages = pages
       ..selectIndex = selectIndex
       ..pageController = pageController
-      ..panelController = panelController
+      ..tabController = tabController
       ..isBlack =isBlack
       ..isDra = isDra
+      ..tabs = tabs
       ..miniNav = miniNav;
   }
 }
@@ -37,7 +39,6 @@ EntranceState initState(Map<String, dynamic> args) {
   state.pageController =
       PageController(initialPage: state.selectIndex, viewportFraction: .99);
   state.miniNav = SpUtil.getBool(MINI_NAV, defValue: true);
-  state.panelController = PanelController();
   state.isDra = false;
   state.val = false;
   state.isBlack = SpUtil.getString(USER_BACKGROUND,defValue: null)!=null;
@@ -46,5 +47,6 @@ EntranceState initState(Map<String, dynamic> args) {
     NewFindPage().buildPage(null),
     TopPagePage().buildPage(null),
   ];
+  state.tabs = [Tab(text:'me'),Tab(text:'find'),Tab(text:'top')];
   return state;
 }

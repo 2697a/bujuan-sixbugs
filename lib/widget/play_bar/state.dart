@@ -1,9 +1,9 @@
 
 import 'package:bujuan/constant/constants.dart';
-import 'package:bujuan/constant/play_state.dart';
 import 'package:bujuan/constant/theme.dart';
 import 'package:bujuan/entity/lyric_entity.dart';
 import 'package:bujuan/global_store/state.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutterstarrysky/flutter_starry_sky.dart';
 
@@ -11,9 +11,10 @@ import 'package:flutterstarrysky/song_info.dart';
 
 class PlayBarState implements GlobalBaseState, Cloneable<PlayBarState> {
   bool isMini;
+  PanelController panelController;
   @override
   PlayBarState clone() {
-    return PlayBarState()..isMini=isMini..currSong = currSong..playState = playState;
+    return PlayBarState()..isMini=isMini..currSong = currSong..playState = playState..appTheme = appTheme..panelController = panelController..currSongPos = currSongPos;
   }
 
   @override
@@ -49,5 +50,6 @@ PlayBarState initState(Map<String, dynamic> args) {
 
   }
   playBarState.isMini = true;
+  playBarState.panelController = PanelController();
   return playBarState;
 }

@@ -79,6 +79,8 @@ void _onBottomTap(Action action, Context<EntranceState> ctx) {
 
 
 void _onInit(Action action, Context<EntranceState> ctx) async {
+  TickerProvider t = (ctx.stfState) as TickerProvider;
+  ctx.state.tabController = TabController(length:ctx.state.pages.length,vsync: t,initialIndex: 1);
   FlutterStarrySky().onPlayerStateChanged.listen((PlayState playState) {
     GlobalStore.store.dispatch(GlobalActionCreator.changePlayState(playState));
   });

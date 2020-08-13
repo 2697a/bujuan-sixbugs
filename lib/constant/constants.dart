@@ -1,8 +1,10 @@
+import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/entity/song_bean_entity.dart';
 
 class Constants {
   static bool dark = false;
   static List<int> loveSongIds = [];
+  static final double bottomHeight = Screens.setHeight(56);
 //  static String playSongHistory = "PLAY_SONG_HISTORY";
 //  static String playSongListHistory = "PLAY_SONG_LIST_HISTORY";
 //
@@ -97,6 +99,7 @@ const String krv_top = 'http://p1.music.126.net/H4Y7jxd_zwygcAmPMfwJnQ==/1917438
 const String rb_top = 'http://p2.music.126.net/Rgqbqsf4b3gNOzZKxOMxuw==/19029247741938160.jpg?param=200y200';
 
 const String itunes_top = 'http://p2.music.126.net/WTpbsVfxeB6qDs_3_rnQtg==/109951163601178881.jpg?param=200y200';
+
 enum TopType { BS, NEW, YC, HOT }
 enum PlayModeType { REPEAT, REPEAT_ONE, SHUFFLE }
 enum OpenType { SETTING, DONATION, ABOUT }

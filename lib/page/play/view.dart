@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:bujuan/bujuan_music.dart';
 import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/page/play/action.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterstarrysky/flutter_starry_sky.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'state.dart';
 
 Widget buildView(
