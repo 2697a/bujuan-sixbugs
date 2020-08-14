@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:bujuan/constant/Screens.dart';
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:bujuan/widget/bujuan_drawer.dart';
@@ -16,44 +15,11 @@ import 'package:flutter_point_tab_bar/pointTabIndicator.dart';
 import '../android_back_desktop.dart';
 import 'action.dart';
 import 'state.dart';
-Widget buildView(
-    EntranceState state, Dispatch dispatch, ViewService viewService) {
+
+Widget buildView(EntranceState state, Dispatch dispatch, ViewService viewService) {
   return WillPopScope(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-//        appBar: AppBar(
-//          elevation: 0,
-//          backgroundColor: Colors.transparent,
-//          leading: Builder(builder: (context) {
-//            return IconButton(
-//                padding: EdgeInsets.all(0),
-//                icon: ImageHelper.getImage(
-//                    SpUtil.getString('head',
-//                        defValue:
-//                        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
-//                    height: 32,
-//                    isRound: true),
-//                onPressed: () {
-//                  Scaffold.of(context).openDrawer();
-//                });
-//          }),
-//          title: Text('归山深浅去，须尽丘壑美。'),
-////          bottom: _navBar(state, dispatch),
-//          centerTitle: true,
-//          actions: <Widget>[
-//            IconButton(
-//              padding: EdgeInsets.all(0),
-//              icon: Icon(
-//                Icons.search,
-//                size: 28,
-//              ),
-//              onPressed: () {
-//                Navigator.of(viewService.context)
-//                    .pushNamed('search', arguments: null);
-//              },
-//            )
-//          ],
-//        ),
         body: Stack(
           children: [
             Container(
@@ -66,62 +32,58 @@ Widget buildView(
                     leading: Builder(builder: (context) {
                       return IconButton(
                           padding: EdgeInsets.all(0),
-                          icon: ImageHelper.getImage(
-                              SpUtil.getString('head',
-                                  defValue:
-                                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588014709572&di=019dc384d533dd0fe890ec9d4e26beeb&imgtype=0&src=http%3A%2F%2Fp1.qhimgs4.com%2Ft01a30c675c53e713c2.jpg'),
-                              height: 32,
-                              isRound: true),
+                          icon: Icon(Icons.menu,size: 26,),
                           onPressed: () {
                             Scaffold.of(context).openDrawer();
                           });
                     }),
-                    title: Text('归山深浅去，须尽丘壑美。'),
+                    title: Text('Drink and love money'),
                     centerTitle: true,
                     actions: <Widget>[
                       IconButton(
                         padding: EdgeInsets.all(0),
                         icon: Icon(
                           Icons.search,
-                          size: 28,
+                          size: 26,
                         ),
                         onPressed: () {
-                          Navigator.of(viewService.context)
-                              .pushNamed('search', arguments: null);
+                          Navigator.of(viewService.context).pushNamed('search', arguments: null);
                         },
                       )
                     ],
                   ),
-                  TabBar(tabs: state.tabs,controller: state.tabController,indicatorWeight: 1,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    isScrollable: true,
-                    indicatorPadding: EdgeInsets.only(bottom: 0.0),
-                    labelPadding: EdgeInsets.only(left: 0),),
-                  Expanded(child: TabBarView(
+                  TabBar(
+//                    isScrollable: true,
+                    controller: state.tabController,
+                    indicator: PointTabIndicator(
+                      position: PointTabIndicatorPosition.bottom,
+                      color: Colors.blue.withOpacity(.6),
+                      insets: EdgeInsets.only(bottom: 8),
+                    ),
+                    tabs: state.tabList.map((item) {
+                      return Tab(
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(viewService.context).size.width / 4,
+                          child: Text(
+                            item,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  Expanded(
+                      child: TabBarView(
                     controller: state.tabController,
                     children: state.pages,
                   )),
-//                  _navBar(state, dispatch),
-//                  Expanded(
-//                    child: PageView.builder(
-//                      physics: BouncingScrollPhysics(),
-//                      itemBuilder: (context, index) {
-//                        return state.pages[index];
-//                      },
-//                      itemCount: state.pages.length,
-//                      controller: state.pageController,
-//                      onPageChanged: (index) {
-//                        dispatch(EntranceActionCreator.onPageChange(index));
-//                      },
-//                    ),
-//                  )
                 ],
               ),
             ),
             PlayBarPage().buildPage(null)
           ],
         ),
-//        floatingActionButton: PlayBarPage().buildPage(null),
         drawer: BujuanDrawer(
           child: LeftPage(),
         ),
@@ -130,7 +92,7 @@ Widget buildView(
 //        if (state.panelController.isPanelOpen) {
 //          state.panelController.close();
 //        } else {
-          AndroidBackTop.backDeskTop(); //设置为返回不退出app
+        AndroidBackTop.backDeskTop(); //设置为返回不退出app
 //        }
         return false;
       });
@@ -144,8 +106,7 @@ Widget _navBar(EntranceState state, dispatch) {
               BottomMiniNavyBarItem(
                 activeColor: const Color.fromRGBO(213, 15, 37, 1),
               ),
-              BottomMiniNavyBarItem(
-                  activeColor: const Color.fromRGBO(238, 178, 17, 1)),
+              BottomMiniNavyBarItem(activeColor: const Color.fromRGBO(238, 178, 17, 1)),
               BottomMiniNavyBarItem(
                 activeColor: const Color.fromRGBO(0, 153, 37, 1),
               ),

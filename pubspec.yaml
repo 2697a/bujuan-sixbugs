@@ -24,6 +24,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   synchronized: ^2.1.0+2
   cached_network_image: ^2.1.0+1
+  extended_image: ^1.1.0
   flutter_easyrefresh: ^2.1.0
   flutter_screenutil: ^1.1.0
   sliding_up_panel:

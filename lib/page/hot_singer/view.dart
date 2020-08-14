@@ -12,18 +12,12 @@ import 'state.dart';
 Widget buildView(
     HotSingerState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
-    body: Widgets.blackWidget(null, state.showLoading
+    body: state.showLoading
         ? LoadingPage()
         : Container(
       child: EasyRefresh.custom(
         footer: MaterialFooter(),
         slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: AppBar(
-              title: Text('热门歌手'),
-              backgroundColor: Colors.transparent,
-            ),
-          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
@@ -50,6 +44,6 @@ Widget buildView(
         ],
         onLoad: () => dispatch(HotSingerActionCreator.onLoad()),
       ),
-    )),
+    ),
   );
 }

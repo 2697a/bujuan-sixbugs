@@ -5,7 +5,7 @@ import 'reducer.dart';
 import 'state.dart';
 import 'view.dart';
 
-class HotSingerPage extends Page<HotSingerState, Map<String, dynamic>> {
+class HotSingerPage extends Page<HotSingerState, Map<String, dynamic>>  with KeepAliveMixin {
   HotSingerPage()
       : super(
             initState: initState,

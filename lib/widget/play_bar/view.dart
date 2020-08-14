@@ -201,143 +201,145 @@ Widget buildView(PlayBarState state, Dispatch dispatch, ViewService viewService)
           onPanelClosed: () {
             println('state====close${state.panelController.isPanelOpen}');
           },
-          panel: Container(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(top: 25),
-                          alignment: Alignment.center,
-                          child: SleekCircularSlider(
-                            appearance: CircularSliderAppearance(
-                                size: MediaQuery.of(viewService.context).size.width / 1.2,
-                                startAngle: 45,
-                                angleRange: 300,
-                                customColors: CustomSliderColors(trackColor: Colors.grey.withOpacity(.6), progressBarColor: Color.fromRGBO(220, 190, 251, 1)),
-                                customWidths: CustomSliderWidths(trackWidth: 1, progressBarWidth: 4)),
-                            min: 0,
-                            max: state.currSong.duration.toDouble(),
-                            initialValue: state.currSongPos.toDouble(),
-                            onChange: (double value) {},
-                            onChangeStart: (double startValue) {},
-                            onChangeEnd: (double endValue) {},
-                            innerWidget: (double value) {
-                              return Center(
-                                child: Stack(
-                                  children: <Widget>[
-                                    ImageHelper.getImage(state.currSong.songCover + "?param=500y500", height: MediaQuery.of(viewService.context).size.width / 1.26, isRound: true),
-                                    Container(
-                                      height: MediaQuery.of(viewService.context).size.width / 1.26,
-                                      width: MediaQuery.of(viewService.context).size.width / 1.26,
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(horizontal: 30),
-                                        width: Screens.setWidth(55),
-                                        height: Screens.setWidth(55),
-                                        decoration: BoxDecoration(color: Color.fromRGBO(220, 190, 251, 1), borderRadius: BorderRadius.circular(Screens.setWidth(55))),
-                                        child: IconButton(
-                                            icon: state.playState == PlayState.STOP || state.playState == PlayState.PAUSE
-                                                ? Icon(
-                                              Icons.play_arrow,
-                                              size: 30,
-                                              color: Colors.white,
-                                            )
-                                                : Icon(
-                                              Icons.pause,
-                                              size: 30,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              ///操作
-                                              dispatch(PlayBarActionCreator.sendTask());
+          panel: Scaffold(
+            body: Container(
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 65),
+                            alignment: Alignment.center,
+                            child: SleekCircularSlider(
+                              appearance: CircularSliderAppearance(
+                                  size: MediaQuery.of(viewService.context).size.width / 1.2,
+                                  startAngle: 45,
+                                  angleRange: 300,
+                                  customColors: CustomSliderColors(trackColor: Colors.grey.withOpacity(.6), progressBarColor: Color.fromRGBO(220, 190, 251, 1)),
+                                  customWidths: CustomSliderWidths(trackWidth: 1, progressBarWidth: 4)),
+                              min: 0,
+                              max: state.currSong.duration.toDouble(),
+                              initialValue: state.currSongPos.toDouble(),
+                              onChange: (double value) {},
+                              onChangeStart: (double startValue) {},
+                              onChangeEnd: (double endValue) {},
+                              innerWidget: (double value) {
+                                return Center(
+                                  child: Stack(
+                                    children: <Widget>[
+                                      ImageHelper.getImage(state.currSong.songCover + "?param=500y500", height: MediaQuery.of(viewService.context).size.width / 1.26, isRound: true),
+                                      Container(
+                                        height: MediaQuery.of(viewService.context).size.width / 1.26,
+                                        width: MediaQuery.of(viewService.context).size.width / 1.26,
+                                        alignment: Alignment.center,
+                                        child: Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 30),
+                                          width: Screens.setWidth(55),
+                                          height: Screens.setWidth(55),
+                                          decoration: BoxDecoration(color: Color.fromRGBO(220, 190, 251, 1), borderRadius: BorderRadius.circular(Screens.setWidth(55))),
+                                          child: IconButton(
+                                              icon: state.playState == PlayState.STOP || state.playState == PlayState.PAUSE
+                                                  ? Icon(
+                                                Icons.play_arrow,
+                                                size: 30,
+                                                color: Colors.white,
+                                              )
+                                                  : Icon(
+                                                Icons.pause,
+                                                size: 30,
+                                                color: Colors.white,
+                                              ),
+                                              onPressed: () {
+                                                ///操作
+                                                dispatch(PlayBarActionCreator.sendTask());
 //                                      dispatch(PlayViewActionCreator.playOrPause());
-                                            }),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        Padding(padding: EdgeInsets.symmetric(vertical: 12)),
-                        Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                state.currSong.artist,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 14, color: Colors.grey),
-                              ),
+                                              }),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                state.currSong.songName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            IconButton(
-                                icon: Icon(Icons.sort),
-                                onPressed: () {
-//                          state.scaffoldKey.currentState.openDrawer();
-                                }),
-                            IconButton(
-                                icon: BuJuanUtil.getPlayMode(state.playModeType),
-                                onPressed: () {
-//                          dispatch(PlayViewActionCreator.getChangePlayMode());
-                                }),
-                            state.currSong.isLike != null
-                                ? IconButton(
-                                icon: state.currSong.isLike
-                                    ? Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                )
-                                    : Icon(
-                                  Icons.favorite_border,
+                          ),
+                          Padding(padding: EdgeInsets.symmetric(vertical: 12)),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  state.currSong.artist,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 14, color: Colors.grey),
                                 ),
-                                onPressed: () {
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  state.currSong.songName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              IconButton(
+                                  icon: Icon(Icons.sort),
+                                  onPressed: () {
+//                          state.scaffoldKey.currentState.openDrawer();
+                                  }),
+                              IconButton(
+                                  icon: BuJuanUtil.getPlayMode(state.playModeType),
+                                  onPressed: () {
+//                          dispatch(PlayViewActionCreator.getChangePlayMode());
+                                  }),
+                              state.currSong.isLike != null
+                                  ? IconButton(
+                                  icon: state.currSong.isLike
+                                      ? Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  )
+                                      : Icon(
+                                    Icons.favorite_border,
+                                  ),
+                                  onPressed: () {
 //                          dispatch(PlayViewActionCreator.getLikeOrUnLike(
 //                              !state.currSong.isLike));
-                                })
-                                : IconButton(
-                                icon: Icon(Icons.favorite_border),
-                                onPressed: () {
+                                  })
+                                  : IconButton(
+                                  icon: Icon(Icons.favorite_border),
+                                  onPressed: () {
 //                          dispatch(PlayViewActionCreator.getLikeOrUnLike(!state.currSong.isLike));
-                                }),
-                            IconButton(
-                                icon: Icon(Icons.message),
-                                onPressed: () {
+                                  }),
+                              IconButton(
+                                  icon: Icon(Icons.message),
+                                  onPressed: () {
 //                          dispatch(PlayViewActionCreator.getSongTalk(
 //                              state.currSong.songId.toString()));
-                                }),
-                          ],
-                        ),
-                      ],
-                    )),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      onPressed: () {
-                        Navigator.of(viewService.context).pop();
-                      }),
-                ),
-              ],
+                                  }),
+                            ],
+                          ),
+                        ],
+                      )),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                        icon: Icon(Icons.keyboard_arrow_down),
+                        onPressed: () {
+                          Navigator.of(viewService.context).pop();
+                        }),
+                  ),
+                ],
+              ),
             ),
           ),
           minHeight: Constants.bottomHeight,
@@ -353,7 +355,7 @@ Widget buildView(PlayBarState state, Dispatch dispatch, ViewService viewService)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ImageHelper.getImage('${state.currSong.songCover ?? ''}?param=150y150', isRound: true, height: Screens.setHeight(40)),
+                        ImageHelper.getImage('${state.currSong.songCover ?? ''}?param=150y150', isRound: true, height: Screens.setHeight(48)),
                         Padding(padding: EdgeInsets.only(left: Screens.width10)),
                         Expanded(
                             child: Column(

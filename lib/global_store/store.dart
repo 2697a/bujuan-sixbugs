@@ -7,6 +7,7 @@ import 'package:bujuan/entity/song_bean_entity.dart';
 import 'package:bujuan/utils/sp_util.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutterstarrysky/flutter_starry_sky.dart';
+import 'package:flutterstarrysky/song_info.dart';
 import 'reducer.dart';
 import 'state.dart';
 
@@ -19,19 +20,20 @@ class GlobalStore {
     var string = SpUtil.getString(playSongHistory, defValue: null);
     var mode = SpUtil.getInt(PLAY_MODE, defValue: PlayModeType.REPEAT.index);
     var backPath = SpUtil.getString(USER_BACKGROUND, defValue: null);
-    SongBeanEntity songBeanEntity = SongBeanEntity(
-        name: '暂无播放歌曲',
-        singer: '暂无歌手信息',
-        picUrl:
+    SongInfo songBeanEntity = SongInfo(
+        songName: '暂无播放歌曲',
+        artist: '暂无歌手信息',
+        duration: 100,
+        songCover:
             'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3974834430,2578081919&fm=26&gp=0.jpg');
-    if (string != null) {
-      songBeanEntity = SongBeanEntity.fromJson(jsonDecode(string));
-    }
+//    if (string != null) {
+//      songBeanEntity = SongBeanEntity.fromJson(jsonDecode(string));
+//    }
     return globalStore ??= createStore<GlobalState>(
         GlobalState()
           ..appTheme = appTheme
           ..playState = playState
-          ..currSong = null
+          ..currSong = songBeanEntity
           ..currSongPos = 0
           ..lyric = null
           ..blur = SpUtil.getDouble(BLUR, defValue: 2)

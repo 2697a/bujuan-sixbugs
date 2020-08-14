@@ -21,7 +21,7 @@ Effect<SheetDetailsState> buildEffect() {
 }
 
 //播放歌曲
-void _onPlay(Action action, Context<SheetDetailsState> ctx) {
+void _onPlay(Action action, Context<SheetDetailsState> ctx) async{
   var list = ctx.state.list;
   var index = action.payload??0;
    NetUtils().setPlayListAndPlayById(list, index, '${ctx.state.playlist.id}');

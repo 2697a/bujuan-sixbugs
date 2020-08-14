@@ -15,64 +15,64 @@ Widget buildView(
         ? LoadingPage()
         : DefaultTabController(
             length: state.tabs.length,
-//            child: NestedScrollView(
-//              headerSliverBuilder:
-//                  (BuildContext context, bool innerBoxIsScrolled) {
-//                // These are the slivers that show up in the "outer" scroll view.
-//                return <Widget>[
-//                  SliverOverlapAbsorber(
-//                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-//                        context),
-//                    child: SliverAppBar(
-//                      title: Text(state.artistBean.name),
-//                      centerTitle: false,
-//                      pinned: true,
-//                      floating: false,
-//                      snap: false,
-//                      primary: true,
-//                      expandedHeight: 230.0,
-//                      elevation: 10,
-//                      //是否显示阴影，直接取值innerBoxIsScrolled，展开不显示阴影，合并后会显示
-//                      forceElevated: innerBoxIsScrolled,
-//                      flexibleSpace: new FlexibleSpaceBar(
-//                        background: Stack(
-//                          children: <Widget>[
-//                            Container(
-//                              width: double.infinity,
-//                              height: 260,
-//                              child: ImageHelper.getImage(
-//                                  state.artistBean.picUrl + "?param=400y400",
-//                                  height: 230),
-//                            ),
-//                            Container(
-//                              decoration: BoxDecoration(
-//                                  color: Constants.dark
-//                                      ? Colors.grey[850].withOpacity(.3)
-//                                      : Colors.white.withOpacity(.3)),
-//                            ),
-//                          ],
-//                        ),
-//                      ),
-//
-//                      bottom: TabBar(
-//                        tabs: state.tabs
-//                            .map((String name) => Tab(text: name))
-//                            .toList(),
-//                      ),
-//                    ),
-//                  ),
-//                ];
-//              },
-//              body: TabBarView(
-//                  // These are the contents of the tab views, below the tabs.
-//                  children: <Widget>[
-//                    songView(state, dispatch, viewService),
-//                    albumView(state, dispatch, viewService),
-//                    Center(
-//                      child: Text('暂未完善'),
-//                    )
-//                  ]),
-//            ),
+            child: NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                // These are the slivers that show up in the "outer" scroll view.
+                return <Widget>[
+                  SliverOverlapAbsorber(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                    child: SliverAppBar(
+                      title: Text(state.artistBean.name),
+                      centerTitle: false,
+                      pinned: true,
+                      floating: false,
+                      snap: false,
+                      primary: true,
+                      expandedHeight: 230.0,
+                      elevation: 10,
+                      //是否显示阴影，直接取值innerBoxIsScrolled，展开不显示阴影，合并后会显示
+                      forceElevated: innerBoxIsScrolled,
+                      flexibleSpace: new FlexibleSpaceBar(
+                        background: Stack(
+                          children: <Widget>[
+                            Container(
+                              width: double.infinity,
+                              height: 260,
+                              child: ImageHelper.getImage(
+                                  state.artistBean.picUrl + "?param=400y400",
+                                  height: 230),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Constants.dark
+                                      ? Colors.grey[850].withOpacity(.3)
+                                      : Colors.white.withOpacity(.3)),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      bottom: TabBar(
+                        tabs: state.tabs
+                            .map((String name) => Tab(text: name))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                ];
+              },
+              body: TabBarView(
+                  // These are the contents of the tab views, below the tabs.
+                  children: <Widget>[
+                    songView(state, dispatch, viewService),
+                    albumView(state, dispatch, viewService),
+                    Center(
+                      child: Text('暂未完善'),
+                    )
+                  ]),
+            ),
           ),
   );
 }

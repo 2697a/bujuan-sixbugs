@@ -1,5 +1,6 @@
 import 'package:bujuan/constant/constants.dart';
 import 'package:bujuan/page/bujuan_find/page.dart';
+import 'package:bujuan/page/hot_singer/page.dart';
 import 'package:bujuan/page/mine/page.dart';
 import 'package:bujuan/page/top/page.dart';
 import 'package:bujuan/utils/sp_util.dart';
@@ -16,6 +17,7 @@ class EntranceState implements Cloneable<EntranceState> {
   TabController tabController;
   List<Widget> pages;
   List<Tab> tabs;
+  List<String> tabList;
   bool isDra;
   bool isBlack;
 
@@ -28,6 +30,7 @@ class EntranceState implements Cloneable<EntranceState> {
       ..tabController = tabController
       ..isBlack =isBlack
       ..isDra = isDra
+      ..tabList = tabList
       ..tabs = tabs
       ..miniNav = miniNav;
   }
@@ -46,7 +49,9 @@ EntranceState initState(Map<String, dynamic> args) {
     MinePage().buildPage(null),
     NewFindPage().buildPage(null),
     TopPagePage().buildPage(null),
+    HotSingerPage().buildPage(null)
   ];
+  state.tabList = ['Me' ,'Find','Top','Artist'];
   state.tabs = [Tab(text:'me'),Tab(text:'find'),Tab(text:'top')];
   return state;
 }
