@@ -1,5 +1,5 @@
 # bujuan
-
+# 此项目已停止维护，最新版本已经移至：[bujuan]: https://github.com/2697a/bujuan
 # 不倦(flutter仿网易云音乐)
 暂不支持ios设备
 
